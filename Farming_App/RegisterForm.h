@@ -10,12 +10,12 @@ namespace FarmingApp {
 	using namespace System::Drawing;
 
 	/// <summary>
-	/// Summary for LoginForm
+	/// Summary for RegisterForm
 	/// </summary>
-	public ref class LoginForm : public System::Windows::Forms::Form
+	public ref class RegisterForm : public System::Windows::Forms::Form
 	{
 	public:
-		LoginForm(void)
+		RegisterForm(void)
 		{
 			InitializeComponent();
 			//
@@ -27,7 +27,7 @@ namespace FarmingApp {
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		~LoginForm()
+		~RegisterForm()
 		{
 			if (components)
 			{
@@ -39,10 +39,10 @@ namespace FarmingApp {
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::TextBox^ textBox1;
 	private: System::Windows::Forms::TextBox^ textBox2;
-	private: System::Windows::Forms::CheckBox^ checkBox1;
+	private: System::Windows::Forms::TextBox^ textBox3;
 	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Label^ label3;
+	private: System::Windows::Forms::Label^ label2;
 
 	private:
 		/// <summary>
@@ -61,10 +61,10 @@ namespace FarmingApp {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
+			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->panel1->SuspendLayout();
 			this->SuspendLayout();
 			// 
@@ -73,10 +73,10 @@ namespace FarmingApp {
 			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
 				static_cast<System::Int32>(static_cast<System::Byte>(84)));
 			this->panel1->Controls->Add(this->label1);
-			this->panel1->Location = System::Drawing::Point(0, 0);
+			this->panel1->Location = System::Drawing::Point(0, 1);
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(601, 114);
-			this->panel1->TabIndex = 0;
+			this->panel1->TabIndex = 1;
 			// 
 			// label1
 			// 
@@ -84,22 +84,22 @@ namespace FarmingApp {
 			this->label1->Font = (gcnew System::Drawing::Font(L"Dubai", 16.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label1->ForeColor = System::Drawing::Color::White;
-			this->label1->Location = System::Drawing::Point(211, 18);
+			this->label1->Location = System::Drawing::Point(200, 20);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(158, 73);
+			this->label1->Size = System::Drawing::Size(176, 73);
 			this->label1->TabIndex = 1;
-			this->label1->Text = L"Sign In";
+			this->label1->Text = L"Sign Up";
 			// 
 			// textBox1
 			// 
 			this->textBox1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->textBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.125F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(162)));
-			this->textBox1->Location = System::Drawing::Point(46, 175);
+			this->textBox1->Location = System::Drawing::Point(49, 150);
 			this->textBox1->Multiline = true;
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(509, 41);
-			this->textBox1->TabIndex = 1;
+			this->textBox1->TabIndex = 2;
 			this->textBox1->Text = L"Username";
 			// 
 			// textBox2
@@ -107,24 +107,24 @@ namespace FarmingApp {
 			this->textBox2->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->textBox2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.125F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(162)));
-			this->textBox2->Location = System::Drawing::Point(46, 264);
+			this->textBox2->Location = System::Drawing::Point(49, 238);
 			this->textBox2->Multiline = true;
 			this->textBox2->Name = L"textBox2";
 			this->textBox2->Size = System::Drawing::Size(509, 41);
-			this->textBox2->TabIndex = 2;
+			this->textBox2->TabIndex = 3;
 			this->textBox2->Text = L"Password";
 			// 
-			// checkBox1
+			// textBox3
 			// 
-			this->checkBox1->AutoSize = true;
-			this->checkBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.125F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->textBox3->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->textBox3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.125F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(162)));
-			this->checkBox1->Location = System::Drawing::Point(314, 329);
-			this->checkBox1->Name = L"checkBox1";
-			this->checkBox1->Size = System::Drawing::Size(241, 35);
-			this->checkBox1->TabIndex = 3;
-			this->checkBox1->Text = L"Show Password";
-			this->checkBox1->UseVisualStyleBackColor = true;
+			this->textBox3->Location = System::Drawing::Point(49, 326);
+			this->textBox3->Multiline = true;
+			this->textBox3->Name = L"textBox3";
+			this->textBox3->Size = System::Drawing::Size(509, 41);
+			this->textBox3->TabIndex = 4;
+			this->textBox3->Text = L"Confirm Pasword";
 			// 
 			// button1
 			// 
@@ -134,25 +134,12 @@ namespace FarmingApp {
 			this->button1->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button1->ForeColor = System::Drawing::Color::White;
-			this->button1->Location = System::Drawing::Point(171, 415);
+			this->button1->Location = System::Drawing::Point(165, 421);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(260, 64);
-			this->button1->TabIndex = 4;
-			this->button1->Text = L"Sign In";
+			this->button1->TabIndex = 5;
+			this->button1->Text = L"Sign Up";
 			this->button1->UseVisualStyleBackColor = false;
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7.875F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(162)));
-			this->label2->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(164)), static_cast<System::Int32>(static_cast<System::Byte>(165)),
-				static_cast<System::Int32>(static_cast<System::Byte>(169)));
-			this->label2->Location = System::Drawing::Point(171, 538);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(260, 25);
-			this->label2->TabIndex = 5;
-			this->label2->Text = L"Don\'t have an account\?";
 			// 
 			// label3
 			// 
@@ -161,13 +148,26 @@ namespace FarmingApp {
 				static_cast<System::Byte>(162)));
 			this->label3->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
 				static_cast<System::Int32>(static_cast<System::Byte>(84)));
-			this->label3->Location = System::Drawing::Point(242, 575);
+			this->label3->Location = System::Drawing::Point(239, 569);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(117, 31);
-			this->label3->TabIndex = 6;
-			this->label3->Text = L"Sign Up";
+			this->label3->Size = System::Drawing::Size(105, 31);
+			this->label3->TabIndex = 8;
+			this->label3->Text = L"Sign In";
 			// 
-			// LoginForm
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7.875F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(162)));
+			this->label2->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(164)), static_cast<System::Int32>(static_cast<System::Byte>(165)),
+				static_cast<System::Int32>(static_cast<System::Byte>(169)));
+			this->label2->Location = System::Drawing::Point(151, 535);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(286, 25);
+			this->label2->TabIndex = 7;
+			this->label2->Text = L"Already have an account\?";
+			// 
+			// RegisterForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(12, 25);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
@@ -176,13 +176,13 @@ namespace FarmingApp {
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->button1);
-			this->Controls->Add(this->checkBox1);
+			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->panel1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
-			this->Name = L"LoginForm";
-			this->Text = L"LoginForm";
+			this->Name = L"RegisterForm";
+			this->Text = L"RegisterForm";
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
 			this->ResumeLayout(false);
