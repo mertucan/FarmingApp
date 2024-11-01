@@ -11,7 +11,7 @@ int main(array<String^>^ args) {
 
     // Giriþ Formu
     FarmingApp::LoginForm loginForm;
-    //Application::Run(% loginForm);
+    Application::Run(% loginForm);
 
     // Kayýt Formu
     FarmingApp::RegisterForm registerForm;

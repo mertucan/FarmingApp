@@ -7,6 +7,7 @@ namespace FarmingApp {
 	using namespace System::Collections;
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
+	using namespace System::Data::SqlClient;
 	using namespace System::Drawing;
 
 	/// <summary>
@@ -140,6 +141,7 @@ namespace FarmingApp {
 			this->button1->TabIndex = 4;
 			this->button1->Text = L"Sign In";
 			this->button1->UseVisualStyleBackColor = false;
+			this->button1->Click += gcnew System::EventHandler(this, &LoginForm::button1_Click);
 			// 
 			// label2
 			// 
@@ -190,5 +192,52 @@ namespace FarmingApp {
 
 		}
 #pragma endregion
-	};
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		SqlConnection^ conn;
+		// Veritabaný baðlantý dizesi (kendi veritabaný bilgilerinizi ekleyin)
+		String^ connectionString = "Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True";
+
+		// Kullanýcý adý ve þifreyi al
+		String^ username = textBox1->Text;
+		String^ password = textBox2->Text;
+
+		// SQL sorgusu
+		String^ query = L"SELECT COUNT(1) FROM farmers WHERE username = @username AND password = @password";
+
+		try {
+			// SqlConnection oluþtur
+			SqlConnection^ conn = gcnew SqlConnection(connectionString);
+			SqlCommand^ cmd = gcnew SqlCommand(query, conn);
+
+			// Parametreleri ekle
+			cmd->Parameters->AddWithValue("@username", username);
+			cmd->Parameters->AddWithValue("@password", password);
+
+			// Baðlantýyý aç
+			conn->Open();
+
+			// Sorguyu çalýþtýr ve sonucu al
+			int count = Convert::ToInt32(cmd->ExecuteScalar());
+
+			if (count == 1) {
+				MessageBox::Show("Giriþ baþarýlý!", "Baþarýlý", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				// Giriþ baþarýlý olduðunda yönlendirme veya baþka iþlemler yapýlabilir
+			}
+			else {
+				MessageBox::Show("Kullanýcý adý veya þifre hatalý!", "Hata", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		catch (SqlException^ ex)
+		{
+			MessageBox::Show("Error: " + ex->Message);
+		}
+		finally
+		{
+			if (conn != nullptr && conn->State == ConnectionState::Open)
+			{
+				conn->Close();
+			}
+		}
+	}
+};
 }
