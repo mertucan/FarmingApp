@@ -7,6 +7,7 @@ namespace FarmingApp {
 	using namespace System::Collections;
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
+	using namespace System::Data::SqlClient;
 	using namespace System::Drawing;
 
 	/// <summary>
@@ -73,7 +74,7 @@ namespace FarmingApp {
 			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
 				static_cast<System::Int32>(static_cast<System::Byte>(84)));
 			this->panel1->Controls->Add(this->label1);
-			this->panel1->Location = System::Drawing::Point(0, 1);
+			this->panel1->Location = System::Drawing::Point(0, 0);
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(601, 114);
 			this->panel1->TabIndex = 1;
@@ -124,7 +125,7 @@ namespace FarmingApp {
 			this->textBox3->Name = L"textBox3";
 			this->textBox3->Size = System::Drawing::Size(509, 41);
 			this->textBox3->TabIndex = 4;
-			this->textBox3->Text = L"Confirm Pasword";
+			this->textBox3->Text = L"Confirm Password";
 			// 
 			// button1
 			// 
@@ -140,6 +141,7 @@ namespace FarmingApp {
 			this->button1->TabIndex = 5;
 			this->button1->Text = L"Sign Up";
 			this->button1->UseVisualStyleBackColor = false;
+			this->button1->Click += gcnew System::EventHandler(this, &RegisterForm::button1_Click);
 			// 
 			// label3
 			// 
@@ -190,5 +192,32 @@ namespace FarmingApp {
 
 		}
 #pragma endregion
-	};
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		
+		// Kullanýcý adý ve þifre alanlarýný kontrol edin
+		if (textBox2->Text == textBox3->Text) {
+			// SQL baðlantýsý ve komutu oluþturun
+			SqlConnection^ connection = gcnew SqlConnection("Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True");
+
+			SqlCommand^ command = gcnew SqlCommand("INSERT INTO farmers (username, password) VALUES (@username, @password)", connection);
+			command->Parameters->AddWithValue("@username", textBox1->Text);
+			command->Parameters->AddWithValue("@password", textBox2->Text);
+
+			try {
+				connection->Open();
+				command->ExecuteNonQuery();
+				MessageBox::Show("User added succesfully.");
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Exception: " + ex->Message);
+			}
+			finally {
+				connection->Close();
+			}
+		}
+		else {
+			MessageBox::Show("Passwords are not matching!");
+		}
+	}
+};
 }
