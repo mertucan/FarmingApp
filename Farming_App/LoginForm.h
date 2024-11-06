@@ -258,8 +258,14 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 	String^ username = textBox1->Text;
 	String^ password = textBox2->Text;
 
-	// SQL sorgusu
-	String^ query = L"SELECT COUNT(1) FROM farmers WHERE username = @username AND password = @password";
+	// TextBox'larýn boþ olup olmadýðýný kontrol et
+	if (String::IsNullOrWhiteSpace(username) || String::IsNullOrWhiteSpace(password)) {
+		MessageBox::Show("Username and password cannot be empty!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		return; // Eðer boþsa, iþlem yapýlmaz
+	}
+
+	// SQL sorgusu: önce kullanýcý adý var mý kontrol et
+	String^ query = L"SELECT COUNT(1) FROM farmers WHERE username = @username";
 
 	try {
 		// SqlConnection oluþtur
@@ -268,34 +274,50 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 
 		// Parametreleri ekle
 		cmd->Parameters->AddWithValue("@username", username);
-		cmd->Parameters->AddWithValue("@password", password);
 
 		// Baðlantýyý aç
 		conn->Open();
 
-		// Sorguyu çalýþtýr ve sonucu al
-		int count = Convert::ToInt32(cmd->ExecuteScalar());
+		// Kullanýcý adý sorgusunu çalýþtýr ve sonucu al
+		int userCount = Convert::ToInt32(cmd->ExecuteScalar());
 
-		if (count == 1) {
-			MessageBox::Show("Giriþ baþarýlý!", "Baþarýlý", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		if (userCount == 1) {
+			// Kullanýcý adý doðruysa, þifreyi kontrol et
+			String^ queryPassword = L"SELECT COUNT(1) FROM farmers WHERE username = @username AND password = @password";
+			SqlCommand^ cmdPassword = gcnew SqlCommand(queryPassword, conn);
+			cmdPassword->Parameters->AddWithValue("@username", username);
+			cmdPassword->Parameters->AddWithValue("@password", password);
 
-			// Kullanýcý bilgilerini veritabanýndan almak için ek sorgu ekleyin
-			String^ queryUser = "SELECT farmers_id, username, password FROM farmers WHERE username = @username";
-			SqlCommand^ cmdUser = gcnew SqlCommand(queryUser, conn);
-			cmdUser->Parameters->AddWithValue("@username", username);
-			SqlDataReader^ reader = cmdUser->ExecuteReader();
+			// Þifreyi kontrol et
+			int passwordCount = Convert::ToInt32(cmdPassword->ExecuteScalar());
 
-			if (reader->Read()) {
-				// Veritabanýndan gelen kullanýcý bilgileriyle user nesnesini oluþturun
-				user = gcnew User();
-				user->id = reader->GetInt32(0);  
+			if (passwordCount == 1) {
+				// Þifre doðruysa giriþ baþarýlý
+				MessageBox::Show("Login is successful", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+
+				// Kullanýcý bilgilerini veritabanýndan almak için ek sorgu ekleyin
+				String^ queryUser = "SELECT farmers_id, username, password FROM farmers WHERE username = @username";
+				SqlCommand^ cmdUser = gcnew SqlCommand(queryUser, conn);
+				cmdUser->Parameters->AddWithValue("@username", username);
+				SqlDataReader^ reader = cmdUser->ExecuteReader();
+
+				if (reader->Read()) {
+					// Veritabanýndan gelen kullanýcý bilgileriyle user nesnesini oluþturun
+					user = gcnew User();
+					user->id = reader->GetInt32(0);
+				}
+
+				reader->Close();
+				// Giriþ baþarýlý olduðunda yönlendirme veya baþka iþlemler yapýlabilir
 			}
-
-			reader->Close();
-			// Giriþ baþarýlý olduðunda yönlendirme veya baþka iþlemler yapýlabilir
+			else {
+				// Þifre yanlýþ olduðunda
+				MessageBox::Show("Incorrect password.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
 		}
 		else {
-			MessageBox::Show("Kullanýcý adý veya þifre hatalý!", "Hata", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			// Kullanýcý adý bulunamadýðýnda
+			MessageBox::Show("No registered account found with the provided username", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 	}
 	catch (SqlException^ ex) {
@@ -308,6 +330,7 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 	}
 }
 
+
 	private: System::Void label3_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
 		label3->Font = gcnew System::Drawing::Font(label3->Font, System::Drawing::FontStyle::Underline | System::Drawing::FontStyle::Bold);
 	}
@@ -315,36 +338,39 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 		label3->Font = gcnew System::Drawing::Font(label3->Font, System::Drawing::FontStyle::Regular | System::Drawing::FontStyle::Bold);
 	}
 	public: bool switchToRegister = false;
-	private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e) {
-		// RegisterForm'a geçiþi iþaretle
-		this->switchToRegister = true;
+private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e) {
+	// RegisterForm'a geçiþi iþaretle
+	this->switchToRegister = true;
 
-		// Eðer RegisterForm'a geçiþ yapýlacaksa, RegisterForm'u aç
-		if (this->switchToRegister) {
-			// RegisterForm'u modal olmayan þekilde açmak için Show() kullanýyoruz.
-			FarmingApp::RegisterForm^ registerForm = gcnew FarmingApp::RegisterForm();
-			registerForm->ShowDialog(); // RegisterForm'un kendisi modal bir þekilde açýlýr.
+	// Eðer RegisterForm'a geçiþ yapýlacaksa, RegisterForm'u aç
+	if (this->switchToRegister) {
+		// Önce LoginForm'u kapatýyoruz
+		this->Hide(); // LoginForm'un kapanmasýný istemiyorsanýz, sadece gizleyebilirsiniz.
 
-			// Giriþ iþlemi baþarýlýysa, burada iþlemleri yapabilirsiniz.
-			if (registerForm->switchToLogin) {
-				// Kullanýcý giriþ formuna dönmeyi seçtiyse, tekrar login formunu aç.
-				FarmingApp::LoginForm^ loginForm = gcnew FarmingApp::LoginForm();
-				loginForm->ShowDialog();
-			}
-			else {
-				// Kullanýcý baþarýlý þekilde kaydolduysa:
-				user = registerForm->user;
-				MessageBox::Show("Successful auth: " + user->id.ToString(), "Program.cpp", MessageBoxButtons::OK);
-			}
-		}
-		else {
-			// Eðer RegisterForm'a geçiþ yapýlmadýysa, LoginForm'u aç
+		// RegisterForm'u modal olarak açýyoruz
+		FarmingApp::RegisterForm^ registerForm = gcnew FarmingApp::RegisterForm();
+		registerForm->ShowDialog(); // RegisterForm'un kendisi modal bir þekilde açýlýr.
+
+		// Giriþ iþlemi baþarýlýysa, burada iþlemleri yapabilirsiniz.
+		if (registerForm->switchToLogin) {
+			// Kullanýcý giriþ formuna dönmeyi seçtiyse, LoginForm'u tekrar açýyoruz.
 			FarmingApp::LoginForm^ loginForm = gcnew FarmingApp::LoginForm();
 			loginForm->ShowDialog();
 		}
-		// Program sonlandýðýnda formu kapatýyoruz.
-		this->Close();
+		else {
+			// Kullanýcý baþarýlý þekilde kaydolduysa:
+			user = registerForm->user;
+		}
+
+		// Burada sadece RegisterForm'dan çýktýktan sonra bu formu kapatabiliriz
+		this->Close();  // MainForm veya LoginForm'un kapanmasýný burada istiyorsanýz
 	}
+	else {
+		// Eðer RegisterForm'a geçiþ yapýlmadýysa, LoginForm'u aç
+		FarmingApp::LoginForm^ loginForm = gcnew FarmingApp::LoginForm();
+		loginForm->ShowDialog();
+	}
+}
 	private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
 	}

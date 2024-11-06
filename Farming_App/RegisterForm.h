@@ -136,6 +136,7 @@ namespace FarmingApp {
 			this->textBox2->Location = System::Drawing::Point(49, 291);
 			this->textBox2->Multiline = true;
 			this->textBox2->Name = L"textBox2";
+			this->textBox2->PasswordChar = '*';
 			this->textBox2->Size = System::Drawing::Size(509, 41);
 			this->textBox2->TabIndex = 3;
 			// 
@@ -148,6 +149,7 @@ namespace FarmingApp {
 			this->textBox3->Location = System::Drawing::Point(49, 385);
 			this->textBox3->Multiline = true;
 			this->textBox3->Name = L"textBox3";
+			this->textBox3->PasswordChar = '*';
 			this->textBox3->Size = System::Drawing::Size(509, 41);
 			this->textBox3->TabIndex = 4;
 			// 
@@ -261,31 +263,51 @@ namespace FarmingApp {
 		}
 #pragma endregion
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		// Kullanýcý adý ve þifre alanlarýný kontrol edin
-		if (textBox2->Text == textBox3->Text) {
-			// SQL baðlantýsý ve komutu oluþturun
-			SqlConnection^ connection = gcnew SqlConnection("Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True");
+		// Kullanýcý adý ve þifre alanlarýnýn boþ olup olmadýðýný kontrol et
+		if (textBox1->Text->Trim() == "" || textBox2->Text->Trim() == "" || textBox3->Text->Trim() == "") {
+			MessageBox::Show("Username and passwords cannot be empty!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
-			SqlCommand^ command = gcnew SqlCommand("INSERT INTO farmers (username, password) VALUES (@username, @password)", connection);
-			command->Parameters->AddWithValue("@username", textBox1->Text);
-			command->Parameters->AddWithValue("@password", textBox2->Text);
+			return; // Boþ alanlar varsa fonksiyonu sonlandýrýr
+		}
 
-			try {
-				connection->Open();
+		// Þifrelerin eþleþip eþleþmediðini kontrol et
+		if (textBox2->Text != textBox3->Text) {
+			MessageBox::Show("Passwords are not matching!");
+			return;
+		}
+
+		// SQL baðlantýsý ve komutunu oluþtur
+		SqlConnection^ connection = gcnew SqlConnection("Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True");
+
+		// Kullanýcý adý zaten veritabanýnda var mý kontrol et
+		SqlCommand^ checkCommand = gcnew SqlCommand("SELECT COUNT(*) FROM farmers WHERE username = @username", connection);
+		checkCommand->Parameters->AddWithValue("@username", textBox1->Text);
+
+		try {
+			connection->Open();
+			int userCount = (int)checkCommand->ExecuteScalar(); // Kullanýcý sayýsýný al
+
+			if (userCount > 0) {
+				// Kullanýcý adý zaten varsa uyarý ver
+				MessageBox::Show("Username is already taken! Please choose a different one.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			else {
+				// Kullanýcý adý yoksa, yeni kullanýcýyý ekle
+				SqlCommand^ command = gcnew SqlCommand("INSERT INTO farmers (username, password) VALUES (@username, @password)", connection);
+				command->Parameters->AddWithValue("@username", textBox1->Text);
+				command->Parameters->AddWithValue("@password", textBox2->Text);
 				command->ExecuteNonQuery();
-				MessageBox::Show("User added succesfully.");
-			}
-			catch (Exception^ ex) {
-				MessageBox::Show("Exception: " + ex->Message);
-			}
-			finally {
-				connection->Close();
+				MessageBox::Show("User added successfully.");
 			}
 		}
-		else {
-			MessageBox::Show("Passwords are not matching!");
+		catch (Exception^ ex) {
+			MessageBox::Show("Exception: " + ex->Message);
+		}
+		finally {
+			connection->Close();
 		}
 	}
+
 	
 	private: System::Void label3_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
 		label3->Font = gcnew System::Drawing::Font(label3->Font, System::Drawing::FontStyle::Underline | System::Drawing::FontStyle::Bold);
