@@ -110,6 +110,8 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies />
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>main</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -120,11 +122,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="FormSwitch.cpp" />
     <ClCompile Include="LoginForm.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="RegisterForm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FormSwitch.h" />
     <ClInclude Include="LoginForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
