@@ -21,9 +21,6 @@
     <ClCompile Include="RegisterForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FormSwitch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LoginForm.h">
@@ -32,8 +29,8 @@
     <ClInclude Include="RegisterForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FormSwitch.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="User.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

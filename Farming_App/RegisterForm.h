@@ -1,6 +1,5 @@
 #pragma once
-#include "FormSwitch.h"
-#include "LoginForm.h"
+#include "User.h"
 
 namespace FarmingApp {
 
@@ -24,6 +23,7 @@ namespace FarmingApp {
 			//
 			//TODO: Add the constructor code here
 			//
+			this->CenterToScreen();
 		}
 
 	protected:
@@ -286,17 +286,18 @@ namespace FarmingApp {
 			MessageBox::Show("Passwords are not matching!");
 		}
 	}
-
+	
 	private: System::Void label3_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
 		label3->Font = gcnew System::Drawing::Font(label3->Font, System::Drawing::FontStyle::Underline | System::Drawing::FontStyle::Bold);
 	}
 	private: System::Void label3_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
 		label3->Font = gcnew System::Drawing::Font(label3->Font, System::Drawing::FontStyle::Regular | System::Drawing::FontStyle::Bold);
 	}
+	public: bool switchToLogin = false;
+	public: User^ user = nullptr;
 	private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e) {
-		RegisterForm^ registerForm = gcnew RegisterForm();
-		registerForm->Show();  // Doðrudan RegisterForm'u göster
-		this->Hide();  // LoginForm'u gizle
+		this->switchToLogin = true;
+		this->Hide();
 	}
 	private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();

@@ -1,5 +1,5 @@
 #pragma once
-#include "FormSwitch.h"
+#include "User.h"
 #include "RegisterForm.h"
 
 namespace FarmingApp {
@@ -49,6 +49,8 @@ namespace FarmingApp {
 	private: System::Windows::Forms::Label^ label4;
 	private: System::Windows::Forms::Label^ label5;
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
+
+
 
 	private:
 		/// <summary>
@@ -147,6 +149,7 @@ namespace FarmingApp {
 			this->checkBox1->TabIndex = 3;
 			this->checkBox1->Text = L"Show Password";
 			this->checkBox1->UseVisualStyleBackColor = true;
+			this->checkBox1->CheckedChanged += gcnew System::EventHandler(this, &LoginForm::checkBox1_CheckedChanged);
 			// 
 			// button1
 			// 
@@ -244,53 +247,66 @@ namespace FarmingApp {
 
 		}
 #pragma endregion
-	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		SqlConnection^ conn;
-		// Veritabaný baðlantý dizesi (kendi veritabaný bilgilerinizi ekleyin)
-		String^ connectionString = "Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True";
+	public: User^ user = nullptr;
 
-		// Kullanýcý adý ve þifreyi al
-		String^ username = textBox1->Text;
-		String^ password = textBox2->Text;
+private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+	SqlConnection^ conn;
+	// Veritabaný baðlantý dizesi (kendi veritabaný bilgilerinizi ekleyin)
+	String^ connectionString = "Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True";
 
-		// SQL sorgusu
-		String^ query = L"SELECT COUNT(1) FROM farmers WHERE username = @username AND password = @password";
+	// Kullanýcý adý ve þifreyi al
+	String^ username = textBox1->Text;
+	String^ password = textBox2->Text;
 
-		try {
-			// SqlConnection oluþtur
-			SqlConnection^ conn = gcnew SqlConnection(connectionString);
-			SqlCommand^ cmd = gcnew SqlCommand(query, conn);
+	// SQL sorgusu
+	String^ query = L"SELECT COUNT(1) FROM farmers WHERE username = @username AND password = @password";
 
-			// Parametreleri ekle
-			cmd->Parameters->AddWithValue("@username", username);
-			cmd->Parameters->AddWithValue("@password", password);
+	try {
+		// SqlConnection oluþtur
+		conn = gcnew SqlConnection(connectionString);
+		SqlCommand^ cmd = gcnew SqlCommand(query, conn);
 
-			// Baðlantýyý aç
-			conn->Open();
+		// Parametreleri ekle
+		cmd->Parameters->AddWithValue("@username", username);
+		cmd->Parameters->AddWithValue("@password", password);
 
-			// Sorguyu çalýþtýr ve sonucu al
-			int count = Convert::ToInt32(cmd->ExecuteScalar());
+		// Baðlantýyý aç
+		conn->Open();
 
-			if (count == 1) {
-				MessageBox::Show("Giriþ baþarýlý!", "Baþarýlý", MessageBoxButtons::OK, MessageBoxIcon::Information);
-				// Giriþ baþarýlý olduðunda yönlendirme veya baþka iþlemler yapýlabilir
+		// Sorguyu çalýþtýr ve sonucu al
+		int count = Convert::ToInt32(cmd->ExecuteScalar());
+
+		if (count == 1) {
+			MessageBox::Show("Giriþ baþarýlý!", "Baþarýlý", MessageBoxButtons::OK, MessageBoxIcon::Information);
+
+			// Kullanýcý bilgilerini veritabanýndan almak için ek sorgu ekleyin
+			String^ queryUser = "SELECT farmers_id, username, password FROM farmers WHERE username = @username";
+			SqlCommand^ cmdUser = gcnew SqlCommand(queryUser, conn);
+			cmdUser->Parameters->AddWithValue("@username", username);
+			SqlDataReader^ reader = cmdUser->ExecuteReader();
+
+			if (reader->Read()) {
+				// Veritabanýndan gelen kullanýcý bilgileriyle user nesnesini oluþturun
+				user = gcnew User();
+				user->id = reader->GetInt32(0);  
 			}
-			else {
-				MessageBox::Show("Kullanýcý adý veya þifre hatalý!", "Hata", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			}
+
+			reader->Close();
+			// Giriþ baþarýlý olduðunda yönlendirme veya baþka iþlemler yapýlabilir
 		}
-		catch (SqlException^ ex)
-		{
-			MessageBox::Show("Error: " + ex->Message);
-		}
-		finally
-		{
-			if (conn != nullptr && conn->State == ConnectionState::Open)
-			{
-				conn->Close();
-			}
+		else {
+			MessageBox::Show("Kullanýcý adý veya þifre hatalý!", "Hata", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 	}
+	catch (SqlException^ ex) {
+		MessageBox::Show("Error: " + ex->Message);
+	}
+	finally {
+		if (conn != nullptr && conn->State == ConnectionState::Open) {
+			conn->Close();
+		}
+	}
+}
 
 	private: System::Void label3_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
 		label3->Font = gcnew System::Drawing::Font(label3->Font, System::Drawing::FontStyle::Underline | System::Drawing::FontStyle::Bold);
@@ -298,11 +314,47 @@ namespace FarmingApp {
 	private: System::Void label3_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
 		label3->Font = gcnew System::Drawing::Font(label3->Font, System::Drawing::FontStyle::Regular | System::Drawing::FontStyle::Bold);
 	}
+	public: bool switchToRegister = false;
 	private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e) {
-		FormSwitch::SwitchForm(this, gcnew RegisterForm());
+		// RegisterForm'a geçiþi iþaretle
+		this->switchToRegister = true;
+
+		// Eðer RegisterForm'a geçiþ yapýlacaksa, RegisterForm'u aç
+		if (this->switchToRegister) {
+			// RegisterForm'u modal olmayan þekilde açmak için Show() kullanýyoruz.
+			FarmingApp::RegisterForm^ registerForm = gcnew FarmingApp::RegisterForm();
+			registerForm->ShowDialog(); // RegisterForm'un kendisi modal bir þekilde açýlýr.
+
+			// Giriþ iþlemi baþarýlýysa, burada iþlemleri yapabilirsiniz.
+			if (registerForm->switchToLogin) {
+				// Kullanýcý giriþ formuna dönmeyi seçtiyse, tekrar login formunu aç.
+				FarmingApp::LoginForm^ loginForm = gcnew FarmingApp::LoginForm();
+				loginForm->ShowDialog();
+			}
+			else {
+				// Kullanýcý baþarýlý þekilde kaydolduysa:
+				user = registerForm->user;
+				MessageBox::Show("Successful auth: " + user->id.ToString(), "Program.cpp", MessageBoxButtons::OK);
+			}
+		}
+		else {
+			// Eðer RegisterForm'a geçiþ yapýlmadýysa, LoginForm'u aç
+			FarmingApp::LoginForm^ loginForm = gcnew FarmingApp::LoginForm();
+			loginForm->ShowDialog();
+		}
+		// Program sonlandýðýnda formu kapatýyoruz.
+		this->Close();
 	}
 	private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
+	}
+	private: System::Void checkBox1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (checkBox1->Checked) {
+			textBox2->PasswordChar = '\0'; // Þifreyi görünür yap
+		}
+		else {
+			textBox2->PasswordChar = '*'; // Þifreyi gizler
+		}
 	}
 };
 }
