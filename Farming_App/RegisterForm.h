@@ -23,6 +23,7 @@ namespace FarmingApp {
 			//
 			//TODO: Add the constructor code here
 			//
+			this->textBox3->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &RegisterForm::textBox3_KeyDown);
 			this->CenterToScreen();
 		}
 
@@ -152,6 +153,7 @@ namespace FarmingApp {
 			this->textBox3->PasswordChar = '*';
 			this->textBox3->Size = System::Drawing::Size(509, 41);
 			this->textBox3->TabIndex = 4;
+			this->textBox3->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &RegisterForm::textBox3_KeyDown);
 			// 
 			// button1
 			// 
@@ -236,8 +238,8 @@ namespace FarmingApp {
 			// 
 			// RegisterForm
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(12, 25);
-			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->AutoScaleDimensions = System::Drawing::SizeF(192, 192);
+			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
 			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(600, 671);
 			this->Controls->Add(this->label6);
@@ -324,5 +326,14 @@ namespace FarmingApp {
 	private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
 	}
+private: System::Void textBox3_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
+	if (e->KeyCode == System::Windows::Forms::Keys::Enter) {
+		// Button1'ın Click olayını tetikle
+		this->button1->PerformClick();
+		e->SuppressKeyPress = true;
+		this->switchToLogin = true;
+		this->Hide();
+	}
+}
 };
 }

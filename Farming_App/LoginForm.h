@@ -1,6 +1,7 @@
 #pragma once
 #include "User.h"
 #include "RegisterForm.h"
+#include "MainForm.h"
 
 namespace FarmingApp {
 
@@ -24,6 +25,7 @@ namespace FarmingApp {
 			//
 			//TODO: Add the constructor code here
 			//
+			this->textBox2->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &LoginForm::textBox2_KeyDown);
 		}
 
 	protected:
@@ -137,6 +139,7 @@ namespace FarmingApp {
 			this->textBox2->PasswordChar = '*';
 			this->textBox2->Size = System::Drawing::Size(509, 41);
 			this->textBox2->TabIndex = 2;
+			this->textBox2->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &LoginForm::textBox2_KeyDown);
 			// 
 			// checkBox1
 			// 
@@ -222,8 +225,8 @@ namespace FarmingApp {
 			// 
 			// LoginForm
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(12, 25);
-			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->AutoScaleDimensions = System::Drawing::SizeF(192, 192);
+			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
 			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(600, 671);
 			this->Controls->Add(this->label5);
@@ -308,7 +311,10 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 				}
 
 				reader->Close();
-				// Giriþ baþarýlý olduðunda yönlendirme veya baþka iþlemler yapýlabilir
+				MainForm^ mainForm = gcnew MainForm();
+				mainForm->Show();
+				this->Hide();
+
 			}
 			else {
 				// Þifre yanlýþ olduðunda
@@ -382,5 +388,11 @@ private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e)
 			textBox2->PasswordChar = '*'; // Þifreyi gizler
 		}
 	}
+private: System::Void textBox2_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
+	if (e->KeyCode == System::Windows::Forms::Keys::Enter) {
+		// Button1'ýn Click olayýný tetikle
+		this->button1->PerformClick();
+	}
+}
 };
 }
