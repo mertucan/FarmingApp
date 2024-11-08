@@ -188,6 +188,8 @@ namespace FarmingApp {
 			this->button2->TabIndex = 2;
 			this->button2->Text = L"Delete";
 			this->button2->UseVisualStyleBackColor = false;
+			this->button2->Click += gcnew System::EventHandler(this, &MainForm::button2_Click);
+
 			// 
 			// button1
 			// 
@@ -769,6 +771,9 @@ namespace FarmingApp {
 		}
 #pragma endregion
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+
+	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 };
 }
