@@ -53,12 +53,20 @@ namespace FarmingApp {
 	private: System::Windows::Forms::Label^ label5;
 	private: System::Windows::Forms::Label^ label6;
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
+	private: System::Windows::Forms::Panel^ panel2;
+	private: System::Windows::Forms::Label^ label7;
+	private: System::Windows::Forms::PictureBox^ pictureBox2;
+	private: System::Windows::Forms::ToolTip^ toolTip1;
+	private: System::ComponentModel::IContainer^ components;
+
+
+
 
 	private:
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -67,6 +75,7 @@ namespace FarmingApp {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(RegisterForm::typeid));
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
@@ -80,8 +89,14 @@ namespace FarmingApp {
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->panel2 = (gcnew System::Windows::Forms::Panel());
+			this->label7 = (gcnew System::Windows::Forms::Label());
+			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
+			this->toolTip1 = (gcnew System::Windows::Forms::ToolTip(this->components));
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
+			this->panel2->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// panel1
@@ -142,6 +157,7 @@ namespace FarmingApp {
 			this->textBox2->PasswordChar = '*';
 			this->textBox2->Size = System::Drawing::Size(509, 41);
 			this->textBox2->TabIndex = 3;
+			this->textBox2->TextChanged += gcnew System::EventHandler(this, &RegisterForm::textBox2_TextChanged);
 			// 
 			// textBox3
 			// 
@@ -165,7 +181,7 @@ namespace FarmingApp {
 			this->button1->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button1->ForeColor = System::Drawing::Color::White;
-			this->button1->Location = System::Drawing::Point(165, 472);
+			this->button1->Location = System::Drawing::Point(165, 492);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(260, 64);
 			this->button1->TabIndex = 5;
@@ -180,7 +196,7 @@ namespace FarmingApp {
 				static_cast<System::Byte>(162)));
 			this->label3->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
 				static_cast<System::Int32>(static_cast<System::Byte>(84)));
-			this->label3->Location = System::Drawing::Point(239, 611);
+			this->label3->Location = System::Drawing::Point(239, 631);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(105, 31);
 			this->label3->TabIndex = 8;
@@ -196,7 +212,7 @@ namespace FarmingApp {
 				static_cast<System::Byte>(162)));
 			this->label2->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(164)), static_cast<System::Int32>(static_cast<System::Byte>(165)),
 				static_cast<System::Int32>(static_cast<System::Byte>(169)));
-			this->label2->Location = System::Drawing::Point(151, 577);
+			this->label2->Location = System::Drawing::Point(151, 597);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(286, 25);
 			this->label2->TabIndex = 7;
@@ -238,12 +254,47 @@ namespace FarmingApp {
 			this->label6->TabIndex = 11;
 			this->label6->Text = L"Confirm Password";
 			// 
+			// panel2
+			// 
+			this->panel2->Controls->Add(this->label7);
+			this->panel2->Location = System::Drawing::Point(49, 338);
+			this->panel2->Name = L"panel2";
+			this->panel2->Size = System::Drawing::Size(512, 34);
+			this->panel2->TabIndex = 12;
+			this->panel2->Visible = false;
+			// 
+			// label7
+			// 
+			this->label7->AutoSize = true;
+			this->label7->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7.875F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(162)));
+			this->label7->ForeColor = System::Drawing::Color::White;
+			this->label7->Location = System::Drawing::Point(3, 3);
+			this->label7->Name = L"label7";
+			this->label7->Size = System::Drawing::Size(0, 25);
+			this->label7->TabIndex = 13;
+			this->label7->Visible = false;
+			// 
+			// pictureBox2
+			// 
+			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
+			this->pictureBox2->Location = System::Drawing::Point(521, 294);
+			this->pictureBox2->Name = L"pictureBox2";
+			this->pictureBox2->Size = System::Drawing::Size(35, 35);
+			this->pictureBox2->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox2->TabIndex = 13;
+			this->pictureBox2->TabStop = false;
+			this->pictureBox2->MouseEnter += gcnew System::EventHandler(this, &RegisterForm::pictureBox2_MouseEnter);
+			this->pictureBox2->MouseLeave += gcnew System::EventHandler(this, &RegisterForm::pictureBox2_MouseLeave);
+			// 
 			// RegisterForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(192, 192);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
 			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(600, 671);
+			this->Controls->Add(this->pictureBox2);
+			this->Controls->Add(this->panel2);
 			this->Controls->Add(this->label6);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->label4);
@@ -261,6 +312,9 @@ namespace FarmingApp {
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+			this->panel2->ResumeLayout(false);
+			this->panel2->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -275,7 +329,12 @@ namespace FarmingApp {
 
 		// Þifrelerin eþleþip eþleþmediðini kontrol et
 		if (textBox2->Text != textBox3->Text) {
-			MessageBox::Show("Passwords are not matching!");
+			MessageBox::Show("Passwords are not matching!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+
+		if (label7->Text != "Strong") {
+			MessageBox::Show("You need a stronger password!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			return;
 		}
 
@@ -306,7 +365,7 @@ namespace FarmingApp {
 				command->ExecuteNonQuery();
 
 				// Kayýt baþarýlý mesajý
-				MessageBox::Show("Registration successful!");
+				MessageBox::Show("Registration is successful", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 				this->switchToLogin = true;
 				this->Hide();
 			}
@@ -358,6 +417,53 @@ private: System::Void textBox3_KeyDown(System::Object^ sender, System::Windows::
 		this->switchToLogin = true;
 		this->Hide();
 	}
+}
+private: System::Void textBox2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	// Get the password entered by the user
+	System::String^ password = textBox2->Text;
+
+	// Check the strength of the password
+	if (password->Length < 6) {
+		panel2->Visible = true;
+		label7->Visible = true;
+		panel2->BackColor = Color::FromArgb(255, 0, 0); // Red for weak
+		label7->Text = "Weak";
+		label6->Location = System::Drawing::Point(24, 190);
+		textBox3->Location = System::Drawing::Point(25, 210);
+	}
+	else if (password->Length >= 6 && password->Length < 10) {
+		panel2->BackColor = Color::FromArgb(255, 165, 0); // Orange for medium
+		label7->Text = "Fair";
+	}
+	else {
+		// Check if password contains at least one special character and number
+		bool hasSpecialChar = false;
+		bool hasDigit = false;
+		for (int i = 0; i < password->Length; i++) {
+			if (Char::IsDigit(password[i])) {
+				hasDigit = true;
+			}
+			if (!Char::IsLetterOrDigit(password[i])) {
+				hasSpecialChar = true;
+			}
+		}
+
+		if (hasSpecialChar && hasDigit) {
+			panel2->BackColor = Color::FromArgb(0, 128, 0); // Green for strong
+			label7->Text = "Strong";
+		}
+		else {
+			panel2->BackColor = Color::FromArgb(255, 165, 0); // Orange for medium (fallback)
+			label7->Text = "Fair";
+		}
+	}
+}
+
+private: System::Void pictureBox2_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
+	toolTip1->SetToolTip(this->pictureBox2, L"Password must be at least 8 characters long\nPassword must include both letters and numbers\nPassword must contain at least one special character.");
+}
+private: System::Void pictureBox2_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+	toolTip1->SetToolTip(this->pictureBox2, "");
 }
 };
 }
