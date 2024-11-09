@@ -252,90 +252,58 @@ namespace FarmingApp {
 #pragma endregion
 	public: User^ user = nullptr;
 
-private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-	SqlConnection^ conn;
-	// Veritabaný baðlantý dizesi (kendi veritabaný bilgilerinizi ekleyin)
-	String^ connectionString = "Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True";
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		// Kullanýcý adý ve þifre alanlarýnýn boþ olup olmadýðýný kontrol et
+		if (textBox1->Text->Trim() == "" || textBox2->Text->Trim() == "") {
+			MessageBox::Show("Username and password cannot be empty!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
 
-	// Kullanýcý adý ve þifreyi al
-	String^ username = textBox1->Text;
-	String^ password = textBox2->Text;
+		// SQL baðlantýsý ve komutunu oluþtur
+		SqlConnection^ connection = gcnew SqlConnection("Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True");
 
-	// TextBox'larýn boþ olup olmadýðýný kontrol et
-	if (String::IsNullOrWhiteSpace(username) || String::IsNullOrWhiteSpace(password)) {
-		MessageBox::Show("Username and password cannot be empty!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		return; // Eðer boþsa, iþlem yapýlmaz
-	}
+		// Kullanýcý adý ile ilgili veriyi almak için SQL komutunu oluþtur
+		SqlCommand^ command = gcnew SqlCommand("SELECT password FROM farmers WHERE username = @username", connection);
+		command->Parameters->AddWithValue("@username", textBox1->Text);
 
-	// SQL sorgusu: önce kullanýcý adý var mý kontrol et
-	String^ query = L"SELECT COUNT(1) FROM farmers WHERE username = @username";
+		try {
+			connection->Open();
+			SqlDataReader^ reader = command->ExecuteReader();
 
-	try {
-		// SqlConnection oluþtur
-		conn = gcnew SqlConnection(connectionString);
-		SqlCommand^ cmd = gcnew SqlCommand(query, conn);
+			if (reader->Read()) {
+				// Veritabanýndaki hashli þifreyi al
+				System::String^ storedHashedPassword = reader->GetString(0);
 
-		// Parametreleri ekle
-		cmd->Parameters->AddWithValue("@username", username);
+				// Kullanýcýnýn girdiði þifreyi hashle
+				System::String^ enteredPassword = textBox2->Text;
+				System::String^ hashedEnteredPassword = RegisterForm::HashPassword(enteredPassword);
 
-		// Baðlantýyý aç
-		conn->Open();
-
-		// Kullanýcý adý sorgusunu çalýþtýr ve sonucu al
-		int userCount = Convert::ToInt32(cmd->ExecuteScalar());
-
-		if (userCount == 1) {
-			// Kullanýcý adý doðruysa, þifreyi kontrol et
-			String^ queryPassword = L"SELECT COUNT(1) FROM farmers WHERE username = @username AND password = @password";
-			SqlCommand^ cmdPassword = gcnew SqlCommand(queryPassword, conn);
-			cmdPassword->Parameters->AddWithValue("@username", username);
-			cmdPassword->Parameters->AddWithValue("@password", password);
-
-			// Þifreyi kontrol et
-			int passwordCount = Convert::ToInt32(cmdPassword->ExecuteScalar());
-
-			if (passwordCount == 1) {
-				// Þifre doðruysa giriþ baþarýlý
-				MessageBox::Show("Login is successful", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
-
-				// Kullanýcý bilgilerini veritabanýndan almak için ek sorgu ekleyin
-				String^ queryUser = "SELECT farmers_id, username, password FROM farmers WHERE username = @username";
-				SqlCommand^ cmdUser = gcnew SqlCommand(queryUser, conn);
-				cmdUser->Parameters->AddWithValue("@username", username);
-				SqlDataReader^ reader = cmdUser->ExecuteReader();
-
-				if (reader->Read()) {
-					// Veritabanýndan gelen kullanýcý bilgileriyle user nesnesini oluþturun
-					user = gcnew User();
-					user->id = reader->GetInt32(0);
+				// Hash'li þifreyi karþýlaþtýr
+				if (hashedEnteredPassword == storedHashedPassword) {
+					// Giriþ baþarýlý
+					MessageBox::Show("Login is successful", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+					reader->Close();
+					MainForm^ mainForm = gcnew MainForm();
+					mainForm->Show();
+					this->Hide();
 				}
-
-				reader->Close();
-				MainForm^ mainForm = gcnew MainForm();
-				mainForm->Show();
-				this->Hide();
-
+				else {
+					// Þifre hatalý
+					MessageBox::Show("Incorrect password.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
 			}
 			else {
-				// Þifre yanlýþ olduðunda
-				MessageBox::Show("Incorrect password.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				// Kullanýcý adý bulunamadý
+				MessageBox::Show("Username not found.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
 		}
-		else {
-			// Kullanýcý adý bulunamadýðýnda
-			MessageBox::Show("No registered account found with the provided username", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		catch (Exception^ ex) {
+			MessageBox::Show("Error: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+		finally {
+			connection->Close();
 		}
 	}
-	catch (SqlException^ ex) {
-		MessageBox::Show("Error: " + ex->Message);
-	}
-	finally {
-		if (conn != nullptr && conn->State == ConnectionState::Open) {
-			conn->Close();
-		}
-	}
-}
-
 
 	private: System::Void label3_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
 		label3->Font = gcnew System::Drawing::Font(label3->Font, System::Drawing::FontStyle::Underline | System::Drawing::FontStyle::Bold);

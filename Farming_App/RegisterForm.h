@@ -10,6 +10,8 @@ namespace FarmingApp {
 	using namespace System::Data;
 	using namespace System::Data::SqlClient;
 	using namespace System::Drawing;
+	using namespace System::Security::Cryptography;
+	using namespace System::Text;
 
 	/// <summary>
 	/// Summary for RegisterForm
@@ -268,7 +270,6 @@ namespace FarmingApp {
 		// Kullanýcý adý ve þifre alanlarýnýn boþ olup olmadýðýný kontrol et
 		if (textBox1->Text->Trim() == "" || textBox2->Text->Trim() == "" || textBox3->Text->Trim() == "") {
 			MessageBox::Show("Username and passwords cannot be empty!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-
 			return; // Boþ alanlar varsa fonksiyonu sonlandýrýr
 		}
 
@@ -277,6 +278,10 @@ namespace FarmingApp {
 			MessageBox::Show("Passwords are not matching!");
 			return;
 		}
+
+		// Hashleme iþlemi
+		System::String^ password = textBox2->Text;
+		System::String^ hashedPassword = HashPassword(password);
 
 		// SQL baðlantýsý ve komutunu oluþtur
 		SqlConnection^ connection = gcnew SqlConnection("Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True");
@@ -297,19 +302,38 @@ namespace FarmingApp {
 				// Kullanýcý adý yoksa, yeni kullanýcýyý ekle
 				SqlCommand^ command = gcnew SqlCommand("INSERT INTO farmers (username, password) VALUES (@username, @password)", connection);
 				command->Parameters->AddWithValue("@username", textBox1->Text);
-				command->Parameters->AddWithValue("@password", textBox2->Text);
+				command->Parameters->AddWithValue("@password", hashedPassword);
 				command->ExecuteNonQuery();
-				MessageBox::Show("User added successfully.");
+
+				// Kayýt baþarýlý mesajý
+				MessageBox::Show("Registration successful!");
+				this->switchToLogin = true;
+				this->Hide();
 			}
 		}
 		catch (Exception^ ex) {
-			MessageBox::Show("Exception: " + ex->Message);
+			MessageBox::Show("Error: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 		finally {
 			connection->Close();
 		}
 	}
 
+	// Þifreyi hashlemek için kullanýlan fonksiyon
+	public: static System::String^ HashPassword(System::String^ password) {
+		// SHA256 kullanarak þifreyi hashle
+		SHA256^ sha256 = SHA256::Create();
+		array<Byte>^ bytes = Encoding::UTF8->GetBytes(password);
+		array<Byte>^ hash = sha256->ComputeHash(bytes);
+
+		// Hash'i hexadecimal formatýnda döndür
+		StringBuilder^ stringBuilder = gcnew StringBuilder();
+		for (int i = 0; i < hash->Length; i++) {
+			stringBuilder->Append(hash[i].ToString("x2"));
+		}
+
+		return stringBuilder->ToString();
+	}
 	
 	private: System::Void label3_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
 		label3->Font = gcnew System::Drawing::Font(label3->Font, System::Drawing::FontStyle::Underline | System::Drawing::FontStyle::Bold);
