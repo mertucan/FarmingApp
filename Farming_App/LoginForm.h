@@ -85,13 +85,14 @@ namespace FarmingApp {
 			// 
 			// panel1
 			// 
+			this->panel1->Anchor = System::Windows::Forms::AnchorStyles::Top;
 			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
 				static_cast<System::Int32>(static_cast<System::Byte>(84)));
 			this->panel1->Controls->Add(this->pictureBox1);
 			this->panel1->Controls->Add(this->label1);
 			this->panel1->Location = System::Drawing::Point(0, 0);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(601, 114);
+			this->panel1->Size = System::Drawing::Size(609, 114);
 			this->panel1->TabIndex = 0;
 			// 
 			// pictureBox1
@@ -227,6 +228,7 @@ namespace FarmingApp {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(192, 192);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
+			this->AutoSize = true;
 			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(600, 671);
 			this->Controls->Add(this->label5);

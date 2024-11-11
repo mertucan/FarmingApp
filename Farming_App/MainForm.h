@@ -7,6 +7,7 @@ namespace FarmingApp {
 	using namespace System::Collections;
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
+	using namespace System::Data::SqlClient;
 	using namespace System::Drawing;
 
 	/// <summary>
@@ -68,6 +69,7 @@ namespace FarmingApp {
 	private: System::Windows::Forms::DataGridView^ dataGridView6;
 	private: System::Windows::Forms::Button^ button17;
 	private: System::Windows::Forms::Button^ button18;
+
 
 	private:
 		/// <summary>
@@ -152,7 +154,7 @@ namespace FarmingApp {
 			this->groupBox1->Controls->Add(this->dataGridView1);
 			this->groupBox1->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->groupBox1->Location = System::Drawing::Point(12, 202);
+			this->groupBox1->Location = System::Drawing::Point(12, 143);
 			this->groupBox1->Name = L"groupBox1";
 			this->groupBox1->Size = System::Drawing::Size(529, 422);
 			this->groupBox1->TabIndex = 0;
@@ -189,7 +191,6 @@ namespace FarmingApp {
 			this->button2->Text = L"Delete";
 			this->button2->UseVisualStyleBackColor = false;
 			this->button2->Click += gcnew System::EventHandler(this, &MainForm::button2_Click);
-
 			// 
 			// button1
 			// 
@@ -234,12 +235,12 @@ namespace FarmingApp {
 			dataGridViewCellStyle2->WrapMode = System::Windows::Forms::DataGridViewTriState::False;
 			this->dataGridView1->DefaultCellStyle = dataGridViewCellStyle2;
 			this->dataGridView1->EnableHeadersVisualStyles = false;
-			this->dataGridView1->Location = System::Drawing::Point(0, 40);
+			this->dataGridView1->Location = System::Drawing::Point(10, 40);
 			this->dataGridView1->Margin = System::Windows::Forms::Padding(4, 3, 4, 3);
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->RowHeadersWidth = 82;
 			this->dataGridView1->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
-			this->dataGridView1->Size = System::Drawing::Size(517, 276);
+			this->dataGridView1->Size = System::Drawing::Size(511, 276);
 			this->dataGridView1->TabIndex = 0;
 			// 
 			// groupBox2
@@ -249,7 +250,7 @@ namespace FarmingApp {
 			this->groupBox2->Controls->Add(this->button5);
 			this->groupBox2->Controls->Add(this->button6);
 			this->groupBox2->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold));
-			this->groupBox2->Location = System::Drawing::Point(541, 202);
+			this->groupBox2->Location = System::Drawing::Point(541, 143);
 			this->groupBox2->Name = L"groupBox2";
 			this->groupBox2->Size = System::Drawing::Size(529, 422);
 			this->groupBox2->TabIndex = 1;
@@ -264,7 +265,7 @@ namespace FarmingApp {
 			this->button4->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button4->ForeColor = System::Drawing::Color::White;
-			this->button4->Location = System::Drawing::Point(378, 341);
+			this->button4->Location = System::Drawing::Point(372, 341);
 			this->button4->Name = L"button4";
 			this->button4->Size = System::Drawing::Size(151, 57);
 			this->button4->TabIndex = 4;
@@ -296,12 +297,12 @@ namespace FarmingApp {
 			dataGridViewCellStyle4->WrapMode = System::Windows::Forms::DataGridViewTriState::False;
 			this->dataGridView2->DefaultCellStyle = dataGridViewCellStyle4;
 			this->dataGridView2->EnableHeadersVisualStyles = false;
-			this->dataGridView2->Location = System::Drawing::Point(0, 40);
+			this->dataGridView2->Location = System::Drawing::Point(12, 40);
 			this->dataGridView2->Margin = System::Windows::Forms::Padding(4, 3, 4, 3);
 			this->dataGridView2->Name = L"dataGridView2";
 			this->dataGridView2->RowHeadersWidth = 82;
 			this->dataGridView2->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
-			this->dataGridView2->Size = System::Drawing::Size(517, 276);
+			this->dataGridView2->Size = System::Drawing::Size(511, 276);
 			this->dataGridView2->TabIndex = 0;
 			// 
 			// button5
@@ -312,12 +313,13 @@ namespace FarmingApp {
 			this->button5->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button5->ForeColor = System::Drawing::Color::White;
-			this->button5->Location = System::Drawing::Point(193, 341);
+			this->button5->Location = System::Drawing::Point(195, 341);
 			this->button5->Name = L"button5";
 			this->button5->Size = System::Drawing::Size(151, 57);
 			this->button5->TabIndex = 5;
 			this->button5->Text = L"Delete";
 			this->button5->UseVisualStyleBackColor = false;
+			this->button5->Click += gcnew System::EventHandler(this, &MainForm::button5_Click);
 			// 
 			// button6
 			// 
@@ -327,12 +329,13 @@ namespace FarmingApp {
 			this->button6->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button6->ForeColor = System::Drawing::Color::White;
-			this->button6->Location = System::Drawing::Point(12, 341);
+			this->button6->Location = System::Drawing::Point(6, 341);
 			this->button6->Name = L"button6";
 			this->button6->Size = System::Drawing::Size(151, 57);
 			this->button6->TabIndex = 6;
 			this->button6->Text = L"Add";
 			this->button6->UseVisualStyleBackColor = false;
+			this->button6->Click += gcnew System::EventHandler(this, &MainForm::button6_Click);
 			// 
 			// groupBox3
 			// 
@@ -341,7 +344,7 @@ namespace FarmingApp {
 			this->groupBox3->Controls->Add(this->button9);
 			this->groupBox3->Controls->Add(this->dataGridView3);
 			this->groupBox3->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold));
-			this->groupBox3->Location = System::Drawing::Point(1070, 202);
+			this->groupBox3->Location = System::Drawing::Point(1070, 143);
 			this->groupBox3->Name = L"groupBox3";
 			this->groupBox3->Size = System::Drawing::Size(529, 422);
 			this->groupBox3->TabIndex = 2;
@@ -377,6 +380,7 @@ namespace FarmingApp {
 			this->button8->TabIndex = 8;
 			this->button8->Text = L"Delete";
 			this->button8->UseVisualStyleBackColor = false;
+			this->button8->Click += gcnew System::EventHandler(this, &MainForm::button8_Click);
 			// 
 			// button9
 			// 
@@ -392,6 +396,7 @@ namespace FarmingApp {
 			this->button9->TabIndex = 9;
 			this->button9->Text = L"Add";
 			this->button9->UseVisualStyleBackColor = false;
+			this->button9->Click += gcnew System::EventHandler(this, &MainForm::button9_Click);
 			// 
 			// dataGridView3
 			// 
@@ -418,12 +423,12 @@ namespace FarmingApp {
 			dataGridViewCellStyle6->WrapMode = System::Windows::Forms::DataGridViewTriState::False;
 			this->dataGridView3->DefaultCellStyle = dataGridViewCellStyle6;
 			this->dataGridView3->EnableHeadersVisualStyles = false;
-			this->dataGridView3->Location = System::Drawing::Point(0, 40);
+			this->dataGridView3->Location = System::Drawing::Point(11, 40);
 			this->dataGridView3->Margin = System::Windows::Forms::Padding(4, 3, 4, 3);
 			this->dataGridView3->Name = L"dataGridView3";
 			this->dataGridView3->RowHeadersWidth = 82;
 			this->dataGridView3->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
-			this->dataGridView3->Size = System::Drawing::Size(517, 276);
+			this->dataGridView3->Size = System::Drawing::Size(511, 276);
 			this->dataGridView3->TabIndex = 0;
 			// 
 			// groupBox4
@@ -433,7 +438,7 @@ namespace FarmingApp {
 			this->groupBox4->Controls->Add(this->button11);
 			this->groupBox4->Controls->Add(this->button12);
 			this->groupBox4->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold));
-			this->groupBox4->Location = System::Drawing::Point(12, 630);
+			this->groupBox4->Location = System::Drawing::Point(12, 571);
 			this->groupBox4->Name = L"groupBox4";
 			this->groupBox4->Size = System::Drawing::Size(529, 422);
 			this->groupBox4->TabIndex = 2;
@@ -480,12 +485,12 @@ namespace FarmingApp {
 			dataGridViewCellStyle8->WrapMode = System::Windows::Forms::DataGridViewTriState::False;
 			this->dataGridView4->DefaultCellStyle = dataGridViewCellStyle8;
 			this->dataGridView4->EnableHeadersVisualStyles = false;
-			this->dataGridView4->Location = System::Drawing::Point(0, 40);
+			this->dataGridView4->Location = System::Drawing::Point(10, 40);
 			this->dataGridView4->Margin = System::Windows::Forms::Padding(4, 3, 4, 3);
 			this->dataGridView4->Name = L"dataGridView4";
 			this->dataGridView4->RowHeadersWidth = 82;
 			this->dataGridView4->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
-			this->dataGridView4->Size = System::Drawing::Size(517, 276);
+			this->dataGridView4->Size = System::Drawing::Size(511, 276);
 			this->dataGridView4->TabIndex = 0;
 			// 
 			// button11
@@ -502,6 +507,7 @@ namespace FarmingApp {
 			this->button11->TabIndex = 11;
 			this->button11->Text = L"Delete";
 			this->button11->UseVisualStyleBackColor = false;
+			this->button11->Click += gcnew System::EventHandler(this, &MainForm::button11_Click);
 			// 
 			// button12
 			// 
@@ -517,6 +523,7 @@ namespace FarmingApp {
 			this->button12->TabIndex = 12;
 			this->button12->Text = L"Add";
 			this->button12->UseVisualStyleBackColor = false;
+			this->button12->Click += gcnew System::EventHandler(this, &MainForm::button12_Click);
 			// 
 			// groupBox5
 			// 
@@ -525,7 +532,7 @@ namespace FarmingApp {
 			this->groupBox5->Controls->Add(this->button15);
 			this->groupBox5->Controls->Add(this->dataGridView5);
 			this->groupBox5->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold));
-			this->groupBox5->Location = System::Drawing::Point(541, 630);
+			this->groupBox5->Location = System::Drawing::Point(541, 571);
 			this->groupBox5->Name = L"groupBox5";
 			this->groupBox5->Size = System::Drawing::Size(529, 422);
 			this->groupBox5->TabIndex = 3;
@@ -561,6 +568,7 @@ namespace FarmingApp {
 			this->button14->TabIndex = 14;
 			this->button14->Text = L"Delete";
 			this->button14->UseVisualStyleBackColor = false;
+			this->button14->Click += gcnew System::EventHandler(this, &MainForm::button14_Click);
 			// 
 			// button15
 			// 
@@ -576,6 +584,7 @@ namespace FarmingApp {
 			this->button15->TabIndex = 15;
 			this->button15->Text = L"Add";
 			this->button15->UseVisualStyleBackColor = false;
+			this->button15->Click += gcnew System::EventHandler(this, &MainForm::button15_Click);
 			// 
 			// dataGridView5
 			// 
@@ -602,12 +611,12 @@ namespace FarmingApp {
 			dataGridViewCellStyle10->WrapMode = System::Windows::Forms::DataGridViewTriState::False;
 			this->dataGridView5->DefaultCellStyle = dataGridViewCellStyle10;
 			this->dataGridView5->EnableHeadersVisualStyles = false;
-			this->dataGridView5->Location = System::Drawing::Point(0, 40);
+			this->dataGridView5->Location = System::Drawing::Point(11, 40);
 			this->dataGridView5->Margin = System::Windows::Forms::Padding(4, 3, 4, 3);
 			this->dataGridView5->Name = L"dataGridView5";
 			this->dataGridView5->RowHeadersWidth = 82;
 			this->dataGridView5->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
-			this->dataGridView5->Size = System::Drawing::Size(517, 276);
+			this->dataGridView5->Size = System::Drawing::Size(511, 276);
 			this->dataGridView5->TabIndex = 0;
 			// 
 			// groupBox6
@@ -617,7 +626,7 @@ namespace FarmingApp {
 			this->groupBox6->Controls->Add(this->button17);
 			this->groupBox6->Controls->Add(this->button18);
 			this->groupBox6->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold));
-			this->groupBox6->Location = System::Drawing::Point(1070, 630);
+			this->groupBox6->Location = System::Drawing::Point(1070, 571);
 			this->groupBox6->Name = L"groupBox6";
 			this->groupBox6->Size = System::Drawing::Size(529, 422);
 			this->groupBox6->TabIndex = 3;
@@ -664,12 +673,12 @@ namespace FarmingApp {
 			dataGridViewCellStyle12->WrapMode = System::Windows::Forms::DataGridViewTriState::False;
 			this->dataGridView6->DefaultCellStyle = dataGridViewCellStyle12;
 			this->dataGridView6->EnableHeadersVisualStyles = false;
-			this->dataGridView6->Location = System::Drawing::Point(0, 40);
+			this->dataGridView6->Location = System::Drawing::Point(11, 40);
 			this->dataGridView6->Margin = System::Windows::Forms::Padding(4, 3, 4, 3);
 			this->dataGridView6->Name = L"dataGridView6";
 			this->dataGridView6->RowHeadersWidth = 82;
 			this->dataGridView6->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
-			this->dataGridView6->Size = System::Drawing::Size(517, 276);
+			this->dataGridView6->Size = System::Drawing::Size(511, 276);
 			this->dataGridView6->TabIndex = 0;
 			// 
 			// button17
@@ -686,6 +695,7 @@ namespace FarmingApp {
 			this->button17->TabIndex = 17;
 			this->button17->Text = L"Delete";
 			this->button17->UseVisualStyleBackColor = false;
+			this->button17->Click += gcnew System::EventHandler(this, &MainForm::button17_Click);
 			// 
 			// button18
 			// 
@@ -701,27 +711,31 @@ namespace FarmingApp {
 			this->button18->TabIndex = 18;
 			this->button18->Text = L"Add";
 			this->button18->UseVisualStyleBackColor = false;
+			this->button18->Click += gcnew System::EventHandler(this, &MainForm::button18_Click);
 			// 
 			// panel1
 			// 
+			this->panel1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
 			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
 				static_cast<System::Int32>(static_cast<System::Byte>(84)));
 			this->panel1->Controls->Add(this->pictureBox1);
 			this->panel1->Controls->Add(this->label1);
 			this->panel1->Location = System::Drawing::Point(0, 0);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(1618, 126);
+			this->panel1->Size = System::Drawing::Size(1621, 126);
 			this->panel1->TabIndex = 4;
 			// 
 			// pictureBox1
 			// 
 			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(1571, 12);
+			this->pictureBox1->Location = System::Drawing::Point(1559, 12);
 			this->pictureBox1->Name = L"pictureBox1";
 			this->pictureBox1->Size = System::Drawing::Size(35, 35);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox1->TabIndex = 12;
 			this->pictureBox1->TabStop = false;
+			this->pictureBox1->Click += gcnew System::EventHandler(this, &MainForm::pictureBox1_Click);
 			// 
 			// label1
 			// 
@@ -739,7 +753,8 @@ namespace FarmingApp {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(192, 192);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
-			this->ClientSize = System::Drawing::Size(1618, 1111);
+			this->AutoSize = true;
+			this->ClientSize = System::Drawing::Size(1618, 1028);
 			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->groupBox6);
 			this->Controls->Add(this->groupBox5);
@@ -751,6 +766,7 @@ namespace FarmingApp {
 			this->Name = L"MainForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"MainForm";
+			this->Load += gcnew System::EventHandler(this, &MainForm::MainForm_Load);
 			this->groupBox1->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->groupBox2->ResumeLayout(false);
@@ -770,10 +786,199 @@ namespace FarmingApp {
 
 		}
 #pragma endregion
-	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+	public: static String^ table;
+
+	private: void LoadData() {
+		String^ connectionString = "Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True";
+
+		LoadDataIntoGridView(dataGridView1, "SELECT animals_type as Type, animals_weight as Weight, animals_price as Price, animals_stock as Stock FROM animals", connectionString);
+		LoadDataIntoGridView(dataGridView2, "SELECT cars_type as Type, cars_explanation as Explanation, cars_price as Price, cars_stock as Stock FROM cars", connectionString);
+		LoadDataIntoGridView(dataGridView3, "SELECT crops_name as Type, crops_explanation as Explanation, crops_price as Price, crops_stock as Stock FROM crops", connectionString);
+		LoadDataIntoGridView(dataGridView4, "SELECT foods_type as Type, foods_explanation as Explanation , foods_price as Price , foods_stock as Stock FROM foods", connectionString);
+		LoadDataIntoGridView(dataGridView5, "SELECT med_type as Type, med_explanation as Explanation, med_price as Price, med_stock as Stock FROM medicine", connectionString);
+		LoadDataIntoGridView(dataGridView6, "SELECT plans_id as ID, crops.crops_name as Type, effective_plan as 'Effective Plan' FROM plans INNER JOIN crops ON crops.crops_id = plans.crops_id", connectionString);
+	}
+
+	private: void LoadDataIntoGridView(DataGridView^ gridView, String^ query, String^ connectionString) {
+		try {
+			SqlConnection^ connection = gcnew SqlConnection(connectionString);
+			SqlDataAdapter^ dataAdapter = gcnew SqlDataAdapter(query, connection);
+			DataTable^ dataTable = gcnew DataTable();
+
+			dataAdapter->Fill(dataTable);
+			gridView->DataSource = dataTable;
+
+			gridView->AutoResizeColumns(DataGridViewAutoSizeColumnsMode::ColumnHeader);
+		}
+		catch (Exception^ ex) {
+			MessageBox::Show("Veri yüklenirken hata oluþtu: " + ex->Message);
+		}
+	}
+	private: System::Void MainForm_Load(System::Object^ sender, System::EventArgs^ e) {
+		LoadData();
+	}
+
+	private: void DeleteSelectedRow(DataGridView^ gridView, String^ tableName, String^ dbColumnName, String^ gridColumnName) {
+		if (gridView->Rows->Count == 0) {
+			MessageBox::Show("There is no data to delete.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+
+		if (gridView->SelectedRows->Count > 0) {
+			if (gridView->SelectedRows[0]->Cells[gridColumnName] != nullptr &&
+				gridView->SelectedRows[0]->Cells[gridColumnName]->Value != nullptr) {
+
+				String^ value = gridView->SelectedRows[0]->Cells[gridColumnName]->Value->ToString();
+				String^ connectionString = "Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True";
+				String^ deleteQuery = "DELETE FROM " + tableName + " WHERE " + dbColumnName + " = @value";
+
+				try {
+					SqlConnection^ connection = gcnew SqlConnection(connectionString);
+					SqlCommand^ command = gcnew SqlCommand(deleteQuery, connection);
+
+					command->Parameters->AddWithValue("@value", value);
+
+					connection->Open();
+					int result = command->ExecuteNonQuery();
+					connection->Close();
+
+					if (result > 0) {
+						MessageBox::Show("Deleting process is successful", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+						LoadData();
+					}
+					else {
+						MessageBox::Show("An error occurred while deleting the data.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					}
+				}
+				catch (Exception^ ex) {
+					MessageBox::Show("Error: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+			}
+			else {
+				MessageBox::Show("The selected row does not contain a valid value in the specified column.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		else {
+			MessageBox::Show("Please select the row you want to delete.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+	}
+
+	private: void DeleteSelectedRowWithReferences(DataGridView^ gridView, String^ tableName, String^ dbColumnName, String^ gridColumnName, String^ referenceTableName, String^ referenceColumnName) {
+		if (gridView->Rows->Count == 0) {
+			MessageBox::Show("There is no data to delete.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+
+		if (gridView->SelectedRows->Count > 0) {
+			if (gridView->SelectedRows[0]->Cells[gridColumnName] != nullptr &&
+				gridView->SelectedRows[0]->Cells[gridColumnName]->Value != nullptr) {
+
+				String^ value = gridView->SelectedRows[0]->Cells[gridColumnName]->Value->ToString();
+				String^ connectionString = "Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True";
+
+				try {
+					SqlConnection^ connection = gcnew SqlConnection(connectionString);
+
+					// Ýlk olarak crops_id deðerini bul
+					String^ findCropsIdQuery = "SELECT crops_id FROM " + tableName + " WHERE " + dbColumnName + " = @value";
+					SqlCommand^ findCommand = gcnew SqlCommand(findCropsIdQuery, connection);
+					findCommand->Parameters->AddWithValue("@value", value);
+
+					connection->Open();
+					Object^ cropsIdObj = findCommand->ExecuteScalar();
+					connection->Close();
+
+					if (cropsIdObj != nullptr) {
+						int cropsId = Convert::ToInt32(cropsIdObj);
+
+						// plans tablosundan iliþkili kayýtlarý sil
+						String^ deleteReferenceQuery = "DELETE FROM " + referenceTableName + " WHERE " + referenceColumnName + " = @cropsId";
+						SqlCommand^ deleteReferenceCommand = gcnew SqlCommand(deleteReferenceQuery, connection);
+						deleteReferenceCommand->Parameters->AddWithValue("@cropsId", cropsId);
+
+						connection->Open();
+						deleteReferenceCommand->ExecuteNonQuery();
+						connection->Close();
+
+						// crops tablosundaki kaydý sil
+						String^ deleteQuery = "DELETE FROM " + tableName + " WHERE " + dbColumnName + " = @value";
+						SqlCommand^ command = gcnew SqlCommand(deleteQuery, connection);
+						command->Parameters->AddWithValue("@value", value);
+
+						connection->Open();
+						int result = command->ExecuteNonQuery();
+						connection->Close();
+
+						if (result > 0) {
+							MessageBox::Show("Deleting process is successful", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+							LoadData();
+						}
+						else {
+							MessageBox::Show("An error occurred while deleting the data.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+						}
+					}
+					else {
+						MessageBox::Show("The selected row does not contain a valid crops_id in the specified column.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					}
+				}
+				catch (Exception^ ex) {
+					MessageBox::Show("Error: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+			}
+			else {
+				MessageBox::Show("The selected row does not contain a valid value in the specified column.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		else {
+			MessageBox::Show("Please select the row you want to delete.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
 	}
 
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+		DeleteSelectedRow(dataGridView1, "animals", "animals_type", "Type");
+	}
+	private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) {
+		DeleteSelectedRow(dataGridView2, "cars", "cars_type", "Type");
+	}
+	private: System::Void button8_Click(System::Object^ sender, System::EventArgs^ e) {
+		DeleteSelectedRowWithReferences(dataGridView3, "crops", "crops_name", "Type", "plans", "crops_id");
+	}
+	private: System::Void button11_Click(System::Object^ sender, System::EventArgs^ e) {
+		DeleteSelectedRow(dataGridView4, "foods", "foods_type", "Type");
+	}
+	private: System::Void button14_Click(System::Object^ sender, System::EventArgs^ e) {
+		DeleteSelectedRow(dataGridView5, "medicine", "med_type", "Type");
+	}
+	private: System::Void button17_Click(System::Object^ sender, System::EventArgs^ e) {
+		DeleteSelectedRowWithReferences(dataGridView6, "crops", "crops_name", "Type", "plans", "crops_id");
+	}
+
+	/*private: void SelectTableType(String^ table_type) {
+		table = table_type;
+		LoginForm^ mainForm = gcnew LoginForm();
+		mainForm->Show();
+	}*/
+
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		//SelectTableType("animals");
+	}
+	private: System::Void button6_Click(System::Object^ sender, System::EventArgs^ e) {
+		//SelectTableType("cars");
+	}
+	private: System::Void button9_Click(System::Object^ sender, System::EventArgs^ e) {
+		//SelectTableType("crops");
+	}
+	private: System::Void button12_Click(System::Object^ sender, System::EventArgs^ e) {
+		//SelectTableType("foods");
+	}
+	private: System::Void button15_Click(System::Object^ sender, System::EventArgs^ e) {
+		//SelectTableType("medicine");
+	}
+	private: System::Void button18_Click(System::Object^ sender, System::EventArgs^ e) {
+		//SelectTableType("plans");
+	}
+	private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->Close();
 	}
 };
 }
