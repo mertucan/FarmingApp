@@ -2,6 +2,7 @@
 #include "User.h"
 #include "RegisterForm.h"
 #include "MainForm.h"
+#include "ForgotPassword.h"
 
 namespace FarmingApp {
 
@@ -51,6 +52,7 @@ namespace FarmingApp {
 	private: System::Windows::Forms::Label^ label4;
 	private: System::Windows::Forms::Label^ label5;
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
+	private: System::Windows::Forms::Label^ label6;
 
 
 
@@ -79,6 +81,7 @@ namespace FarmingApp {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
@@ -178,7 +181,7 @@ namespace FarmingApp {
 				static_cast<System::Byte>(162)));
 			this->label2->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(164)), static_cast<System::Int32>(static_cast<System::Byte>(165)),
 				static_cast<System::Int32>(static_cast<System::Byte>(169)));
-			this->label2->Location = System::Drawing::Point(171, 568);
+			this->label2->Location = System::Drawing::Point(171, 574);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(260, 25);
 			this->label2->TabIndex = 5;
@@ -191,7 +194,7 @@ namespace FarmingApp {
 				static_cast<System::Byte>(162)));
 			this->label3->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
 				static_cast<System::Int32>(static_cast<System::Byte>(84)));
-			this->label3->Location = System::Drawing::Point(242, 605);
+			this->label3->Location = System::Drawing::Point(242, 611);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(117, 31);
 			this->label3->TabIndex = 6;
@@ -224,6 +227,21 @@ namespace FarmingApp {
 			this->label5->TabIndex = 11;
 			this->label5->Text = L"Password";
 			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7.875F, System::Drawing::FontStyle::Bold));
+			this->label6->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
+				static_cast<System::Int32>(static_cast<System::Byte>(84)));
+			this->label6->Location = System::Drawing::Point(178, 538);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(253, 25);
+			this->label6->TabIndex = 12;
+			this->label6->Text = L"Forgot your password\?";
+			this->label6->Click += gcnew System::EventHandler(this, &LoginForm::label6_Click);
+			this->label6->MouseEnter += gcnew System::EventHandler(this, &LoginForm::label6_MouseEnter);
+			this->label6->MouseLeave += gcnew System::EventHandler(this, &LoginForm::label6_MouseLeave);
+			// 
 			// LoginForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(192, 192);
@@ -231,6 +249,7 @@ namespace FarmingApp {
 			this->AutoSize = true;
 			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(600, 671);
+			this->Controls->Add(this->label6);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->label4);
 			this->Controls->Add(this->label3);
@@ -313,13 +332,13 @@ namespace FarmingApp {
 	private: System::Void label3_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
 		label3->Font = gcnew System::Drawing::Font(label3->Font, System::Drawing::FontStyle::Regular | System::Drawing::FontStyle::Bold);
 	}
-	public: bool switchToRegister = false;
+	public: bool switchToForm = false;
 private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e) {
 	// RegisterForm'a geçiþi iþaretle
-	this->switchToRegister = true;
+	this->switchToForm = true;
 
 	// Eðer RegisterForm'a geçiþ yapýlacaksa, RegisterForm'u aç
-	if (this->switchToRegister) {
+	if (this->switchToForm) {
 		// Önce LoginForm'u kapatýyoruz
 		this->Hide(); // LoginForm'un kapanmasýný istemiyorsanýz, sadece gizleyebilirsiniz.
 
@@ -337,9 +356,6 @@ private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e)
 			// Kullanýcý baþarýlý þekilde kaydolduysa:
 			user = registerForm->user;
 		}
-
-		// Burada sadece RegisterForm'dan çýktýktan sonra bu formu kapatabiliriz
-		this->Close();  // MainForm veya LoginForm'un kapanmasýný burada istiyorsanýz
 	}
 	else {
 		// Eðer RegisterForm'a geçiþ yapýlmadýysa, LoginForm'u aç
@@ -347,6 +363,8 @@ private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e)
 		loginForm->ShowDialog();
 	}
 }
+
+	
 	private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
 	}
@@ -364,5 +382,35 @@ private: System::Void textBox2_KeyDown(System::Object^ sender, System::Windows::
 		this->button1->PerformClick();
 	}
 }
+	private: System::Void label6_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
+		label6->Font = gcnew System::Drawing::Font(label6->Font, System::Drawing::FontStyle::Underline | System::Drawing::FontStyle::Bold);
+	}
+	private: System::Void label6_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+		label6->Font = gcnew System::Drawing::Font(label6->Font, System::Drawing::FontStyle::Regular | System::Drawing::FontStyle::Bold);
+	}
+	private: System::Void label6_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->switchToForm = true;
+
+		if (this->switchToForm) {
+			// Önce LoginForm'u kapatýyoruz
+			this->Hide(); // LoginForm'un kapanmasýný istemiyorsanýz, sadece gizleyebilirsiniz.
+
+			FarmingApp::ForgotPassword^ forgotForm = gcnew FarmingApp::ForgotPassword();
+			forgotForm->ShowDialog();
+
+			if (forgotForm->switchToLogin) {
+				FarmingApp::LoginForm^ loginForm = gcnew FarmingApp::LoginForm();
+				loginForm->ShowDialog();
+			}
+			else {
+
+			}
+		}
+		else {
+			// Eðer RegisterForm'a geçiþ yapýlmadýysa, LoginForm'u aç
+			FarmingApp::LoginForm^ loginForm = gcnew FarmingApp::LoginForm();
+			loginForm->ShowDialog();
+		}
+	}
 };
 }

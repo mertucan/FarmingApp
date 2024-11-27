@@ -369,7 +369,7 @@ namespace FarmingApp {
 				// Kayýt baþarýlý mesajý
 				MessageBox::Show("Registration is successful", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 				this->switchToLogin = true;
-				this->Hide();
+				this->Close();
 			}
 		}
 		catch (Exception^ ex) {
