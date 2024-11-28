@@ -1,4 +1,5 @@
 #pragma once
+#include "User.h"
 
 namespace FarmingApp {
 
@@ -16,7 +17,10 @@ namespace FarmingApp {
 	public ref class FieldForm : public System::Windows::Forms::Form
 	{
 	public:
-		FieldForm(void)
+		void SetCurrentUser(User^ user) {
+			currentUser = user;
+		}
+		FieldForm()  // Kullanýcýyý al
 		{
 			InitializeComponent();
 			InitializeFieldGrid(); // Harita oluþturma metodunu çaðýr
@@ -55,17 +59,17 @@ namespace FarmingApp {
 			// 
 			// tableLayoutPanel2
 			// 
-			this->tableLayoutPanel2->ColumnCount = 10;
-			for (int i = 0; i < 25; i++) {
+			this->tableLayoutPanel2->ColumnCount = 10;  // 10 kolon ekleniyor
+			for (int i = 0; i < 10; i++) {
 				this->tableLayoutPanel2->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 50)));
 			}
-			this->tableLayoutPanel2->RowCount = 10;
-			for (int i = 0; i < 25; i++) {
+			this->tableLayoutPanel2->RowCount = 10;  // 10 satýr ekleniyor
+			for (int i = 0; i < 10; i++) {
 				this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 50)));
 			}
 			this->tableLayoutPanel2->Location = System::Drawing::Point(50, 50);
 			this->tableLayoutPanel2->Name = L"tableLayoutPanel2";
-			this->tableLayoutPanel2->Size = System::Drawing::Size(1250, 1250);  // 25x25 alan için boyut
+			this->tableLayoutPanel2->Size = System::Drawing::Size(500, 500);  // 10x10 alan için boyut
 			this->tableLayoutPanel2->TabIndex = 0;
 			this->tableLayoutPanel2->Padding = System::Windows::Forms::Padding(0);
 			this->tableLayoutPanel2->CellBorderStyle = System::Windows::Forms::TableLayoutPanelCellBorderStyle::None;
@@ -82,6 +86,7 @@ namespace FarmingApp {
 
 	private:
 		SqlConnection^ connection = gcnew SqlConnection("Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True");
+		User^ currentUser; // Giriþ yapan kullanýcýyý tutacak deðiþken
 
 		void InitializeFieldGrid() {
 			int buttonIndex = 1;  // Numara baþlat
@@ -137,12 +142,67 @@ namespace FarmingApp {
 			connection->Close();
 		}
 
-		// Buton týklama olayý
 		void OnFieldButtonClick(Object^ sender, EventArgs^ e) {
+			if (currentUser == nullptr) {
+				MessageBox::Show("User not set.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+
+			// Butonun baðlý olduðu paneli buluyoruz
 			Button^ clickedButton = dynamic_cast<Button^>(sender);
 			if (clickedButton != nullptr) {
-				MessageBox::Show("Bir alan seçildi!");
+				// Eðer butonun arka plan rengi kýrmýzýysa, kullanýcýya hata mesajý göster
+				if (clickedButton->BackColor == System::Drawing::Color::Red) {
+					MessageBox::Show("This field is occupied.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;  // Eðer alan doluysa iþlem yapýlmasýn
+				}
+
+				int fieldParcel = Int32::Parse(clickedButton->Text);  // Butonun üzerinde yazan field_parcel numarasýný alýyoruz
+
+				// farmers_id'yi field tablosunda güncelle
+				UpdateFarmersIdInField(fieldParcel);
+
+				// Butonlarý tekrar yükle
+				ReloadFieldGrid();
 			}
+		}
+
+
+		// Buton týklama olayý
+		void UpdateFarmersIdInField(int fieldParcel) {
+			try {
+				// SQL baðlantýsýný açýyoruz
+				connection->Open();
+
+				// SQL komutunu hazýrlýyoruz
+				SqlCommand^ updateCommand = gcnew SqlCommand("UPDATE field SET farmers_id = @farmersId WHERE field_parcel = @fieldParcel", connection);
+
+				// Parametreleri ekliyoruz
+				updateCommand->Parameters->AddWithValue("@farmersId", currentUser->id);
+				updateCommand->Parameters->AddWithValue("@fieldParcel", fieldParcel);
+
+				// Komutu çalýþtýrýyoruz
+				int rowsAffected = updateCommand->ExecuteNonQuery();
+
+				if (rowsAffected > 0) {
+					MessageBox::Show("Field updated successfully!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				}
+				else {
+					MessageBox::Show("Field update failed!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("An error occurred: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			finally {
+				connection->Close();
+			}
+		}
+
+		void ReloadFieldGrid() {
+			// Mevcut butonlarý temizleyip, veritabanýndan tekrar alarak butonlarý yeniden yükleyelim
+			this->tableLayoutPanel2->Controls->Clear();
+			InitializeFieldGrid();  // Yeni verilerle butonlarý yeniden yükle
 		}
 	};
 }

@@ -3,6 +3,7 @@
 #include "RegisterForm.h"
 #include "MainForm.h"
 #include "ForgotPassword.h"
+#include "FieldForm.h"
 
 namespace FarmingApp {
 
@@ -271,7 +272,7 @@ namespace FarmingApp {
 
 		}
 #pragma endregion
-	public: User^ user = nullptr;
+		public: User^ user = nullptr;
 
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		// Kullanýcý adý ve þifre alanlarýnýn boþ olup olmadýðýný kontrol et
@@ -284,7 +285,7 @@ namespace FarmingApp {
 		SqlConnection^ connection = gcnew SqlConnection("Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True");
 
 		// Kullanýcý adý ile ilgili veriyi almak için SQL komutunu oluþtur
-		SqlCommand^ command = gcnew SqlCommand("SELECT password FROM farmers WHERE username = @username", connection);
+		SqlCommand^ command = gcnew SqlCommand("SELECT farmers_id, username, password, phone_number, email, budget FROM farmers WHERE username = @username", connection);
 		command->Parameters->AddWithValue("@username", textBox1->Text);
 
 		try {
@@ -292,39 +293,58 @@ namespace FarmingApp {
 			SqlDataReader^ reader = command->ExecuteReader();
 
 			if (reader->Read()) {
-				// Veritabanýndaki hashli þifreyi al
-				System::String^ storedHashedPassword = reader->GetString(0);
+				// Veritabanýndaki bilgileri al
+				System::String^ storedHashedPassword = reader->IsDBNull(2) ? "" : reader->GetString(2); // password
+				System::String^ phoneNumber = reader->IsDBNull(3) ? "" : reader->GetString(3); // phone_number
+				System::String^ email = reader->IsDBNull(4) ? "" : reader->GetString(4); // email
+				double budget = reader->IsDBNull(5) ? 0.0 : reader->GetDouble(5); // budget
 
 				// Kullanýcýnýn girdiði þifreyi hashle
 				System::String^ enteredPassword = textBox2->Text;
-				System::String^ hashedEnteredPassword = RegisterForm::HashPassword(enteredPassword);
+				System::String^ hashedEnteredPassword = RegisterForm::HashPassword(enteredPassword); // Hash'li þifreyi oluþtur
 
 				// Hash'li þifreyi karþýlaþtýr
 				if (hashedEnteredPassword == storedHashedPassword) {
-					// Giriþ baþarýlý
-					MessageBox::Show("Login is successful", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+					// Þifre doðrulandý, kullanýcýyý bilgilendir
+					MessageBox::Show("Login successful!", "Successful", MessageBoxButtons::OK, MessageBoxIcon::Information);
+
+					// Veritabanýndan alýnan verileri User nesnesine aktar
+					user = gcnew User(
+						reader->GetInt32(0),   // farmers_id
+						textBox1->Text,        // username
+						storedHashedPassword,  // password
+						phoneNumber,           // phone_number
+						email,                 // email
+						budget                 // budget
+					);
+
 					reader->Close();
 					MainForm^ mainForm = gcnew MainForm();
 					mainForm->Show();
+					FieldForm^ fieldForm = gcnew FieldForm();
+					fieldForm->SetCurrentUser(user);
+					fieldForm->Show();
 					this->Hide();
 				}
 				else {
-					// Þifre hatalý
-					MessageBox::Show("Incorrect password.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					// Þifre yanlýþ
+					MessageBox::Show("Incorrect password!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 				}
 			}
 			else {
 				// Kullanýcý adý bulunamadý
-				MessageBox::Show("Username not found.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				MessageBox::Show("Username not found!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
 		}
 		catch (Exception^ ex) {
-			MessageBox::Show("Error: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			MessageBox::Show("An error occurred: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 		finally {
 			connection->Close();
 		}
 	}
+
+
 
 	private: System::Void label3_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
 		label3->Font = gcnew System::Drawing::Font(label3->Font, System::Drawing::FontStyle::Underline | System::Drawing::FontStyle::Bold);
