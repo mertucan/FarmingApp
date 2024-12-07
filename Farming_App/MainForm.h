@@ -35,42 +35,24 @@ namespace FarmingApp {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::GroupBox^ groupBox1;
+
 	protected:
-	private: System::Windows::Forms::GroupBox^ groupBox2;
-	private: System::Windows::Forms::GroupBox^ groupBox3;
-	private: System::Windows::Forms::GroupBox^ groupBox4;
-	private: System::Windows::Forms::GroupBox^ groupBox5;
-	private: System::Windows::Forms::GroupBox^ groupBox6;
+
 	private: System::Windows::Forms::Panel^ panel1;
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::DataGridView^ dataGridView1;
+	private: System::Windows::Forms::Panel^ panel2;
+	private: System::Windows::Forms::Panel^ panel3;
+	private: System::Windows::Forms::Button^ button6;
+	private: System::Windows::Forms::Button^ button5;
+	private: System::Windows::Forms::Button^ button4;
 	private: System::Windows::Forms::Button^ button3;
 	private: System::Windows::Forms::Button^ button2;
 	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::Button^ button4;
-	private: System::Windows::Forms::DataGridView^ dataGridView2;
-	private: System::Windows::Forms::Button^ button5;
-	private: System::Windows::Forms::Button^ button6;
+	private: System::Windows::Forms::DataGridView^ dataGridView1;
 	private: System::Windows::Forms::Button^ button7;
 	private: System::Windows::Forms::Button^ button8;
 	private: System::Windows::Forms::Button^ button9;
-	private: System::Windows::Forms::DataGridView^ dataGridView3;
-	private: System::Windows::Forms::Button^ button10;
-	private: System::Windows::Forms::DataGridView^ dataGridView4;
-	private: System::Windows::Forms::Button^ button11;
-	private: System::Windows::Forms::Button^ button12;
-	private: System::Windows::Forms::Button^ button13;
-	private: System::Windows::Forms::Button^ button14;
-	private: System::Windows::Forms::Button^ button15;
-	private: System::Windows::Forms::DataGridView^ dataGridView5;
-	private: System::Windows::Forms::Button^ button16;
-	private: System::Windows::Forms::DataGridView^ dataGridView6;
-	private: System::Windows::Forms::Button^ button17;
-	private: System::Windows::Forms::Button^ button18;
-
-
 
 
 	private:
@@ -86,129 +68,201 @@ namespace FarmingApp {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
 			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle1 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle2 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle3 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle4 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle5 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle6 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle7 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle8 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle9 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle10 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle11 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle12 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
-			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->panel2 = (gcnew System::Windows::Forms::Panel());
+			this->panel3 = (gcnew System::Windows::Forms::Panel());
+			this->button6 = (gcnew System::Windows::Forms::Button());
+			this->button5 = (gcnew System::Windows::Forms::Button());
+			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
-			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
-			this->button4 = (gcnew System::Windows::Forms::Button());
-			this->dataGridView2 = (gcnew System::Windows::Forms::DataGridView());
-			this->button5 = (gcnew System::Windows::Forms::Button());
-			this->button6 = (gcnew System::Windows::Forms::Button());
-			this->groupBox3 = (gcnew System::Windows::Forms::GroupBox());
 			this->button7 = (gcnew System::Windows::Forms::Button());
 			this->button8 = (gcnew System::Windows::Forms::Button());
 			this->button9 = (gcnew System::Windows::Forms::Button());
-			this->dataGridView3 = (gcnew System::Windows::Forms::DataGridView());
-			this->groupBox4 = (gcnew System::Windows::Forms::GroupBox());
-			this->button10 = (gcnew System::Windows::Forms::Button());
-			this->dataGridView4 = (gcnew System::Windows::Forms::DataGridView());
-			this->button11 = (gcnew System::Windows::Forms::Button());
-			this->button12 = (gcnew System::Windows::Forms::Button());
-			this->groupBox5 = (gcnew System::Windows::Forms::GroupBox());
-			this->button13 = (gcnew System::Windows::Forms::Button());
-			this->button14 = (gcnew System::Windows::Forms::Button());
-			this->button15 = (gcnew System::Windows::Forms::Button());
-			this->dataGridView5 = (gcnew System::Windows::Forms::DataGridView());
-			this->groupBox6 = (gcnew System::Windows::Forms::GroupBox());
-			this->button16 = (gcnew System::Windows::Forms::Button());
-			this->dataGridView6 = (gcnew System::Windows::Forms::DataGridView());
-			this->button17 = (gcnew System::Windows::Forms::Button());
-			this->button18 = (gcnew System::Windows::Forms::Button());
-			this->panel1 = (gcnew System::Windows::Forms::Panel());
-			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
-			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->groupBox1->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
-			this->groupBox2->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->BeginInit();
-			this->groupBox3->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView3))->BeginInit();
-			this->groupBox4->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView4))->BeginInit();
-			this->groupBox5->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView5))->BeginInit();
-			this->groupBox6->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView6))->BeginInit();
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
+			this->panel3->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
-			// groupBox1
+			// panel1
 			// 
-			this->groupBox1->Controls->Add(this->button3);
-			this->groupBox1->Controls->Add(this->button2);
-			this->groupBox1->Controls->Add(this->button1);
-			this->groupBox1->Controls->Add(this->dataGridView1);
-			this->groupBox1->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->panel1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
+				static_cast<System::Int32>(static_cast<System::Byte>(84)));
+			this->panel1->Controls->Add(this->pictureBox1);
+			this->panel1->Controls->Add(this->label1);
+			this->panel1->Location = System::Drawing::Point(276, 0);
+			this->panel1->Name = L"panel1";
+			this->panel1->Size = System::Drawing::Size(1181, 126);
+			this->panel1->TabIndex = 4;
+			// 
+			// pictureBox1
+			// 
+			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
+			this->pictureBox1->Location = System::Drawing::Point(1136, 12);
+			this->pictureBox1->Name = L"pictureBox1";
+			this->pictureBox1->Size = System::Drawing::Size(35, 35);
+			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox1->TabIndex = 12;
+			this->pictureBox1->TabStop = false;
+			this->pictureBox1->Click += gcnew System::EventHandler(this, &MainForm::pictureBox1_Click);
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Dubai", 16.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->groupBox1->Location = System::Drawing::Point(12, 143);
-			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(529, 422);
-			this->groupBox1->TabIndex = 0;
-			this->groupBox1->TabStop = false;
-			this->groupBox1->Text = L"Animals";
+			this->label1->ForeColor = System::Drawing::Color::White;
+			this->label1->Location = System::Drawing::Point(525, 30);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(152, 73);
+			this->label1->TabIndex = 1;
+			this->label1->Text = L"Admin";
+			// 
+			// panel2
+			// 
+			this->panel2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->panel2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(39)), static_cast<System::Int32>(static_cast<System::Byte>(39)),
+				static_cast<System::Int32>(static_cast<System::Byte>(58)));
+			this->panel2->Location = System::Drawing::Point(0, 0);
+			this->panel2->Name = L"panel2";
+			this->panel2->Size = System::Drawing::Size(277, 126);
+			this->panel2->TabIndex = 5;
+			// 
+			// panel3
+			// 
+			this->panel3->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left));
+			this->panel3->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(51)), static_cast<System::Int32>(static_cast<System::Byte>(51)),
+				static_cast<System::Int32>(static_cast<System::Byte>(76)));
+			this->panel3->Controls->Add(this->button6);
+			this->panel3->Controls->Add(this->button5);
+			this->panel3->Controls->Add(this->button4);
+			this->panel3->Controls->Add(this->button3);
+			this->panel3->Controls->Add(this->button2);
+			this->panel3->Controls->Add(this->button1);
+			this->panel3->Location = System::Drawing::Point(0, 126);
+			this->panel3->Name = L"panel3";
+			this->panel3->Size = System::Drawing::Size(277, 530);
+			this->panel3->TabIndex = 6;
+			// 
+			// button6
+			// 
+			this->button6->Anchor = System::Windows::Forms::AnchorStyles::Top;
+			this->button6->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(51)), static_cast<System::Int32>(static_cast<System::Byte>(51)),
+				static_cast<System::Int32>(static_cast<System::Byte>(76)));
+			this->button6->FlatAppearance->BorderSize = 0;
+			this->button6->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button6->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button6->ForeColor = System::Drawing::Color::White;
+			this->button6->Location = System::Drawing::Point(0, 356);
+			this->button6->Name = L"button6";
+			this->button6->Size = System::Drawing::Size(277, 64);
+			this->button6->TabIndex = 10;
+			this->button6->Text = L"Plans";
+			this->button6->UseVisualStyleBackColor = false;
+			this->button6->Click += gcnew System::EventHandler(this, &MainForm::button6_Click);
+			// 
+			// button5
+			// 
+			this->button5->Anchor = System::Windows::Forms::AnchorStyles::Top;
+			this->button5->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(51)), static_cast<System::Int32>(static_cast<System::Byte>(51)),
+				static_cast<System::Int32>(static_cast<System::Byte>(76)));
+			this->button5->FlatAppearance->BorderSize = 0;
+			this->button5->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button5->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button5->ForeColor = System::Drawing::Color::White;
+			this->button5->Location = System::Drawing::Point(0, 286);
+			this->button5->Name = L"button5";
+			this->button5->Size = System::Drawing::Size(277, 64);
+			this->button5->TabIndex = 9;
+			this->button5->Text = L"Medicine";
+			this->button5->UseVisualStyleBackColor = false;
+			this->button5->Click += gcnew System::EventHandler(this, &MainForm::button5_Click);
+			// 
+			// button4
+			// 
+			this->button4->Anchor = System::Windows::Forms::AnchorStyles::Top;
+			this->button4->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(51)), static_cast<System::Int32>(static_cast<System::Byte>(51)),
+				static_cast<System::Int32>(static_cast<System::Byte>(76)));
+			this->button4->FlatAppearance->BorderSize = 0;
+			this->button4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button4->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button4->ForeColor = System::Drawing::Color::White;
+			this->button4->Location = System::Drawing::Point(0, 216);
+			this->button4->Name = L"button4";
+			this->button4->Size = System::Drawing::Size(277, 64);
+			this->button4->TabIndex = 8;
+			this->button4->Text = L"Foods";
+			this->button4->UseVisualStyleBackColor = false;
+			this->button4->Click += gcnew System::EventHandler(this, &MainForm::button4_Click);
 			// 
 			// button3
 			// 
-			this->button3->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
-				static_cast<System::Int32>(static_cast<System::Byte>(84)));
+			this->button3->Anchor = System::Windows::Forms::AnchorStyles::Top;
+			this->button3->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(51)), static_cast<System::Int32>(static_cast<System::Byte>(51)),
+				static_cast<System::Int32>(static_cast<System::Byte>(76)));
+			this->button3->FlatAppearance->BorderSize = 0;
 			this->button3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button3->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->button3->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button3->ForeColor = System::Drawing::Color::White;
-			this->button3->Location = System::Drawing::Point(366, 341);
+			this->button3->Location = System::Drawing::Point(0, 146);
 			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(151, 57);
-			this->button3->TabIndex = 3;
-			this->button3->Text = L"Update";
+			this->button3->Size = System::Drawing::Size(277, 64);
+			this->button3->TabIndex = 7;
+			this->button3->Text = L"Crops";
 			this->button3->UseVisualStyleBackColor = false;
+			this->button3->Click += gcnew System::EventHandler(this, &MainForm::button3_Click);
 			// 
 			// button2
 			// 
-			this->button2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
-				static_cast<System::Int32>(static_cast<System::Byte>(84)));
+			this->button2->Anchor = System::Windows::Forms::AnchorStyles::Top;
+			this->button2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(51)), static_cast<System::Int32>(static_cast<System::Byte>(51)),
+				static_cast<System::Int32>(static_cast<System::Byte>(76)));
+			this->button2->FlatAppearance->BorderSize = 0;
 			this->button2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button2->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->button2->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button2->ForeColor = System::Drawing::Color::White;
-			this->button2->Location = System::Drawing::Point(187, 341);
+			this->button2->Location = System::Drawing::Point(0, 76);
 			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(151, 57);
-			this->button2->TabIndex = 2;
-			this->button2->Text = L"Delete";
+			this->button2->Size = System::Drawing::Size(277, 64);
+			this->button2->TabIndex = 6;
+			this->button2->Text = L"Cars";
 			this->button2->UseVisualStyleBackColor = false;
 			this->button2->Click += gcnew System::EventHandler(this, &MainForm::button2_Click);
 			// 
 			// button1
 			// 
-			this->button1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
-				static_cast<System::Int32>(static_cast<System::Byte>(84)));
+			this->button1->Anchor = System::Windows::Forms::AnchorStyles::Top;
+			this->button1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(51)), static_cast<System::Int32>(static_cast<System::Byte>(51)),
+				static_cast<System::Int32>(static_cast<System::Byte>(76)));
+			this->button1->FlatAppearance->BorderSize = 0;
 			this->button1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button1->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->button1->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button1->ForeColor = System::Drawing::Color::White;
-			this->button1->Location = System::Drawing::Point(6, 341);
+			this->button1->Location = System::Drawing::Point(0, 6);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(151, 57);
-			this->button1->TabIndex = 1;
-			this->button1->Text = L"Add";
+			this->button1->Size = System::Drawing::Size(277, 64);
+			this->button1->TabIndex = 5;
+			this->button1->Text = L"Animals";
 			this->button1->UseVisualStyleBackColor = false;
-			this->button1->Click += gcnew System::EventHandler(this, &MainForm::button1_Click);
+			this->button1->Click += gcnew System::EventHandler(this, &MainForm::button1_Click_1);
 			// 
 			// dataGridView1
 			// 
@@ -237,121 +291,13 @@ namespace FarmingApp {
 			dataGridViewCellStyle2->WrapMode = System::Windows::Forms::DataGridViewTriState::False;
 			this->dataGridView1->DefaultCellStyle = dataGridViewCellStyle2;
 			this->dataGridView1->EnableHeadersVisualStyles = false;
-			this->dataGridView1->Location = System::Drawing::Point(10, 40);
+			this->dataGridView1->Location = System::Drawing::Point(304, 154);
 			this->dataGridView1->Margin = System::Windows::Forms::Padding(4, 3, 4, 3);
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->RowHeadersWidth = 82;
 			this->dataGridView1->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
-			this->dataGridView1->Size = System::Drawing::Size(511, 276);
+			this->dataGridView1->Size = System::Drawing::Size(789, 276);
 			this->dataGridView1->TabIndex = 0;
-			// 
-			// groupBox2
-			// 
-			this->groupBox2->Controls->Add(this->button4);
-			this->groupBox2->Controls->Add(this->dataGridView2);
-			this->groupBox2->Controls->Add(this->button5);
-			this->groupBox2->Controls->Add(this->button6);
-			this->groupBox2->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold));
-			this->groupBox2->Location = System::Drawing::Point(541, 143);
-			this->groupBox2->Name = L"groupBox2";
-			this->groupBox2->Size = System::Drawing::Size(529, 422);
-			this->groupBox2->TabIndex = 1;
-			this->groupBox2->TabStop = false;
-			this->groupBox2->Text = L"Cars";
-			// 
-			// button4
-			// 
-			this->button4->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
-				static_cast<System::Int32>(static_cast<System::Byte>(84)));
-			this->button4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button4->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button4->ForeColor = System::Drawing::Color::White;
-			this->button4->Location = System::Drawing::Point(372, 341);
-			this->button4->Name = L"button4";
-			this->button4->Size = System::Drawing::Size(151, 57);
-			this->button4->TabIndex = 4;
-			this->button4->Text = L"Update";
-			this->button4->UseVisualStyleBackColor = false;
-			// 
-			// dataGridView2
-			// 
-			this->dataGridView2->BackgroundColor = System::Drawing::Color::WhiteSmoke;
-			this->dataGridView2->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->dataGridView2->CellBorderStyle = System::Windows::Forms::DataGridViewCellBorderStyle::SingleHorizontal;
-			dataGridViewCellStyle3->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
-			dataGridViewCellStyle3->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(20)), static_cast<System::Int32>(static_cast<System::Byte>(25)),
-				static_cast<System::Int32>(static_cast<System::Byte>(70)));
-			dataGridViewCellStyle3->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold));
-			dataGridViewCellStyle3->ForeColor = System::Drawing::Color::WhiteSmoke;
-			dataGridViewCellStyle3->SelectionBackColor = System::Drawing::SystemColors::Highlight;
-			dataGridViewCellStyle3->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			dataGridViewCellStyle3->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
-			this->dataGridView2->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
-			this->dataGridView2->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			dataGridViewCellStyle4->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
-			dataGridViewCellStyle4->BackColor = System::Drawing::SystemColors::Window;
-			dataGridViewCellStyle4->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold));
-			dataGridViewCellStyle4->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(164)),
-				static_cast<System::Int32>(static_cast<System::Byte>(165)), static_cast<System::Int32>(static_cast<System::Byte>(169)));
-			dataGridViewCellStyle4->SelectionBackColor = System::Drawing::Color::ForestGreen;
-			dataGridViewCellStyle4->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			dataGridViewCellStyle4->WrapMode = System::Windows::Forms::DataGridViewTriState::False;
-			this->dataGridView2->DefaultCellStyle = dataGridViewCellStyle4;
-			this->dataGridView2->EnableHeadersVisualStyles = false;
-			this->dataGridView2->Location = System::Drawing::Point(12, 40);
-			this->dataGridView2->Margin = System::Windows::Forms::Padding(4, 3, 4, 3);
-			this->dataGridView2->Name = L"dataGridView2";
-			this->dataGridView2->RowHeadersWidth = 82;
-			this->dataGridView2->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
-			this->dataGridView2->Size = System::Drawing::Size(511, 276);
-			this->dataGridView2->TabIndex = 0;
-			// 
-			// button5
-			// 
-			this->button5->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
-				static_cast<System::Int32>(static_cast<System::Byte>(84)));
-			this->button5->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button5->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button5->ForeColor = System::Drawing::Color::White;
-			this->button5->Location = System::Drawing::Point(195, 341);
-			this->button5->Name = L"button5";
-			this->button5->Size = System::Drawing::Size(151, 57);
-			this->button5->TabIndex = 5;
-			this->button5->Text = L"Delete";
-			this->button5->UseVisualStyleBackColor = false;
-			this->button5->Click += gcnew System::EventHandler(this, &MainForm::button5_Click);
-			// 
-			// button6
-			// 
-			this->button6->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
-				static_cast<System::Int32>(static_cast<System::Byte>(84)));
-			this->button6->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button6->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button6->ForeColor = System::Drawing::Color::White;
-			this->button6->Location = System::Drawing::Point(6, 341);
-			this->button6->Name = L"button6";
-			this->button6->Size = System::Drawing::Size(151, 57);
-			this->button6->TabIndex = 6;
-			this->button6->Text = L"Add";
-			this->button6->UseVisualStyleBackColor = false;
-			this->button6->Click += gcnew System::EventHandler(this, &MainForm::button6_Click);
-			// 
-			// groupBox3
-			// 
-			this->groupBox3->Controls->Add(this->button7);
-			this->groupBox3->Controls->Add(this->button8);
-			this->groupBox3->Controls->Add(this->button9);
-			this->groupBox3->Controls->Add(this->dataGridView3);
-			this->groupBox3->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold));
-			this->groupBox3->Location = System::Drawing::Point(1070, 143);
-			this->groupBox3->Name = L"groupBox3";
-			this->groupBox3->Size = System::Drawing::Size(529, 422);
-			this->groupBox3->TabIndex = 2;
-			this->groupBox3->TabStop = false;
-			this->groupBox3->Text = L"Crops";
 			// 
 			// button7
 			// 
@@ -361,24 +307,23 @@ namespace FarmingApp {
 			this->button7->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button7->ForeColor = System::Drawing::Color::White;
-			this->button7->Location = System::Drawing::Point(372, 341);
+			this->button7->Location = System::Drawing::Point(1182, 482);
 			this->button7->Name = L"button7";
-			this->button7->Size = System::Drawing::Size(151, 57);
+			this->button7->Size = System::Drawing::Size(206, 64);
 			this->button7->TabIndex = 7;
-			this->button7->Text = L"Update";
+			this->button7->Text = L"Add";
 			this->button7->UseVisualStyleBackColor = false;
 			// 
 			// button8
 			// 
-			this->button8->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
-				static_cast<System::Int32>(static_cast<System::Byte>(84)));
+			this->button8->BackColor = System::Drawing::Color::Firebrick;
 			this->button8->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->button8->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button8->ForeColor = System::Drawing::Color::White;
-			this->button8->Location = System::Drawing::Point(193, 341);
+			this->button8->Location = System::Drawing::Point(304, 482);
 			this->button8->Name = L"button8";
-			this->button8->Size = System::Drawing::Size(151, 57);
+			this->button8->Size = System::Drawing::Size(206, 64);
 			this->button8->TabIndex = 8;
 			this->button8->Text = L"Delete";
 			this->button8->UseVisualStyleBackColor = false;
@@ -392,433 +337,139 @@ namespace FarmingApp {
 			this->button9->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button9->ForeColor = System::Drawing::Color::White;
-			this->button9->Location = System::Drawing::Point(12, 341);
+			this->button9->Location = System::Drawing::Point(1182, 563);
 			this->button9->Name = L"button9";
-			this->button9->Size = System::Drawing::Size(151, 57);
+			this->button9->Size = System::Drawing::Size(206, 64);
 			this->button9->TabIndex = 9;
-			this->button9->Text = L"Add";
+			this->button9->Text = L"Update";
 			this->button9->UseVisualStyleBackColor = false;
-			this->button9->Click += gcnew System::EventHandler(this, &MainForm::button9_Click);
-			// 
-			// dataGridView3
-			// 
-			this->dataGridView3->BackgroundColor = System::Drawing::Color::WhiteSmoke;
-			this->dataGridView3->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->dataGridView3->CellBorderStyle = System::Windows::Forms::DataGridViewCellBorderStyle::SingleHorizontal;
-			dataGridViewCellStyle5->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
-			dataGridViewCellStyle5->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(20)), static_cast<System::Int32>(static_cast<System::Byte>(25)),
-				static_cast<System::Int32>(static_cast<System::Byte>(70)));
-			dataGridViewCellStyle5->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold));
-			dataGridViewCellStyle5->ForeColor = System::Drawing::Color::WhiteSmoke;
-			dataGridViewCellStyle5->SelectionBackColor = System::Drawing::SystemColors::Highlight;
-			dataGridViewCellStyle5->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			dataGridViewCellStyle5->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
-			this->dataGridView3->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
-			this->dataGridView3->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			dataGridViewCellStyle6->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
-			dataGridViewCellStyle6->BackColor = System::Drawing::SystemColors::Window;
-			dataGridViewCellStyle6->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold));
-			dataGridViewCellStyle6->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(164)),
-				static_cast<System::Int32>(static_cast<System::Byte>(165)), static_cast<System::Int32>(static_cast<System::Byte>(169)));
-			dataGridViewCellStyle6->SelectionBackColor = System::Drawing::Color::ForestGreen;
-			dataGridViewCellStyle6->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			dataGridViewCellStyle6->WrapMode = System::Windows::Forms::DataGridViewTriState::False;
-			this->dataGridView3->DefaultCellStyle = dataGridViewCellStyle6;
-			this->dataGridView3->EnableHeadersVisualStyles = false;
-			this->dataGridView3->Location = System::Drawing::Point(11, 40);
-			this->dataGridView3->Margin = System::Windows::Forms::Padding(4, 3, 4, 3);
-			this->dataGridView3->Name = L"dataGridView3";
-			this->dataGridView3->RowHeadersWidth = 82;
-			this->dataGridView3->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
-			this->dataGridView3->Size = System::Drawing::Size(511, 276);
-			this->dataGridView3->TabIndex = 0;
-			// 
-			// groupBox4
-			// 
-			this->groupBox4->Controls->Add(this->button10);
-			this->groupBox4->Controls->Add(this->dataGridView4);
-			this->groupBox4->Controls->Add(this->button11);
-			this->groupBox4->Controls->Add(this->button12);
-			this->groupBox4->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold));
-			this->groupBox4->Location = System::Drawing::Point(12, 571);
-			this->groupBox4->Name = L"groupBox4";
-			this->groupBox4->Size = System::Drawing::Size(529, 422);
-			this->groupBox4->TabIndex = 2;
-			this->groupBox4->TabStop = false;
-			this->groupBox4->Text = L"Foods";
-			// 
-			// button10
-			// 
-			this->button10->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
-				static_cast<System::Int32>(static_cast<System::Byte>(84)));
-			this->button10->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button10->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button10->ForeColor = System::Drawing::Color::White;
-			this->button10->Location = System::Drawing::Point(372, 353);
-			this->button10->Name = L"button10";
-			this->button10->Size = System::Drawing::Size(151, 57);
-			this->button10->TabIndex = 10;
-			this->button10->Text = L"Update";
-			this->button10->UseVisualStyleBackColor = false;
-			// 
-			// dataGridView4
-			// 
-			this->dataGridView4->BackgroundColor = System::Drawing::Color::WhiteSmoke;
-			this->dataGridView4->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->dataGridView4->CellBorderStyle = System::Windows::Forms::DataGridViewCellBorderStyle::SingleHorizontal;
-			dataGridViewCellStyle7->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
-			dataGridViewCellStyle7->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(20)), static_cast<System::Int32>(static_cast<System::Byte>(25)),
-				static_cast<System::Int32>(static_cast<System::Byte>(70)));
-			dataGridViewCellStyle7->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold));
-			dataGridViewCellStyle7->ForeColor = System::Drawing::Color::WhiteSmoke;
-			dataGridViewCellStyle7->SelectionBackColor = System::Drawing::SystemColors::Highlight;
-			dataGridViewCellStyle7->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			dataGridViewCellStyle7->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
-			this->dataGridView4->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
-			this->dataGridView4->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			dataGridViewCellStyle8->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
-			dataGridViewCellStyle8->BackColor = System::Drawing::SystemColors::Window;
-			dataGridViewCellStyle8->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold));
-			dataGridViewCellStyle8->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(164)),
-				static_cast<System::Int32>(static_cast<System::Byte>(165)), static_cast<System::Int32>(static_cast<System::Byte>(169)));
-			dataGridViewCellStyle8->SelectionBackColor = System::Drawing::Color::ForestGreen;
-			dataGridViewCellStyle8->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			dataGridViewCellStyle8->WrapMode = System::Windows::Forms::DataGridViewTriState::False;
-			this->dataGridView4->DefaultCellStyle = dataGridViewCellStyle8;
-			this->dataGridView4->EnableHeadersVisualStyles = false;
-			this->dataGridView4->Location = System::Drawing::Point(10, 40);
-			this->dataGridView4->Margin = System::Windows::Forms::Padding(4, 3, 4, 3);
-			this->dataGridView4->Name = L"dataGridView4";
-			this->dataGridView4->RowHeadersWidth = 82;
-			this->dataGridView4->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
-			this->dataGridView4->Size = System::Drawing::Size(511, 276);
-			this->dataGridView4->TabIndex = 0;
-			// 
-			// button11
-			// 
-			this->button11->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
-				static_cast<System::Int32>(static_cast<System::Byte>(84)));
-			this->button11->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button11->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button11->ForeColor = System::Drawing::Color::White;
-			this->button11->Location = System::Drawing::Point(193, 353);
-			this->button11->Name = L"button11";
-			this->button11->Size = System::Drawing::Size(151, 57);
-			this->button11->TabIndex = 11;
-			this->button11->Text = L"Delete";
-			this->button11->UseVisualStyleBackColor = false;
-			this->button11->Click += gcnew System::EventHandler(this, &MainForm::button11_Click);
-			// 
-			// button12
-			// 
-			this->button12->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
-				static_cast<System::Int32>(static_cast<System::Byte>(84)));
-			this->button12->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button12->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button12->ForeColor = System::Drawing::Color::White;
-			this->button12->Location = System::Drawing::Point(12, 353);
-			this->button12->Name = L"button12";
-			this->button12->Size = System::Drawing::Size(151, 57);
-			this->button12->TabIndex = 12;
-			this->button12->Text = L"Add";
-			this->button12->UseVisualStyleBackColor = false;
-			this->button12->Click += gcnew System::EventHandler(this, &MainForm::button12_Click);
-			// 
-			// groupBox5
-			// 
-			this->groupBox5->Controls->Add(this->button13);
-			this->groupBox5->Controls->Add(this->button14);
-			this->groupBox5->Controls->Add(this->button15);
-			this->groupBox5->Controls->Add(this->dataGridView5);
-			this->groupBox5->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold));
-			this->groupBox5->Location = System::Drawing::Point(541, 571);
-			this->groupBox5->Name = L"groupBox5";
-			this->groupBox5->Size = System::Drawing::Size(529, 422);
-			this->groupBox5->TabIndex = 3;
-			this->groupBox5->TabStop = false;
-			this->groupBox5->Text = L"Medicine";
-			// 
-			// button13
-			// 
-			this->button13->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
-				static_cast<System::Int32>(static_cast<System::Byte>(84)));
-			this->button13->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button13->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button13->ForeColor = System::Drawing::Color::White;
-			this->button13->Location = System::Drawing::Point(372, 353);
-			this->button13->Name = L"button13";
-			this->button13->Size = System::Drawing::Size(151, 57);
-			this->button13->TabIndex = 13;
-			this->button13->Text = L"Update";
-			this->button13->UseVisualStyleBackColor = false;
-			// 
-			// button14
-			// 
-			this->button14->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
-				static_cast<System::Int32>(static_cast<System::Byte>(84)));
-			this->button14->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button14->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button14->ForeColor = System::Drawing::Color::White;
-			this->button14->Location = System::Drawing::Point(193, 353);
-			this->button14->Name = L"button14";
-			this->button14->Size = System::Drawing::Size(151, 57);
-			this->button14->TabIndex = 14;
-			this->button14->Text = L"Delete";
-			this->button14->UseVisualStyleBackColor = false;
-			this->button14->Click += gcnew System::EventHandler(this, &MainForm::button14_Click);
-			// 
-			// button15
-			// 
-			this->button15->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
-				static_cast<System::Int32>(static_cast<System::Byte>(84)));
-			this->button15->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button15->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button15->ForeColor = System::Drawing::Color::White;
-			this->button15->Location = System::Drawing::Point(12, 353);
-			this->button15->Name = L"button15";
-			this->button15->Size = System::Drawing::Size(151, 57);
-			this->button15->TabIndex = 15;
-			this->button15->Text = L"Add";
-			this->button15->UseVisualStyleBackColor = false;
-			this->button15->Click += gcnew System::EventHandler(this, &MainForm::button15_Click);
-			// 
-			// dataGridView5
-			// 
-			this->dataGridView5->BackgroundColor = System::Drawing::Color::WhiteSmoke;
-			this->dataGridView5->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->dataGridView5->CellBorderStyle = System::Windows::Forms::DataGridViewCellBorderStyle::SingleHorizontal;
-			dataGridViewCellStyle9->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
-			dataGridViewCellStyle9->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(20)), static_cast<System::Int32>(static_cast<System::Byte>(25)),
-				static_cast<System::Int32>(static_cast<System::Byte>(70)));
-			dataGridViewCellStyle9->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold));
-			dataGridViewCellStyle9->ForeColor = System::Drawing::Color::WhiteSmoke;
-			dataGridViewCellStyle9->SelectionBackColor = System::Drawing::SystemColors::Highlight;
-			dataGridViewCellStyle9->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			dataGridViewCellStyle9->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
-			this->dataGridView5->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
-			this->dataGridView5->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			dataGridViewCellStyle10->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
-			dataGridViewCellStyle10->BackColor = System::Drawing::SystemColors::Window;
-			dataGridViewCellStyle10->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold));
-			dataGridViewCellStyle10->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(164)),
-				static_cast<System::Int32>(static_cast<System::Byte>(165)), static_cast<System::Int32>(static_cast<System::Byte>(169)));
-			dataGridViewCellStyle10->SelectionBackColor = System::Drawing::Color::ForestGreen;
-			dataGridViewCellStyle10->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			dataGridViewCellStyle10->WrapMode = System::Windows::Forms::DataGridViewTriState::False;
-			this->dataGridView5->DefaultCellStyle = dataGridViewCellStyle10;
-			this->dataGridView5->EnableHeadersVisualStyles = false;
-			this->dataGridView5->Location = System::Drawing::Point(11, 40);
-			this->dataGridView5->Margin = System::Windows::Forms::Padding(4, 3, 4, 3);
-			this->dataGridView5->Name = L"dataGridView5";
-			this->dataGridView5->RowHeadersWidth = 82;
-			this->dataGridView5->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
-			this->dataGridView5->Size = System::Drawing::Size(511, 276);
-			this->dataGridView5->TabIndex = 0;
-			// 
-			// groupBox6
-			// 
-			this->groupBox6->Controls->Add(this->button16);
-			this->groupBox6->Controls->Add(this->dataGridView6);
-			this->groupBox6->Controls->Add(this->button17);
-			this->groupBox6->Controls->Add(this->button18);
-			this->groupBox6->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold));
-			this->groupBox6->Location = System::Drawing::Point(1070, 571);
-			this->groupBox6->Name = L"groupBox6";
-			this->groupBox6->Size = System::Drawing::Size(529, 422);
-			this->groupBox6->TabIndex = 3;
-			this->groupBox6->TabStop = false;
-			this->groupBox6->Text = L"Plans";
-			// 
-			// button16
-			// 
-			this->button16->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
-				static_cast<System::Int32>(static_cast<System::Byte>(84)));
-			this->button16->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button16->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button16->ForeColor = System::Drawing::Color::White;
-			this->button16->Location = System::Drawing::Point(372, 353);
-			this->button16->Name = L"button16";
-			this->button16->Size = System::Drawing::Size(151, 57);
-			this->button16->TabIndex = 16;
-			this->button16->Text = L"Update";
-			this->button16->UseVisualStyleBackColor = false;
-			// 
-			// dataGridView6
-			// 
-			this->dataGridView6->BackgroundColor = System::Drawing::Color::WhiteSmoke;
-			this->dataGridView6->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->dataGridView6->CellBorderStyle = System::Windows::Forms::DataGridViewCellBorderStyle::SingleHorizontal;
-			dataGridViewCellStyle11->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
-			dataGridViewCellStyle11->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(20)),
-				static_cast<System::Int32>(static_cast<System::Byte>(25)), static_cast<System::Int32>(static_cast<System::Byte>(70)));
-			dataGridViewCellStyle11->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold));
-			dataGridViewCellStyle11->ForeColor = System::Drawing::Color::WhiteSmoke;
-			dataGridViewCellStyle11->SelectionBackColor = System::Drawing::SystemColors::Highlight;
-			dataGridViewCellStyle11->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			dataGridViewCellStyle11->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
-			this->dataGridView6->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
-			this->dataGridView6->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			dataGridViewCellStyle12->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
-			dataGridViewCellStyle12->BackColor = System::Drawing::SystemColors::Window;
-			dataGridViewCellStyle12->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold));
-			dataGridViewCellStyle12->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(164)),
-				static_cast<System::Int32>(static_cast<System::Byte>(165)), static_cast<System::Int32>(static_cast<System::Byte>(169)));
-			dataGridViewCellStyle12->SelectionBackColor = System::Drawing::Color::ForestGreen;
-			dataGridViewCellStyle12->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
-			dataGridViewCellStyle12->WrapMode = System::Windows::Forms::DataGridViewTriState::False;
-			this->dataGridView6->DefaultCellStyle = dataGridViewCellStyle12;
-			this->dataGridView6->EnableHeadersVisualStyles = false;
-			this->dataGridView6->Location = System::Drawing::Point(11, 40);
-			this->dataGridView6->Margin = System::Windows::Forms::Padding(4, 3, 4, 3);
-			this->dataGridView6->Name = L"dataGridView6";
-			this->dataGridView6->RowHeadersWidth = 82;
-			this->dataGridView6->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
-			this->dataGridView6->Size = System::Drawing::Size(511, 276);
-			this->dataGridView6->TabIndex = 0;
-			// 
-			// button17
-			// 
-			this->button17->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
-				static_cast<System::Int32>(static_cast<System::Byte>(84)));
-			this->button17->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button17->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button17->ForeColor = System::Drawing::Color::White;
-			this->button17->Location = System::Drawing::Point(193, 353);
-			this->button17->Name = L"button17";
-			this->button17->Size = System::Drawing::Size(151, 57);
-			this->button17->TabIndex = 17;
-			this->button17->Text = L"Delete";
-			this->button17->UseVisualStyleBackColor = false;
-			this->button17->Click += gcnew System::EventHandler(this, &MainForm::button17_Click);
-			// 
-			// button18
-			// 
-			this->button18->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
-				static_cast<System::Int32>(static_cast<System::Byte>(84)));
-			this->button18->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button18->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button18->ForeColor = System::Drawing::Color::White;
-			this->button18->Location = System::Drawing::Point(12, 353);
-			this->button18->Name = L"button18";
-			this->button18->Size = System::Drawing::Size(151, 57);
-			this->button18->TabIndex = 18;
-			this->button18->Text = L"Add";
-			this->button18->UseVisualStyleBackColor = false;
-			this->button18->Click += gcnew System::EventHandler(this, &MainForm::button18_Click);
-			// 
-			// panel1
-			// 
-			this->panel1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
-				| System::Windows::Forms::AnchorStyles::Right));
-			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
-				static_cast<System::Int32>(static_cast<System::Byte>(84)));
-			this->panel1->Controls->Add(this->pictureBox1);
-			this->panel1->Controls->Add(this->label1);
-			this->panel1->Location = System::Drawing::Point(0, 0);
-			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(1621, 126);
-			this->panel1->TabIndex = 4;
-			// 
-			// pictureBox1
-			// 
-			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(1559, 12);
-			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(35, 35);
-			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-			this->pictureBox1->TabIndex = 12;
-			this->pictureBox1->TabStop = false;
-			this->pictureBox1->Click += gcnew System::EventHandler(this, &MainForm::pictureBox1_Click);
-			// 
-			// label1
-			// 
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Dubai", 16.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->label1->ForeColor = System::Drawing::Color::White;
-			this->label1->Location = System::Drawing::Point(710, 28);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(134, 73);
-			this->label1->TabIndex = 1;
-			this->label1->Text = L"Items";
 			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(192, 192);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
 			this->AutoSize = true;
-			this->ClientSize = System::Drawing::Size(1618, 1028);
+			this->ClientSize = System::Drawing::Size(1455, 651);
+			this->Controls->Add(this->button9);
+			this->Controls->Add(this->button8);
+			this->Controls->Add(this->button7);
+			this->Controls->Add(this->dataGridView1);
+			this->Controls->Add(this->panel3);
+			this->Controls->Add(this->panel2);
 			this->Controls->Add(this->panel1);
-			this->Controls->Add(this->groupBox6);
-			this->Controls->Add(this->groupBox5);
-			this->Controls->Add(this->groupBox4);
-			this->Controls->Add(this->groupBox3);
-			this->Controls->Add(this->groupBox2);
-			this->Controls->Add(this->groupBox1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->Name = L"MainForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"MainForm";
-			this->Load += gcnew System::EventHandler(this, &MainForm::MainForm_Load);
-			this->groupBox1->ResumeLayout(false);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
-			this->groupBox2->ResumeLayout(false);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->EndInit();
-			this->groupBox3->ResumeLayout(false);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView3))->EndInit();
-			this->groupBox4->ResumeLayout(false);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView4))->EndInit();
-			this->groupBox5->ResumeLayout(false);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView5))->EndInit();
-			this->groupBox6->ResumeLayout(false);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView6))->EndInit();
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+			this->panel3->ResumeLayout(false);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
-	public: static String^ table;
+	String^ connectionString = "Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True";
 
-	private: void LoadData() {
-		String^ connectionString = "Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True";
-
-		LoadDataIntoGridView(dataGridView1, "SELECT animals_type as Type, animals_weight as Weight, animals_price as Price, animals_stock as Stock FROM animals", connectionString);
-		LoadDataIntoGridView(dataGridView2, "SELECT cars_type as Type, cars_explanation as Explanation, cars_price as Price, cars_stock as Stock FROM cars", connectionString);
-		LoadDataIntoGridView(dataGridView3, "SELECT crops_name as Type, crops_explanation as Explanation, crops_price as Price, crops_stock as Stock FROM crops", connectionString);
-		LoadDataIntoGridView(dataGridView4, "SELECT foods_type as Type, foods_explanation as Explanation , foods_price as Price , foods_stock as Stock FROM foods", connectionString);
-		LoadDataIntoGridView(dataGridView5, "SELECT med_type as Type, med_explanation as Explanation, med_price as Price, med_stock as Stock FROM medicine", connectionString);
-		LoadDataIntoGridView(dataGridView6, "SELECT plans_id as ID, crops.crops_name as Type, effective_plan as 'Effective Plan' FROM plans INNER JOIN crops ON crops.crops_id = plans.crops_id", connectionString);
-	}
-
-	private: void LoadDataIntoGridView(DataGridView^ gridView, String^ query, String^ connectionString) {
+	private: void LoadDataIntoGridView(String^ query, String^ connectionString) {
 		try {
 			SqlConnection^ connection = gcnew SqlConnection(connectionString);
 			SqlDataAdapter^ dataAdapter = gcnew SqlDataAdapter(query, connection);
 			DataTable^ dataTable = gcnew DataTable();
 
 			dataAdapter->Fill(dataTable);
-			gridView->DataSource = dataTable;
+			dataGridView1->DataSource = dataTable;
 
-			gridView->AutoResizeColumns(DataGridViewAutoSizeColumnsMode::ColumnHeader);
+			dataGridView1->AutoResizeColumns(DataGridViewAutoSizeColumnsMode::ColumnHeader);
 		}
 		catch (Exception^ ex) {
-			MessageBox::Show("Veri yüklenirken hata oluþtu: " + ex->Message);
+			MessageBox::Show("Error: " + ex->Message);
 		}
 	}
-	private: System::Void MainForm_Load(System::Object^ sender, System::EventArgs^ e) {
-		LoadData();
+
+	private: void DeleteSelectedRowBasedOnLabel() {
+		String^ tableName = "";
+		String^ idColumnName = "";
+		String^ gridColumnName = "";
+		String^ query = "";
+
+		// Label'daki metne göre tablo adýný ve sütun bilgilerini ayarla
+		if (label1->Text == "Animals") {
+			tableName = "animals";
+			idColumnName = "animals_type"; // Örnek: Tür bazlý silme için
+			gridColumnName = "Type";      // DataGridView'deki sütun adý
+			query = "SELECT animals_type as Type, animals_weight as Weight, animals_price as Price, animals_stock as Stock FROM animals";
+		}
+		else if (label1->Text == "Cars") {
+			tableName = "cars";
+			idColumnName = "cars_type";   // Silme iþlemi için kullanýlacak sütun
+			gridColumnName = "Type";      // DataGridView'deki sütun adý
+			query = "SELECT cars_type as Type, cars_explanation as Explanation, cars_price as Price, cars_stock as Stock FROM cars";
+		}
+		else if (label1->Text == "Foods") {
+			tableName = "foods";
+			idColumnName = "foods_type";  // Silme iþlemi için kullanýlacak sütun
+			gridColumnName = "Type";      // DataGridView'deki sütun adý
+			query = "SELECT foods_type as Type, foods_explanation as Explanation, foods_price as Price, foods_stock as Stock FROM foods";
+		}
+		else if (label1->Text == "Medicine") {
+			tableName = "medicine";
+			idColumnName = "med_type";  // Silme iþlemi için kullanýlacak sütun
+			gridColumnName = "Type";      // DataGridView'deki sütun adý
+			query = "SELECT med_type as Type, med_explanation as Explanation, med_price as Price, med_stock as Stock FROM medicine";
+		}
+		else {
+			MessageBox::Show("Invalid table selection. Please select a valid section.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+
+		// Satýrý sil
+		DeleteSelectedRow(dataGridView1, tableName, idColumnName, gridColumnName);
+
+		// Güncellenmiþ tabloyu yükle
+		LoadDataIntoGridView(query, connectionString);
 	}
+
+	private: void DeleteSelectedRowBasedOnLabelWithReferences() {
+		String^ tableName = "";
+		String^ dbColumnName = "";
+		String^ gridColumnName = "";
+		String^ referenceTableName = "";
+		String^ referenceColumnName = "";
+		String^ query = "";
+
+		if (label1->Text == "Crops") {
+			tableName = "crops";
+			dbColumnName = "crops_name"; // Silme için kullanýlacak sütun
+			gridColumnName = "Type";     // DataGridView'deki sütun adý
+			referenceTableName = "plans";
+			referenceColumnName = "crops_id";
+			query = "SELECT crops_name as Type, crops_explanation as Explanation, crops_price as Price, crops_stock as Stock FROM crops";
+
+			// Silme iþlemi için ilgili fonksiyon
+			DeleteSelectedRowWithReferences(dataGridView1, tableName, dbColumnName, gridColumnName, referenceTableName, referenceColumnName);
+		}
+		else if (label1->Text == "Plans") {
+			tableName = "plans";
+			dbColumnName = "plans_id"; // Silme için kullanýlacak sütun
+			gridColumnName = "ID";     // DataGridView'deki sütun adý
+			referenceTableName = "crops"; // Plans silindiðinde baðlý crops kaydýný da kontrol et
+			referenceColumnName = "crops_id";
+			query = "SELECT plans_id as ID, crops.crops_name as Type, effective_plan as 'Effective Plan' FROM plans INNER JOIN crops ON crops.crops_id = plans.crops_id";
+
+			// Ýliþkili silme fonksiyonu
+			DeleteSelectedRowWithReferences(dataGridView1, tableName, dbColumnName, gridColumnName, referenceTableName, referenceColumnName);
+		}
+		else {
+			MessageBox::Show("Invalid table selection. Please select a valid section.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+
+		// Güncellenmiþ tabloyu yükle
+		LoadDataIntoGridView(query, connectionString);
+	}
+
 
 	private: void DeleteSelectedRow(DataGridView^ gridView, String^ tableName, String^ dbColumnName, String^ gridColumnName) {
 		if (gridView->Rows->Count == 0) {
@@ -846,7 +497,6 @@ namespace FarmingApp {
 
 					if (result > 0) {
 						MessageBox::Show("Deleting process is successful", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
-						LoadData();
 					}
 					else {
 						MessageBox::Show("An error occurred while deleting the data.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -881,46 +531,55 @@ namespace FarmingApp {
 				try {
 					SqlConnection^ connection = gcnew SqlConnection(connectionString);
 
-					// Ýlk olarak crops_id deðerini bul
-					String^ findCropsIdQuery = "SELECT crops_id FROM " + tableName + " WHERE " + dbColumnName + " = @value";
-					SqlCommand^ findCommand = gcnew SqlCommand(findCropsIdQuery, connection);
-					findCommand->Parameters->AddWithValue("@value", value);
-
-					connection->Open();
-					Object^ cropsIdObj = findCommand->ExecuteScalar();
-					connection->Close();
-
-					if (cropsIdObj != nullptr) {
-						int cropsId = Convert::ToInt32(cropsIdObj);
-
-						// plans tablosundan iliþkili kayýtlarý sil
-						String^ deleteReferenceQuery = "DELETE FROM " + referenceTableName + " WHERE " + referenceColumnName + " = @cropsId";
-						SqlCommand^ deleteReferenceCommand = gcnew SqlCommand(deleteReferenceQuery, connection);
-						deleteReferenceCommand->Parameters->AddWithValue("@cropsId", cropsId);
+					// "crops" tablosunda ilgili veriyi silmeden önce "plans" tablosundaki veriyi kontrol et
+					if (referenceTableName == "crops") {
+						// "plans" tablosundaki kaydý bul
+						String^ findReferenceQuery = "SELECT crops_id FROM " + tableName + " WHERE " + dbColumnName + " = @value";
+						SqlCommand^ findReferenceCommand = gcnew SqlCommand(findReferenceQuery, connection);
+						findReferenceCommand->Parameters->AddWithValue("@value", value);
 
 						connection->Open();
-						deleteReferenceCommand->ExecuteNonQuery();
+						Object^ referenceIdObj = findReferenceCommand->ExecuteScalar();
 						connection->Close();
 
-						// crops tablosundaki kaydý sil
-						String^ deleteQuery = "DELETE FROM " + tableName + " WHERE " + dbColumnName + " = @value";
-						SqlCommand^ command = gcnew SqlCommand(deleteQuery, connection);
-						command->Parameters->AddWithValue("@value", value);
+						if (referenceIdObj != nullptr) {
+							int referenceId = Convert::ToInt32(referenceIdObj);
 
-						connection->Open();
-						int result = command->ExecuteNonQuery();
-						connection->Close();
+							// "crops" tablosundaki ilgili kaydý sil
+							String^ deleteReferenceQuery = "DELETE FROM " + referenceTableName + " WHERE " + referenceColumnName + " = @id";
+							SqlCommand^ deleteReferenceCommand = gcnew SqlCommand(deleteReferenceQuery, connection);
+							deleteReferenceCommand->Parameters->AddWithValue("@id", referenceId);
 
-						if (result > 0) {
-							MessageBox::Show("Deleting process is successful", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
-							LoadData();
+							connection->Open();
+							int rowsAffected = deleteReferenceCommand->ExecuteNonQuery();
+							connection->Close();
+
+							if (rowsAffected > 0) {
+								MessageBox::Show("Related crop record deleted successfully.", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+							}
+							else {
+								MessageBox::Show("No related crop record found to delete.", "Info", MessageBoxButtons::OK, MessageBoxIcon::Information);
+							}
 						}
 						else {
-							MessageBox::Show("An error occurred while deleting the data.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+							MessageBox::Show("No related crop found in the plans table.", "Info", MessageBoxButtons::OK, MessageBoxIcon::Information);
 						}
 					}
+
+					// Þimdi "plans" tablosundaki veriyi sil
+					String^ deleteQuery = "DELETE FROM " + tableName + " WHERE " + dbColumnName + " = @value";
+					SqlCommand^ command = gcnew SqlCommand(deleteQuery, connection);
+					command->Parameters->AddWithValue("@value", value);
+
+					connection->Open();
+					int result = command->ExecuteNonQuery();
+					connection->Close();
+
+					if (result > 0) {
+						MessageBox::Show("Plan record deleted successfully.", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+					}
 					else {
-						MessageBox::Show("The selected row does not contain a valid crops_id in the specified column.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+						//MessageBox::Show("An error occurred while deleting the data.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 					}
 				}
 				catch (Exception^ ex) {
@@ -936,51 +595,43 @@ namespace FarmingApp {
 		}
 	}
 
-	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
-		DeleteSelectedRow(dataGridView1, "animals", "animals_type", "Type");
-	}
-	private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) {
-		DeleteSelectedRow(dataGridView2, "cars", "cars_type", "Type");
-	}
-	private: System::Void button8_Click(System::Object^ sender, System::EventArgs^ e) {
-		DeleteSelectedRowWithReferences(dataGridView3, "crops", "crops_name", "Type", "plans", "crops_id");
-	}
-	private: System::Void button11_Click(System::Object^ sender, System::EventArgs^ e) {
-		DeleteSelectedRow(dataGridView4, "foods", "foods_type", "Type");
-	}
-	private: System::Void button14_Click(System::Object^ sender, System::EventArgs^ e) {
-		DeleteSelectedRow(dataGridView5, "medicine", "med_type", "Type");
-	}
-	private: System::Void button17_Click(System::Object^ sender, System::EventArgs^ e) {
-		DeleteSelectedRowWithReferences(dataGridView6, "crops", "crops_name", "Type", "plans", "crops_id");
-	}
 
-	/*private: void SelectTableType(String^ table_type) {
-		table = table_type;
-		LoginForm^ mainForm = gcnew LoginForm();
-		mainForm->Show();
-	}*/
-
-	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		//SelectTableType("animals");
-	}
-	private: System::Void button6_Click(System::Object^ sender, System::EventArgs^ e) {
-		//SelectTableType("cars");
-	}
-	private: System::Void button9_Click(System::Object^ sender, System::EventArgs^ e) {
-		//SelectTableType("crops");
-	}
-	private: System::Void button12_Click(System::Object^ sender, System::EventArgs^ e) {
-		//SelectTableType("foods");
-	}
-	private: System::Void button15_Click(System::Object^ sender, System::EventArgs^ e) {
-		//SelectTableType("medicine");
-	}
-	private: System::Void button18_Click(System::Object^ sender, System::EventArgs^ e) {
-		//SelectTableType("plans");
-	}
 	private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
+	}
+	private: System::Void button1_Click_1(System::Object^ sender, System::EventArgs^ e) {
+		label1->Text = button1->Text;
+		LoadDataIntoGridView("SELECT animals_type as Type, animals_weight as Weight, animals_price as Price, animals_stock as Stock FROM animals", connectionString);
+	}
+	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+		label1->Text = button2->Text;
+		LoadDataIntoGridView("SELECT cars_type as Type, cars_explanation as Explanation, cars_price as Price, cars_stock as Stock FROM cars", connectionString);
+	}
+	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+		label1->Text = button3->Text;
+		LoadDataIntoGridView("SELECT crops_name as Type, crops_explanation as Explanation, crops_price as Price, crops_stock as Stock FROM crops", connectionString);
+	}
+	private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
+		label1->Text = button4->Text;
+		LoadDataIntoGridView("SELECT foods_type as Type, foods_explanation as Explanation , foods_price as Price , foods_stock as Stock FROM foods", connectionString);
+	}
+	private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) {
+		label1->Text = button5->Text;
+		LoadDataIntoGridView("SELECT med_type as Type, med_explanation as Explanation, med_price as Price, med_stock as Stock FROM medicine", connectionString);
+	}
+	private: System::Void button6_Click(System::Object^ sender, System::EventArgs^ e) {
+		label1->Text = button6->Text;
+		LoadDataIntoGridView("SELECT plans_id as ID, crops.crops_name as Type, effective_plan as 'Effective Plan' FROM plans INNER JOIN crops ON crops.crops_id = plans.crops_id", connectionString);
+	}
+	private: System::Void button8_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (label1->Text == "Plans" || label1 -> Text == "Crops")
+		{
+			DeleteSelectedRowBasedOnLabelWithReferences();
+		}
+		else
+		{
+			DeleteSelectedRowBasedOnLabel();
+		}
 	}
 };
 }
