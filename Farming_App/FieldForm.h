@@ -23,7 +23,6 @@ namespace FarmingApp {
 		FieldForm()  // Kullanýcýyý al
 		{
 			InitializeComponent();
-			InitializeFieldGrid(); // Harita oluþturma metodunu çaðýr
 		}
 
 	protected:
@@ -60,19 +59,33 @@ namespace FarmingApp {
 			// tableLayoutPanel2
 			// 
 			this->tableLayoutPanel2->ColumnCount = 10;  // 10 kolon ekleniyor
-			for (int i = 0; i < 10; i++) {
-				this->tableLayoutPanel2->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 50)));
-			}
-			this->tableLayoutPanel2->RowCount = 10;  // 10 satýr ekleniyor
-			for (int i = 0; i < 10; i++) {
-				this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 50)));
-			}
+
+			this->tableLayoutPanel2->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->tableLayoutPanel2->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->tableLayoutPanel2->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->tableLayoutPanel2->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->tableLayoutPanel2->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->tableLayoutPanel2->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->tableLayoutPanel2->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->tableLayoutPanel2->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->tableLayoutPanel2->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->tableLayoutPanel2->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+
+			this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->tableLayoutPanel2->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+
 			this->tableLayoutPanel2->Location = System::Drawing::Point(50, 50);
 			this->tableLayoutPanel2->Name = L"tableLayoutPanel2";
 			this->tableLayoutPanel2->Size = System::Drawing::Size(500, 500);  // 10x10 alan için boyut
 			this->tableLayoutPanel2->TabIndex = 0;
-			this->tableLayoutPanel2->Padding = System::Windows::Forms::Padding(0);
-			this->tableLayoutPanel2->CellBorderStyle = System::Windows::Forms::TableLayoutPanelCellBorderStyle::None;
 			// 
 			// FieldForm
 			// 
@@ -81,6 +94,8 @@ namespace FarmingApp {
 			this->Name = L"FieldForm";
 			this->Text = L"FieldForm";
 			this->ResumeLayout(false);
+
+			this->Load += gcnew EventHandler(this, &FieldForm::FieldForm_Load);
 		}
 #pragma endregion
 
@@ -88,58 +103,65 @@ namespace FarmingApp {
 		SqlConnection^ connection = gcnew SqlConnection("Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True");
 		User^ currentUser; // Giriþ yapan kullanýcýyý tutacak deðiþken
 
+		void FieldForm_Load(Object^ sender, EventArgs^ e) {
+			InitializeFieldGrid();
+		}
+
 		void InitializeFieldGrid() {
 			int buttonIndex = 1;  // Numara baþlat
 
 			// SQL sorgusunu hazýrlýyoruz
-			SqlCommand^ command = gcnew SqlCommand("SELECT field_parcel, farmers_id FROM field", connection);
+			SqlCommand^ command = gcnew SqlCommand("SELECT f.field_parcel, f.farmers_id, u.username FROM field f LEFT JOIN farmers u ON f.farmers_id = u.farmers_id", connection);
 			connection->Open();
 			SqlDataReader^ reader = command->ExecuteReader();
 
 			// Veritabanýndaki verileri okuyoruz
 			while (reader->Read()) {
-				// field_parcel ve farmers_id deðerlerini alýyoruz
 				int fieldParcel = reader->GetInt32(0);
 				bool isFarmersIdNull = reader->IsDBNull(1);
+				String^ username = isFarmersIdNull ? nullptr : reader->GetString(2);
 
-				// Panel oluþtur
 				Panel^ panel = gcnew Panel();
 				panel->Size = System::Drawing::Size(50, 50);  // Panel boyutu 50x50
 
-				// Buton oluþtur
 				Button^ button = gcnew Button();
-				button->Size = System::Drawing::Size(50, 50);  // 50x50 boyut
-				button->Margin = System::Windows::Forms::Padding(0);  // Boþluklarý sýfýrla
+				button->Size = System::Drawing::Size(50, 50);
+				button->Margin = System::Windows::Forms::Padding(0);
 				button->Font = gcnew System::Drawing::Font(L"Dubai", 10, FontStyle::Bold);
 				button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 				button->TextAlign = ContentAlignment::MiddleCenter;
-
-				// Her buton için numara ayarla
 				button->Text = fieldParcel.ToString();
 				button->ForeColor = System::Drawing::Color::White;
 
-				// farmers_id null mý kontrol et
+				ToolTip^ tooltip = gcnew ToolTip();
+
 				if (isFarmersIdNull) {
-					button->BackColor = System::Drawing::Color::Green;  // Null ise yeþil
+					button->BackColor = System::Drawing::Color::Green;
+					tooltip->SetToolTip(button, "Available");
+
+					// Týklama olayýný yeþil buton için baðla
+					button->Click += gcnew EventHandler(this, &FieldForm::OnFieldButtonClick);
 				}
 				else {
-					button->BackColor = System::Drawing::Color::Red;    // Null deðilse kýrmýzý
+					button->BackColor = System::Drawing::Color::Red;
+					button->ForeColor = System::Drawing::Color::White;
+					tooltip->SetToolTip(button, "Owned by: " + username);
+
+					// Týklama olayýný kýrmýzý buton için baðla
+					button->Click += gcnew EventHandler(this, &FieldForm::OnRedButtonClick);
 				}
 
-				// Buton ve etiketi panelin içine ekle
 				panel->Controls->Add(button);
+				this->tableLayoutPanel2->Controls->Add(panel, (buttonIndex - 1) % 10, (buttonIndex - 1) / 10);
 
-				// Buton týklama olayýný ekle
-				button->Click += gcnew EventHandler(this, &FieldForm::OnFieldButtonClick);
-
-				// Paneli tableLayoutPanel'e ekle
-				this->tableLayoutPanel2->Controls->Add(panel, (buttonIndex - 1) % 10, (buttonIndex - 1) / 10);  // Row ve Column hesapla
-
-				buttonIndex++;  // Numara artacak
+				buttonIndex++;
 			}
 
-			// Veritabaný baðlantýsýný kapat
 			connection->Close();
+		}
+
+		void OnRedButtonClick(Object^ sender, EventArgs^ e) {
+			MessageBox::Show("This field is occupied and cannot be selected.", "Info", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 
 		void OnFieldButtonClick(Object^ sender, EventArgs^ e) {
@@ -148,24 +170,59 @@ namespace FarmingApp {
 				return;
 			}
 
-			// Butonun baðlý olduðu paneli buluyoruz
 			Button^ clickedButton = dynamic_cast<Button^>(sender);
 			if (clickedButton != nullptr) {
-				// Eðer butonun arka plan rengi kýrmýzýysa, kullanýcýya hata mesajý göster
+				// Eðer buton zaten kýrmýzýysa iþlem yapma
 				if (clickedButton->BackColor == System::Drawing::Color::Red) {
-					MessageBox::Show("This field is occupied.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-					return;  // Eðer alan doluysa iþlem yapýlmasýn
+					MessageBox::Show("This field is occupied and cannot be selected.", "Info", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
 				}
 
-				int fieldParcel = Int32::Parse(clickedButton->Text);  // Butonun üzerinde yazan field_parcel numarasýný alýyoruz
+				// Alanýn kimlik numarasýný al
+				int fieldParcel = Int32::Parse(clickedButton->Text);
 
-				// farmers_id'yi field tablosunda güncelle
-				UpdateFarmersIdInField(fieldParcel);
+				// Veritabanýný güncelle
+				if (UpdateFieldOwnership(fieldParcel)) {
+					// Satýn alma iþlemi baþarýlýysa butonun arka plan rengini ve tooltip'ini güncelle
+					clickedButton->BackColor = System::Drawing::Color::Red;
+					clickedButton->ForeColor = System::Drawing::Color::White;
 
-				// Butonlarý tekrar yükle
-				ReloadFieldGrid();
+					ToolTip^ tooltip = gcnew ToolTip();
+					tooltip->SetToolTip(clickedButton, "Owned by: " + currentUser->username);
+
+					MessageBox::Show("Field successfully purchased!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				}
+				else {
+					MessageBox::Show("Purchase failed. Try again later.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
 			}
 		}
+
+		bool UpdateFieldOwnership(int fieldParcel) {
+			bool isUpdated = false;
+
+			try {
+				connection->Open();
+
+				SqlCommand^ updateCommand = gcnew SqlCommand(
+					"UPDATE field SET farmers_id = @farmersId WHERE field_parcel = @fieldParcel", connection);
+
+				updateCommand->Parameters->AddWithValue("@farmersId", currentUser->id);
+				updateCommand->Parameters->AddWithValue("@fieldParcel", fieldParcel);
+
+				int rowsAffected = updateCommand->ExecuteNonQuery();
+				isUpdated = (rowsAffected > 0); // Eðer etkilenen satýr varsa iþlem baþarýlý
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("An error occurred while updating the field: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			finally {
+				connection->Close();
+			}
+
+			return isUpdated;
+		}
+
 
 
 		// Buton týklama olayý

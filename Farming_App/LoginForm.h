@@ -323,7 +323,6 @@ namespace FarmingApp {
 					mainForm->Show();
 					FieldForm^ fieldForm = gcnew FieldForm();
 					fieldForm->SetCurrentUser(user);
-					fieldForm->Show();
 					this->Hide();
 				}
 				else {

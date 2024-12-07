@@ -1,5 +1,4 @@
 #pragma once
-#include "FieldForm.h"
 
 namespace FarmingApp {
 
@@ -70,7 +69,7 @@ namespace FarmingApp {
 	private: System::Windows::Forms::DataGridView^ dataGridView6;
 	private: System::Windows::Forms::Button^ button17;
 	private: System::Windows::Forms::Button^ button18;
-	private: System::Windows::Forms::Button^ button19;
+
 
 
 
@@ -133,7 +132,6 @@ namespace FarmingApp {
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->button19 = (gcnew System::Windows::Forms::Button());
 			this->groupBox1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->groupBox2->SuspendLayout();
@@ -723,7 +721,6 @@ namespace FarmingApp {
 				| System::Windows::Forms::AnchorStyles::Right));
 			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
 				static_cast<System::Int32>(static_cast<System::Byte>(84)));
-			this->panel1->Controls->Add(this->button19);
 			this->panel1->Controls->Add(this->pictureBox1);
 			this->panel1->Controls->Add(this->label1);
 			this->panel1->Location = System::Drawing::Point(0, 0);
@@ -753,22 +750,6 @@ namespace FarmingApp {
 			this->label1->Size = System::Drawing::Size(134, 73);
 			this->label1->TabIndex = 1;
 			this->label1->Text = L"Items";
-			// 
-			// button19
-			// 
-			this->button19->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
-				static_cast<System::Int32>(static_cast<System::Byte>(84)));
-			this->button19->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button19->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button19->ForeColor = System::Drawing::Color::White;
-			this->button19->Location = System::Drawing::Point(1043, 41);
-			this->button19->Name = L"button19";
-			this->button19->Size = System::Drawing::Size(190, 57);
-			this->button19->TabIndex = 10;
-			this->button19->Text = L"Go to Field";
-			this->button19->UseVisualStyleBackColor = false;
-			this->button19->Click += gcnew System::EventHandler(this, &MainForm::button19_Click);
 			// 
 			// MainForm
 			// 
@@ -1000,11 +981,6 @@ namespace FarmingApp {
 	}
 	private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
-	}
-	private: System::Void button19_Click(System::Object^ sender, System::EventArgs^ e) {
-		FieldForm^ fieldForm = gcnew FieldForm();
-		fieldForm->Show();
-		this->Hide();
 	}
 };
 }
