@@ -4,6 +4,7 @@
 #include "MainForm.h"
 #include "ForgotPassword.h"
 #include "FieldForm.h"
+#include "TransferForm.h"
 
 namespace FarmingApp {
 
@@ -61,7 +62,7 @@ namespace FarmingApp {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -272,7 +273,7 @@ namespace FarmingApp {
 
 		}
 #pragma endregion
-		public: User^ user = nullptr;
+	public: User^ user = nullptr;
 
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		// Kullanýcý adý ve þifre alanlarýnýn boþ olup olmadýðýný kontrol et
@@ -297,7 +298,7 @@ namespace FarmingApp {
 				System::String^ storedHashedPassword = reader->IsDBNull(2) ? "" : reader->GetString(2); // password
 				System::String^ phoneNumber = reader->IsDBNull(3) ? "" : reader->GetString(3); // phone_number
 				System::String^ email = reader->IsDBNull(4) ? "" : reader->GetString(4); // email
-				double budget = reader->IsDBNull(5) ? 0.0 : reader->GetDouble(5); // budget
+				double budget = reader->IsDBNull(5) ? 0.0 : static_cast<double>(reader->GetDecimal(5));
 
 				// Kullanýcýnýn girdiði þifreyi hashle
 				System::String^ enteredPassword = textBox2->Text;
@@ -319,10 +320,19 @@ namespace FarmingApp {
 					);
 
 					reader->Close();
-					MainForm^ mainForm = gcnew MainForm();
-					mainForm->Show();
-					FieldForm^ fieldForm = gcnew FieldForm();
-					fieldForm->SetCurrentUser(user);
+
+					// Kullanýcý adý kontrolü
+					if (textBox1->Text->ToLower() == "admin") {
+						// Admin kullanýcý için MainForm'a yönlendir
+						MainForm^ mainForm = gcnew MainForm();
+						mainForm->Show();
+					}
+					else {
+						// Diðer kullanýcýlar için TransferForm'a yönlendir
+						TransferForm^ transferForm = gcnew TransferForm();
+						transferForm->Show();
+					}
+
 					this->Hide();
 				}
 				else {
@@ -344,7 +354,6 @@ namespace FarmingApp {
 	}
 
 
-
 	private: System::Void label3_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
 		label3->Font = gcnew System::Drawing::Font(label3->Font, System::Drawing::FontStyle::Underline | System::Drawing::FontStyle::Bold);
 	}
@@ -352,38 +361,38 @@ namespace FarmingApp {
 		label3->Font = gcnew System::Drawing::Font(label3->Font, System::Drawing::FontStyle::Regular | System::Drawing::FontStyle::Bold);
 	}
 	public: bool switchToForm = false;
-private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e) {
-	// RegisterForm'a geçiþi iþaretle
-	this->switchToForm = true;
+	private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e) {
+		// RegisterForm'a geçiþi iþaretle
+		this->switchToForm = true;
 
-	// Eðer RegisterForm'a geçiþ yapýlacaksa, RegisterForm'u aç
-	if (this->switchToForm) {
-		// Önce LoginForm'u kapatýyoruz
-		this->Hide(); // LoginForm'un kapanmasýný istemiyorsanýz, sadece gizleyebilirsiniz.
+		// Eðer RegisterForm'a geçiþ yapýlacaksa, RegisterForm'u aç
+		if (this->switchToForm) {
+			// Önce LoginForm'u kapatýyoruz
+			this->Hide(); // LoginForm'un kapanmasýný istemiyorsanýz, sadece gizleyebilirsiniz.
 
-		// RegisterForm'u modal olarak açýyoruz
-		FarmingApp::RegisterForm^ registerForm = gcnew FarmingApp::RegisterForm();
-		registerForm->ShowDialog(); // RegisterForm'un kendisi modal bir þekilde açýlýr.
+			// RegisterForm'u modal olarak açýyoruz
+			FarmingApp::RegisterForm^ registerForm = gcnew FarmingApp::RegisterForm();
+			registerForm->ShowDialog(); // RegisterForm'un kendisi modal bir þekilde açýlýr.
 
-		// Giriþ iþlemi baþarýlýysa, burada iþlemleri yapabilirsiniz.
-		if (registerForm->switchToLogin) {
-			// Kullanýcý giriþ formuna dönmeyi seçtiyse, LoginForm'u tekrar açýyoruz.
+			// Giriþ iþlemi baþarýlýysa, burada iþlemleri yapabilirsiniz.
+			if (registerForm->switchToLogin) {
+				// Kullanýcý giriþ formuna dönmeyi seçtiyse, LoginForm'u tekrar açýyoruz.
+				FarmingApp::LoginForm^ loginForm = gcnew FarmingApp::LoginForm();
+				loginForm->ShowDialog();
+			}
+			else {
+				// Kullanýcý baþarýlý þekilde kaydolduysa:
+				user = registerForm->user;
+			}
+		}
+		else {
+			// Eðer RegisterForm'a geçiþ yapýlmadýysa, LoginForm'u aç
 			FarmingApp::LoginForm^ loginForm = gcnew FarmingApp::LoginForm();
 			loginForm->ShowDialog();
 		}
-		else {
-			// Kullanýcý baþarýlý þekilde kaydolduysa:
-			user = registerForm->user;
-		}
 	}
-	else {
-		// Eðer RegisterForm'a geçiþ yapýlmadýysa, LoginForm'u aç
-		FarmingApp::LoginForm^ loginForm = gcnew FarmingApp::LoginForm();
-		loginForm->ShowDialog();
-	}
-}
 
-	
+
 	private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
 	}
@@ -395,12 +404,12 @@ private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e)
 			textBox2->PasswordChar = '*'; // Þifreyi gizler
 		}
 	}
-private: System::Void textBox2_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
-	if (e->KeyCode == System::Windows::Forms::Keys::Enter) {
-		// Button1'ýn Click olayýný tetikle
-		this->button1->PerformClick();
+	private: System::Void textBox2_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
+		if (e->KeyCode == System::Windows::Forms::Keys::Enter) {
+			// Button1'ýn Click olayýný tetikle
+			this->button1->PerformClick();
+		}
 	}
-}
 	private: System::Void label6_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
 		label6->Font = gcnew System::Drawing::Font(label6->Font, System::Drawing::FontStyle::Underline | System::Drawing::FontStyle::Bold);
 	}
@@ -431,5 +440,5 @@ private: System::Void textBox2_KeyDown(System::Object^ sender, System::Windows::
 			loginForm->ShowDialog();
 		}
 	}
-};
+	};
 }

@@ -122,13 +122,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BankForm.cpp" />
     <ClCompile Include="FieldForm.cpp" />
     <ClCompile Include="ForgotPassword.cpp" />
     <ClCompile Include="LoginForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
+    <ClCompile Include="MyFields.cpp" />
     <ClCompile Include="RegisterForm.cpp" />
+    <ClCompile Include="TransferForm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BankForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="FieldForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -141,12 +147,21 @@
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="MyFields.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="RegisterForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="TransferForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="User.h" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="BankForm.resx">
+      <DependentUpon>BankForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FieldForm.resx">
       <DependentUpon>FieldForm.h</DependentUpon>
     </EmbeddedResource>
@@ -159,8 +174,14 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MyFields.resx">
+      <DependentUpon>MyFields.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="RegisterForm.resx">
       <DependentUpon>RegisterForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TransferForm.resx">
+      <DependentUpon>TransferForm.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

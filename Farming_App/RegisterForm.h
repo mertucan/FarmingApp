@@ -361,9 +361,10 @@ namespace FarmingApp {
 			}
 			else {
 				// Kullanýcý adý yoksa, yeni kullanýcýyý ekle
-				SqlCommand^ command = gcnew SqlCommand("INSERT INTO farmers (username, password) VALUES (@username, @password)", connection);
+				SqlCommand^ command = gcnew SqlCommand("INSERT INTO farmers (username, password, budget) VALUES (@username, @password, @budget)", connection);
 				command->Parameters->AddWithValue("@username", textBox1->Text);
 				command->Parameters->AddWithValue("@password", hashedPassword);
+				command->Parameters->AddWithValue("@budget", 1000);
 				command->ExecuteNonQuery();
 
 				// Kayýt baþarýlý mesajý

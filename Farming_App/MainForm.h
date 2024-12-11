@@ -869,11 +869,15 @@ private: void ClearTextBoxes() {
 		}
 	}
 
-	private: void ToggleVisibility()
+	private: void ChangeVisibility()
 	{
 		panel4->Visible = false;
 		panel5->Visible = false;
 		panel6->Visible = false;
+		button7->Visible = true;
+		button8->Visible = true;
+		button9->Visible = true;
+		dataGridView1->Visible = true;
 	}
 
 	private: void DeleteSelectedRowWithReferences(DataGridView^ gridView, String^ tableName, String^ dbColumnName, String^ gridColumnName, String^ referenceTableName, String^ referenceColumnName) {
@@ -961,37 +965,37 @@ private: void ClearTextBoxes() {
 		this->Close();
 	}
 	private: System::Void button1_Click_1(System::Object^ sender, System::EventArgs^ e) {
-		ToggleVisibility();
+		ChangeVisibility();
 		panel4->Visible = true;
 		label1->Text = button1->Text;
 		LoadDataIntoGridView("SELECT animals_type as Type, animals_weight as Weight, animals_price as Price, animals_stock as Stock FROM animals", connectionString);
 	}
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
-		ToggleVisibility();
+		ChangeVisibility();
 		panel5->Visible = true;
 		label1->Text = button2->Text;
 		LoadDataIntoGridView("SELECT cars_type as Type, cars_explanation as Explanation, cars_price as Price, cars_stock as Stock FROM cars", connectionString);
 	}
 	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
-		ToggleVisibility();
+		ChangeVisibility();
 		panel5->Visible = true;
 		label1->Text = button3->Text;
 		LoadDataIntoGridView("SELECT crops_name as Type, crops_explanation as Explanation, crops_price as Price, crops_stock as Stock FROM crops", connectionString);
 	}
 	private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
-		ToggleVisibility();
+		ChangeVisibility();
 		panel5->Visible = true;
 		label1->Text = button4->Text;
 		LoadDataIntoGridView("SELECT foods_type as Type, foods_explanation as Explanation , foods_price as Price , foods_stock as Stock FROM foods", connectionString);
 	}
 	private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) {
-		ToggleVisibility();
+		ChangeVisibility();
 		panel5->Visible = true;
 		label1->Text = button5->Text;
 		LoadDataIntoGridView("SELECT med_type as Type, med_explanation as Explanation, med_price as Price, med_stock as Stock FROM medicine", connectionString);
 	}
 	private: System::Void button6_Click(System::Object^ sender, System::EventArgs^ e) {
-		ToggleVisibility();
+		ChangeVisibility();
 		panel6->Visible = true;
 		label1->Text = button6->Text;
 		LoadDataIntoGridView("SELECT plans_id as ID, crops.crops_name as Type, effective_plan as 'Effective Plan' FROM plans INNER JOIN crops ON crops.crops_id = plans.crops_id", connectionString);
@@ -1007,7 +1011,11 @@ private: void ClearTextBoxes() {
 		}
 	}
 	private: System::Void MainForm_Load(System::Object^ sender, System::EventArgs^ e) {
-		ToggleVisibility();
+		ChangeVisibility();
+		dataGridView1->Visible = false;
+		button7->Visible = false;
+		button8->Visible = false;
+		button9->Visible = false;
 	}
 
 	private: System::Void button7_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -1089,35 +1097,54 @@ private: void ClearTextBoxes() {
 				SqlConnection^ connection = gcnew SqlConnection(connectionString);
 				connection->Open();
 
-				// Crop tipi kontrolü
-				String^ checkQuery = "SELECT crops_id FROM crops WHERE crops_name = @name";
+				// Mevcut plan kontrolü
+				String^ checkQuery = "SELECT COUNT(*) FROM plans INNER JOIN crops ON plans.crops_id = crops.crops_id WHERE crops_name = @name";
 				SqlCommand^ checkCommand = gcnew SqlCommand(checkQuery, connection);
 				checkCommand->Parameters->AddWithValue("@name", cropType);
-				Object^ cropId = checkCommand->ExecuteScalar();
+				int count = Convert::ToInt32(checkCommand->ExecuteScalar());
 
-				if (cropId == nullptr) {
-					// Eðer crop type veritabanýnda yoksa
-					MessageBox::Show("This crops type doesn't exist.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				if (count > 0) {
+					// Ayný plan zaten varsa kullanýcýya sor
+					if (MessageBox::Show("The same plan already exists. Do you want to update it?", "Confirmation", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
+						// Güncelleme sorgusu
+						String^ updateQuery = "UPDATE plans SET effective_plan = @plan WHERE crops_id = (SELECT crops_id FROM crops WHERE crops_name = @name)";
+						SqlCommand^ updateCommand = gcnew SqlCommand(updateQuery, connection);
+						updateCommand->Parameters->AddWithValue("@plan", effectivePlan);
+						updateCommand->Parameters->AddWithValue("@name", cropType);
+						updateCommand->ExecuteNonQuery();
+
+						MessageBox::Show("Plan updated successfully.", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+					}
 				}
 				else {
-					// Plan ekleme
-					String^ insertQuery = "INSERT INTO plans (crops_id, effective_plan) VALUES (@cropId, @plan)";
-					SqlCommand^ insertCommand = gcnew SqlCommand(insertQuery, connection);
-					insertCommand->Parameters->AddWithValue("@cropId", Convert::ToInt32(cropId));
-					insertCommand->Parameters->AddWithValue("@plan", effectivePlan);
-					insertCommand->ExecuteNonQuery();
+					// Yeni plan ekleme
+					String^ cropIdQuery = "SELECT crops_id FROM crops WHERE crops_name = @name";
+					SqlCommand^ cropIdCommand = gcnew SqlCommand(cropIdQuery, connection);
+					cropIdCommand->Parameters->AddWithValue("@name", cropType);
+					Object^ cropId = cropIdCommand->ExecuteScalar();
 
-					MessageBox::Show("Plan added successfully.", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+					if (cropId == nullptr) {
+						MessageBox::Show("This crops type doesn't exist.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					}
+					else {
+						String^ insertQuery = "INSERT INTO plans (crops_id, effective_plan) VALUES (@cropId, @plan)";
+						SqlCommand^ insertCommand = gcnew SqlCommand(insertQuery, connection);
+						insertCommand->Parameters->AddWithValue("@cropId", Convert::ToInt32(cropId));
+						insertCommand->Parameters->AddWithValue("@plan", effectivePlan);
+						insertCommand->ExecuteNonQuery();
 
-					// Verileri güncelle
-					LoadDataIntoGridView("SELECT plans_id as ID, crops.crops_name as Type, effective_plan as 'Effective Plan' FROM plans INNER JOIN crops ON crops.crops_id = plans.crops_id", connectionString);
-
-					// TextBox'larý sýfýrla
-					textBox12->Clear();
-					textBox11->Clear();
+						MessageBox::Show("Plan added successfully.", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+					}
 				}
 
 				connection->Close();
+
+				// Tabloyu güncelle
+				LoadDataIntoGridView("SELECT plans_id as ID, crops.crops_name as Type, effective_plan as 'Effective Plan' FROM plans INNER JOIN crops ON crops.crops_id = plans.crops_id", connectionString);
+
+				// TextBox'larý sýfýrla
+				textBox12->Clear();
+				textBox11->Clear();
 			}
 			catch (Exception^ ex) {
 				MessageBox::Show("Error: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -1506,45 +1533,48 @@ private: void ClearTextBoxes() {
 					MessageBox::Show("No records found to update.");
 				}
 			}
-			String^ planID = textBox11->Text; // Plans tablosundaki ID
-			String^ cropType = textBox12->Text; // Crops tablosundaki Type
-			String^ effectivePlan = textBox11->Text; // Effective Plan bilgisi
+			else if (label1->Text == "Plans")
+			{
+				String^ planID = textBox11->Text; // Plans tablosundaki ID
+				String^ cropType = textBox12->Text; // Crops tablosundaki Type
+				String^ effectivePlan = textBox11->Text; // Effective Plan bilgisi
 
-			DataGridViewRow^ selectedRow = dataGridView1->SelectedRows[0];
+				DataGridViewRow^ selectedRow = dataGridView1->SelectedRows[0];
 
-			// Ýlk sütunun deðerini alalým (Plan ID)
-			String^ selectedPlanID = selectedRow->Cells["ID"]->Value->ToString();
+				// Ýlk sütunun deðerini alalým (Plan ID)
+				String^ selectedPlanID = selectedRow->Cells["ID"]->Value->ToString();
 
-			if (String::IsNullOrEmpty(planID) || String::IsNullOrEmpty(cropType) || String::IsNullOrEmpty(effectivePlan)) {
-				MessageBox::Show("Please fill all fields.");
-				return;
-			}
+				if (String::IsNullOrEmpty(planID) || String::IsNullOrEmpty(cropType) || String::IsNullOrEmpty(effectivePlan)) {
+					MessageBox::Show("Please fill all fields.");
+					return;
+				}
 
-			// SQL sorgusunu yazalým
-			String^ query =
-				"UPDATE plans "
-				"SET effective_plan = @EffectivePlan "
-				"WHERE plans_id = @PlanID; "
-				"UPDATE crops "
-				"SET crops_name = @CropType "
-				"WHERE crops_id = (SELECT crops_id FROM plans WHERE plans_id = @PlanID);";
+				// SQL sorgusunu yazalým
+				String^ query =
+					"UPDATE plans "
+					"SET effective_plan = @EffectivePlan "
+					"WHERE plans_id = @PlanID; "
+					"UPDATE crops "
+					"SET crops_name = @CropType "
+					"WHERE crops_id = (SELECT crops_id FROM plans WHERE plans_id = @PlanID);";
 
-			SqlCommand^ cmd = gcnew SqlCommand(query, conn);
+				SqlCommand^ cmd = gcnew SqlCommand(query, conn);
 
-			// Parametreleri ekleyelim
-			cmd->Parameters->AddWithValue("@PlanID", selectedPlanID);
-			cmd->Parameters->AddWithValue("@CropType", cropType);
-			cmd->Parameters->AddWithValue("@EffectivePlan", effectivePlan);
+				// Parametreleri ekleyelim
+				cmd->Parameters->AddWithValue("@PlanID", selectedPlanID);
+				cmd->Parameters->AddWithValue("@CropType", cropType);
+				cmd->Parameters->AddWithValue("@EffectivePlan", effectivePlan);
 
-			int rowsAffected = cmd->ExecuteNonQuery();
+				int rowsAffected = cmd->ExecuteNonQuery();
 
-			if (rowsAffected > 0) {
-				MessageBox::Show("Plan record updated successfully.");
-				LoadDataIntoGridView("SELECT plans_id as ID, crops.crops_name as Type, effective_plan as 'Effective Plan' FROM plans INNER JOIN crops ON crops.crops_id = plans.crops_id", connectionString);
-				ClearTextBoxes();
-			}
-			else {
-				MessageBox::Show("No records found to update.");
+				if (rowsAffected > 0) {
+					MessageBox::Show("Plan record updated successfully.");
+					LoadDataIntoGridView("SELECT plans_id as ID, crops.crops_name as Type, effective_plan as 'Effective Plan' FROM plans INNER JOIN crops ON crops.crops_id = plans.crops_id", connectionString);
+					ClearTextBoxes();
+				}
+				else {
+					MessageBox::Show("No records found to update.");
+				}
 			}
 		}
 		catch (Exception^ ex) {

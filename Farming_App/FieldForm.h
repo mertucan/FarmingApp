@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "User.h"
 
 namespace FarmingApp {
@@ -20,7 +20,7 @@ namespace FarmingApp {
 		void SetCurrentUser(User^ user) {
 			currentUser = user;
 		}
-		FieldForm()  // Kullanýcýyý al
+		FieldForm()  // Kullanï¿½cï¿½yï¿½ al
 		{
 			InitializeComponent();
 		}
@@ -84,7 +84,7 @@ namespace FarmingApp {
 
 			this->tableLayoutPanel2->Location = System::Drawing::Point(50, 50);
 			this->tableLayoutPanel2->Name = L"tableLayoutPanel2";
-			this->tableLayoutPanel2->Size = System::Drawing::Size(500, 500);  // 10x10 alan için boyut
+			this->tableLayoutPanel2->Size = System::Drawing::Size(500, 500);
 			this->tableLayoutPanel2->TabIndex = 0;
 			// 
 			// FieldForm
@@ -101,25 +101,26 @@ namespace FarmingApp {
 
 	private:
 		SqlConnection^ connection = gcnew SqlConnection("Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True");
-		User^ currentUser; // Giriþ yapan kullanýcýyý tutacak deðiþken
+		User^ currentUser;
 
 		void FieldForm_Load(Object^ sender, EventArgs^ e) {
 			InitializeFieldGrid();
 		}
 
 		void InitializeFieldGrid() {
-			int buttonIndex = 1;  // Numara baþlat
+			int buttonIndex = 1;  // Numara baÅŸlat
 
-			// SQL sorgusunu hazýrlýyoruz
-			SqlCommand^ command = gcnew SqlCommand("SELECT f.field_parcel, f.farmers_id, u.username FROM field f LEFT JOIN farmers u ON f.farmers_id = u.farmers_id", connection);
+			// SQL sorgusunu hazÄ±rlÄ±yoruz
+			SqlCommand^ command = gcnew SqlCommand("SELECT f.field_parcel, f.farmers_id, f.area, u.username FROM field f LEFT JOIN farmers u ON f.farmers_id = u.farmers_id", connection);
 			connection->Open();
 			SqlDataReader^ reader = command->ExecuteReader();
 
-			// Veritabanýndaki verileri okuyoruz
+			// VeritabanÄ±ndaki verileri okuyoruz
 			while (reader->Read()) {
 				int fieldParcel = reader->GetInt32(0);
 				bool isFarmersIdNull = reader->IsDBNull(1);
-				String^ username = isFarmersIdNull ? nullptr : reader->GetString(2);
+				int area = reader->GetInt32(2);  // 'area' sÃ¼tunu Ã¼Ã§Ã¼ncÃ¼ sÃ¼tun olduÄŸu iÃ§in 2. indeks
+				String^ username = isFarmersIdNull ? nullptr : reader->GetString(3);
 
 				Panel^ panel = gcnew Panel();
 				panel->Size = System::Drawing::Size(50, 50);  // Panel boyutu 50x50
@@ -137,9 +138,9 @@ namespace FarmingApp {
 
 				if (isFarmersIdNull) {
 					button->BackColor = System::Drawing::Color::Green;
-					tooltip->SetToolTip(button, "Available");
+					tooltip->SetToolTip(button, "Available \nArea Size: " + area.ToString());
 
-					// Týklama olayýný yeþil buton için baðla
+					// TÄ±klama olayÄ±nÄ± yeÅŸil buton iÃ§in baÄŸla
 					button->Click += gcnew EventHandler(this, &FieldForm::OnFieldButtonClick);
 				}
 				else {
@@ -147,7 +148,7 @@ namespace FarmingApp {
 					button->ForeColor = System::Drawing::Color::White;
 					tooltip->SetToolTip(button, "Owned by: " + username);
 
-					// Týklama olayýný kýrmýzý buton için baðla
+					// TÄ±klama olayÄ±nÄ± kÄ±rmÄ±zÄ± buton iÃ§in baÄŸla
 					button->Click += gcnew EventHandler(this, &FieldForm::OnRedButtonClick);
 				}
 
@@ -159,6 +160,7 @@ namespace FarmingApp {
 
 			connection->Close();
 		}
+
 
 		void OnRedButtonClick(Object^ sender, EventArgs^ e) {
 			MessageBox::Show("This field is occupied and cannot be selected.", "Info", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -172,18 +174,14 @@ namespace FarmingApp {
 
 			Button^ clickedButton = dynamic_cast<Button^>(sender);
 			if (clickedButton != nullptr) {
-				// Eðer buton zaten kýrmýzýysa iþlem yapma
 				if (clickedButton->BackColor == System::Drawing::Color::Red) {
 					MessageBox::Show("This field is occupied and cannot be selected.", "Info", MessageBoxButtons::OK, MessageBoxIcon::Error);
 					return;
 				}
 
-				// Alanýn kimlik numarasýný al
 				int fieldParcel = Int32::Parse(clickedButton->Text);
 
-				// Veritabanýný güncelle
 				if (UpdateFieldOwnership(fieldParcel)) {
-					// Satýn alma iþlemi baþarýlýysa butonun arka plan rengini ve tooltip'ini güncelle
 					clickedButton->BackColor = System::Drawing::Color::Red;
 					clickedButton->ForeColor = System::Drawing::Color::White;
 
@@ -211,7 +209,7 @@ namespace FarmingApp {
 				updateCommand->Parameters->AddWithValue("@fieldParcel", fieldParcel);
 
 				int rowsAffected = updateCommand->ExecuteNonQuery();
-				isUpdated = (rowsAffected > 0); // Eðer etkilenen satýr varsa iþlem baþarýlý
+				isUpdated = (rowsAffected > 0);
 			}
 			catch (Exception^ ex) {
 				MessageBox::Show("An error occurred while updating the field: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -223,22 +221,17 @@ namespace FarmingApp {
 			return isUpdated;
 		}
 
-
-
-		// Buton týklama olayý
 		void UpdateFarmersIdInField(int fieldParcel) {
 			try {
-				// SQL baðlantýsýný açýyoruz
+
 				connection->Open();
 
-				// SQL komutunu hazýrlýyoruz
 				SqlCommand^ updateCommand = gcnew SqlCommand("UPDATE field SET farmers_id = @farmersId WHERE field_parcel = @fieldParcel", connection);
 
 				// Parametreleri ekliyoruz
 				updateCommand->Parameters->AddWithValue("@farmersId", currentUser->id);
 				updateCommand->Parameters->AddWithValue("@fieldParcel", fieldParcel);
 
-				// Komutu çalýþtýrýyoruz
 				int rowsAffected = updateCommand->ExecuteNonQuery();
 
 				if (rowsAffected > 0) {
@@ -257,9 +250,8 @@ namespace FarmingApp {
 		}
 
 		void ReloadFieldGrid() {
-			// Mevcut butonlarý temizleyip, veritabanýndan tekrar alarak butonlarý yeniden yükleyelim
 			this->tableLayoutPanel2->Controls->Clear();
-			InitializeFieldGrid();  // Yeni verilerle butonlarý yeniden yükle
+			InitializeFieldGrid(); 
 		}
 	};
 }
