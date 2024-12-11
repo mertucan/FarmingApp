@@ -1,4 +1,5 @@
 #pragma once
+#include "User.h"
 
 namespace FarmingApp {
 
@@ -7,6 +8,7 @@ namespace FarmingApp {
 	using namespace System::Collections;
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
+	using namespace System::Data::SqlClient;
 	using namespace System::Drawing;
 
 	/// <summary>
@@ -15,12 +17,11 @@ namespace FarmingApp {
 	public ref class BankForm : public System::Windows::Forms::Form
 	{
 	public:
-		BankForm(void)
+		User^ currentUser;
+		BankForm(User^ user)
 		{
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
+			currentUser = user;
 		}
 
 	protected:
@@ -42,7 +43,8 @@ namespace FarmingApp {
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::TextBox^ textBox1;
+	private: System::Windows::Forms::TextBox^ textBox2;
+
 
 	private:
 		/// <summary>
@@ -65,7 +67,7 @@ namespace FarmingApp {
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
@@ -91,6 +93,7 @@ namespace FarmingApp {
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox1->TabIndex = 12;
 			this->pictureBox1->TabStop = false;
+			this->pictureBox1->Click += gcnew System::EventHandler(this, &BankForm::pictureBox1_Click);
 			// 
 			// label1
 			// 
@@ -142,6 +145,7 @@ namespace FarmingApp {
 			this->button1->TabIndex = 13;
 			this->button1->Text = L"Transfer";
 			this->button1->UseVisualStyleBackColor = false;
+			this->button1->Click += gcnew System::EventHandler(this, &BankForm::button1_Click);
 			// 
 			// label3
 			// 
@@ -155,16 +159,17 @@ namespace FarmingApp {
 			this->label3->TabIndex = 15;
 			this->label3->Text = L"Amount";
 			// 
-			// textBox1
+			// textBox2
 			// 
-			this->textBox1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->textBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->textBox2->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->textBox2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.125F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(162)));
-			this->textBox1->Location = System::Drawing::Point(169, 399);
-			this->textBox1->Multiline = true;
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(264, 41);
-			this->textBox1->TabIndex = 14;
+			this->textBox2->Location = System::Drawing::Point(169, 412);
+			this->textBox2->Multiline = true;
+			this->textBox2->Name = L"textBox2";
+			this->textBox2->Size = System::Drawing::Size(264, 41);
+			this->textBox2->TabIndex = 16;
+			this->textBox2->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &BankForm::textBox2_KeyPress);
 			// 
 			// BankForm
 			// 
@@ -173,8 +178,8 @@ namespace FarmingApp {
 			this->AutoSize = true;
 			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(600, 671);
+			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->label3);
-			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label4);
@@ -193,7 +198,70 @@ namespace FarmingApp {
 		}
 #pragma endregion
 	private: System::Void BankForm_Load(System::Object^ sender, System::EventArgs^ e) {
+		GetBudget();
+	}
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		// Ensure the entered value is a valid number
+		double amount;
+		if (Double::TryParse(textBox2->Text, amount)) {
+			if (amount > 0) {
+				// Update the budget
+				currentUser->budget += amount;
 
+				// Update the UI with the new budget
+				label2->Text = "$" + currentUser->budget.ToString("F2");
+
+				// Now update the budget in the database
+				// Assuming you have a method to update the budget in the database:
+				UpdateBudgetInDatabase(currentUser->id, currentUser->budget);
+			}
+			else {
+				MessageBox::Show("Please enter a positive amount.");
+			}
+		}
+		else {
+			MessageBox::Show("Invalid amount. Please enter a numeric value.");
+		}
+	}
+
+		   void UpdateBudgetInDatabase(int farmersId, double newBudget) {
+			   // Create a connection to the database (make sure you have necessary SQL connection details)
+			   SqlConnection^ connection = gcnew SqlConnection("Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True");
+			   try {
+				   connection->Open();
+
+				   // Create a command to update the budget
+				   String^ query = "UPDATE farmers SET budget = @newBudget WHERE farmers_id = @farmersId";
+				   SqlCommand^ command = gcnew SqlCommand(query, connection);
+
+				   // Add parameters to prevent SQL injection
+				   command->Parameters->AddWithValue("@newBudget", newBudget);
+				   command->Parameters->AddWithValue("@farmersId", farmersId);
+
+				   // Execute the command
+				   command->ExecuteNonQuery();
+				   GetBudget();
+			   }
+			   catch (Exception^ ex) {
+				   MessageBox::Show("Error updating database: " + ex->Message);
+			   }
+			   finally {
+				   connection->Close();
+			   }
+		   }
+
+	void GetBudget()
+	{
+		label2->Text = "$" + currentUser->budget.ToString("F2"); // Mevcut bakiyeyi gösterir
+		textBox2->Clear();
+	}
+	private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->Close();
+	}
+	private: System::Void textBox2_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+		if (!Char::IsDigit(e->KeyChar) && e->KeyChar != ',' && e->KeyChar != (char)8) {
+			e->Handled = true; // Prevent the key from being entered
+		}
 	}
 };
 }

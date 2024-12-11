@@ -330,6 +330,7 @@ namespace FarmingApp {
 					else {
 						// Diðer kullanýcýlar için TransferForm'a yönlendir
 						TransferForm^ transferForm = gcnew TransferForm();
+						transferForm->SetUser(user);  // user nesnesini doðru þekilde aktarýyoruz
 						transferForm->Show();
 					}
 

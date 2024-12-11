@@ -11,6 +11,15 @@ public:
     String^ email;
     double budget;
 
+    User() {
+        id = 0;
+        username = "";
+        password = "";
+        phone_number = "";
+        email = "";
+        budget = 0.0;
+    }
+
     // Yapýcý metod (constructor)
     User(int farmersId, String^ username, String^ password, String^ phoneNumber, String^ email, double budget) {
         id = farmersId;

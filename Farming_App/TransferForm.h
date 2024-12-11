@@ -2,7 +2,7 @@
 #include "FieldForm.h"
 #include "MyFields.h"
 #include "BankForm.h"
-
+#include "User.h"
 
 namespace FarmingApp {
 
@@ -22,10 +22,12 @@ namespace FarmingApp {
 		TransferForm(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
 		}
+	public:
+		void SetUser(User^ user);
+
+	private:
+		User^ currentUser;
 
 	protected:
 		/// <summary>
@@ -320,9 +322,9 @@ namespace FarmingApp {
 		this->Close();
 	}
 	private: System::Void pictureBox6_Click(System::Object^ sender, System::EventArgs^ e) {
-		BankForm^ bankForm= gcnew BankForm();
-		bankForm->Show();
-		this->Hide();
+		BankForm^ bankForm = gcnew BankForm(currentUser);  // Pass the currentUser object
+		bankForm->Show();  // Show the BankForm
+		this->Hide();  // Hide the TransferForm (optional, if you don't want it to stay open)
 	}
 };
 }
