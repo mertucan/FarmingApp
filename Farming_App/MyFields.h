@@ -1,4 +1,5 @@
 #pragma once
+#include "User.h"
 
 namespace FarmingApp {
 
@@ -7,6 +8,7 @@ namespace FarmingApp {
 	using namespace System::Collections;
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
+	using namespace System::Data::SqlClient;
 	using namespace System::Drawing;
 
 	/// <summary>
@@ -15,12 +17,11 @@ namespace FarmingApp {
 	public ref class MyFields : public System::Windows::Forms::Form
 	{
 	public:
-		MyFields(void)
+		User^ currentUser;
+		MyFields(User^ user)
 		{
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
+			currentUser = user;
 		}
 
 	protected:
@@ -38,6 +39,7 @@ namespace FarmingApp {
 	protected:
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::DataGridView^ dataGridView1;
 
 	private:
 		/// <summary>
@@ -53,11 +55,15 @@ namespace FarmingApp {
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyFields::typeid));
+			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle1 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle2 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// panel1
@@ -67,7 +73,7 @@ namespace FarmingApp {
 				static_cast<System::Int32>(static_cast<System::Byte>(84)));
 			this->panel1->Controls->Add(this->pictureBox1);
 			this->panel1->Controls->Add(this->label1);
-			this->panel1->Location = System::Drawing::Point(0, 0);
+			this->panel1->Location = System::Drawing::Point(-235, 0);
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(1456, 114);
 			this->panel1->TabIndex = 1;
@@ -75,7 +81,7 @@ namespace FarmingApp {
 			// pictureBox1
 			// 
 			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(1408, 12);
+			this->pictureBox1->Location = System::Drawing::Point(1173, 12);
 			this->pictureBox1->Name = L"pictureBox1";
 			this->pictureBox1->Size = System::Drawing::Size(35, 35);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
@@ -89,32 +95,96 @@ namespace FarmingApp {
 			this->label1->Font = (gcnew System::Drawing::Font(L"Dubai", 16.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label1->ForeColor = System::Drawing::Color::White;
-			this->label1->Location = System::Drawing::Point(628, 22);
+			this->label1->Location = System::Drawing::Point(630, 21);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(206, 73);
 			this->label1->TabIndex = 1;
 			this->label1->Text = L"My Fields";
+			// 
+			// dataGridView1
+			// 
+			this->dataGridView1->BackgroundColor = System::Drawing::Color::WhiteSmoke;
+			this->dataGridView1->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->dataGridView1->CellBorderStyle = System::Windows::Forms::DataGridViewCellBorderStyle::SingleHorizontal;
+			dataGridViewCellStyle1->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
+			dataGridViewCellStyle1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(20)), static_cast<System::Int32>(static_cast<System::Byte>(25)),
+				static_cast<System::Int32>(static_cast<System::Byte>(70)));
+			dataGridViewCellStyle1->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			dataGridViewCellStyle1->ForeColor = System::Drawing::Color::WhiteSmoke;
+			dataGridViewCellStyle1->SelectionBackColor = System::Drawing::SystemColors::Highlight;
+			dataGridViewCellStyle1->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			dataGridViewCellStyle1->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
+			this->dataGridView1->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			dataGridViewCellStyle2->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
+			dataGridViewCellStyle2->BackColor = System::Drawing::SystemColors::Window;
+			dataGridViewCellStyle2->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			dataGridViewCellStyle2->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(164)),
+				static_cast<System::Int32>(static_cast<System::Byte>(165)), static_cast<System::Int32>(static_cast<System::Byte>(169)));
+			dataGridViewCellStyle2->SelectionBackColor = System::Drawing::Color::ForestGreen;
+			dataGridViewCellStyle2->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			dataGridViewCellStyle2->WrapMode = System::Windows::Forms::DataGridViewTriState::False;
+			this->dataGridView1->DefaultCellStyle = dataGridViewCellStyle2;
+			this->dataGridView1->EnableHeadersVisualStyles = false;
+			this->dataGridView1->Location = System::Drawing::Point(108, 165);
+			this->dataGridView1->Margin = System::Windows::Forms::Padding(4, 3, 4, 3);
+			this->dataGridView1->Name = L"dataGridView1";
+			this->dataGridView1->RowHeadersWidth = 82;
+			this->dataGridView1->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
+			this->dataGridView1->Size = System::Drawing::Size(770, 409);
+			this->dataGridView1->TabIndex = 2;
 			// 
 			// MyFields
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(192, 192);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
 			this->BackColor = System::Drawing::Color::White;
-			this->ClientSize = System::Drawing::Size(1455, 651);
+			this->ClientSize = System::Drawing::Size(985, 651);
+			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->panel1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->Name = L"MyFields";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"MyFields";
+			this->Load += gcnew System::EventHandler(this, &MyFields::MyFields_Load);
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
 	private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
+	}
+	private: System::Void MyFields_Load(System::Object^ sender, System::EventArgs^ e) {
+		// Veritabaný baðlantýsý
+		SqlConnection^ connection = gcnew SqlConnection("Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True"); // Baðlantý dizesini deðiþtirin
+		connection->Open();
+
+		SqlCommand^ command = gcnew SqlCommand("SELECT field_parcel, area, price FROM field WHERE farmers_id = @farmersId", connection);
+		command->Parameters->AddWithValue("@farmersId", currentUser->id);
+
+		SqlDataReader^ reader = command->ExecuteReader();
+
+		dataGridView1->Rows->Clear();
+
+		if (dataGridView1->Columns->Count == 0) {
+			dataGridView1->Columns->Add("Parcel", "Field Parcel");
+			dataGridView1->Columns->Add("Area", "Area");
+			dataGridView1->Columns->Add("Price", "Price");
+		}
+
+		while (reader->Read()) {
+			int fieldParcel = reader->GetInt32(0);
+			int area = reader->GetInt32(1);
+			int price = reader->GetInt32(2);
+			dataGridView1->Rows->Add(fieldParcel.ToString(), area.ToString(), price.ToString());
+		}
+		connection->Close();
 	}
 };
 }

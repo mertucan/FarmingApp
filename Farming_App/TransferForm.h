@@ -150,6 +150,7 @@ namespace FarmingApp {
 			this->pictureBox3->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox3->TabIndex = 3;
 			this->pictureBox3->TabStop = false;
+			this->pictureBox3->Click += gcnew System::EventHandler(this, &TransferForm::pictureBox3_Click);
 			// 
 			// pictureBox4
 			// 
@@ -314,7 +315,7 @@ namespace FarmingApp {
 		this->Hide();
 	}
 	private: System::Void pictureBox5_Click(System::Object^ sender, System::EventArgs^ e) {
-		MyFields^ myfieldForm = gcnew MyFields();
+		MyFields^ myfieldForm = gcnew MyFields(currentUser);
 		myfieldForm->Show();
 		this->Hide();
 	}
@@ -325,6 +326,9 @@ namespace FarmingApp {
 		BankForm^ bankForm = gcnew BankForm(currentUser);  // Pass the currentUser object
 		bankForm->Show();  // Show the BankForm
 		this->Hide();  // Hide the TransferForm (optional, if you don't want it to stay open)
+	}
+	private: System::Void pictureBox3_Click(System::Object^ sender, System::EventArgs^ e) {
+
 	}
 };
 }
