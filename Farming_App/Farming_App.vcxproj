@@ -130,6 +130,7 @@
     <ClCompile Include="MyFields.cpp" />
     <ClCompile Include="RegisterForm.cpp" />
     <ClCompile Include="TransferForm.cpp" />
+    <ClCompile Include="WholesalerForm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BankForm.h">
@@ -157,6 +158,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="User.h" />
+    <ClInclude Include="WholesalerForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="BankForm.resx">
@@ -182,6 +186,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TransferForm.resx">
       <DependentUpon>TransferForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WholesalerForm.resx">
+      <DependentUpon>WholesalerForm.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -3,6 +3,7 @@
 #include "MyFields.h"
 #include "BankForm.h"
 #include "User.h"
+#include "WholesalerForm.h"
 
 namespace FarmingApp {
 
@@ -328,7 +329,9 @@ namespace FarmingApp {
 		this->Hide();  // Hide the TransferForm (optional, if you don't want it to stay open)
 	}
 	private: System::Void pictureBox3_Click(System::Object^ sender, System::EventArgs^ e) {
-
+		WholesalerForm^ wholesalerForm = gcnew WholesalerForm();
+		wholesalerForm->Show();
+		this->Hide();
 	}
 };
 }
