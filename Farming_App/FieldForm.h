@@ -17,12 +17,11 @@ namespace FarmingApp {
 	public ref class FieldForm : public System::Windows::Forms::Form
 	{
 	public:
-		void SetCurrentUser(User^ user) {
-			currentUser = user;
-		}
-		FieldForm()  // Kullan�c�y� al
+		User^ currentUser;
+		FieldForm(User^ user)
 		{
 			InitializeComponent();
+			currentUser = user;
 		}
 
 	protected:
@@ -37,7 +36,11 @@ namespace FarmingApp {
 			}
 		}
 
-	private: System::Windows::Forms::TableLayoutPanel^ tableLayoutPanel2;
+	private: 
+		System::Windows::Forms::TableLayoutPanel^ tableLayoutPanel2;
+		ToolTip^ tooltip = gcnew ToolTip();
+		System::Windows::Forms::Label^ balanceLabel;
+
 	protected:
 
 	private:
@@ -96,22 +99,41 @@ namespace FarmingApp {
 			this->ResumeLayout(false);
 
 			this->Load += gcnew EventHandler(this, &FieldForm::FieldForm_Load);
+			// 
+			// BalanceLabel
+			// 
+			this->balanceLabel = (gcnew System::Windows::Forms::Label());
+			this->balanceLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(162)));
+			this->balanceLabel->ForeColor = System::Drawing::Color::Gray;
+			this->balanceLabel->AutoSize = true;
+			this->balanceLabel->Location = System::Drawing::Point(50, 30);  // Konumu ayarlayın
+			this->balanceLabel->Name = L"balanceLabel";
+			this->balanceLabel->Size = System::Drawing::Size(150, 20);  // Boyut
+			this->balanceLabel->TabIndex = 1;
+			this->balanceLabel->Text = "Your balance: $0";  // İlk başta bakiyeyi 0 olarak ayarlayalım
+			this->Controls->Add(this->balanceLabel);
 		}
 #pragma endregion
 
 	private:
 		SqlConnection^ connection = gcnew SqlConnection("Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True");
-		User^ currentUser;
 
 		void FieldForm_Load(Object^ sender, EventArgs^ e) {
 			InitializeFieldGrid();
+			UpdateBalanceLabel();
+		}
+
+		void UpdateBalanceLabel() {
+			if (currentUser != nullptr) {
+				this->balanceLabel->Text = "Your balance: $" + currentUser->budget.ToString("0.00");
+			}
 		}
 
 		void InitializeFieldGrid() {
 			int buttonIndex = 1;  // Numara başlat
 
 			// SQL sorgusunu hazırlıyoruz
-			SqlCommand^ command = gcnew SqlCommand("SELECT f.field_parcel, f.farmers_id, f.area, u.username FROM field f LEFT JOIN farmers u ON f.farmers_id = u.farmers_id", connection);
+			SqlCommand^ command = gcnew SqlCommand("SELECT f.field_parcel, f.farmers_id, f.area, f.price, u.username FROM field f LEFT JOIN farmers u ON f.farmers_id = u.farmers_id", connection);
 			connection->Open();
 			SqlDataReader^ reader = command->ExecuteReader();
 
@@ -119,8 +141,9 @@ namespace FarmingApp {
 			while (reader->Read()) {
 				int fieldParcel = reader->GetInt32(0);
 				bool isFarmersIdNull = reader->IsDBNull(1);
-				int area = reader->GetInt32(2);  // 'area' sütunu üçüncü sütun olduğu için 2. indeks
-				String^ username = isFarmersIdNull ? nullptr : reader->GetString(3);
+				int area = reader->GetInt32(2);
+				int price = reader->GetInt32(3); // 'price' sütunu üçüncü sütun
+				String^ username = isFarmersIdNull ? nullptr : reader->GetString(4); // 'username' doğru indeks
 
 				Panel^ panel = gcnew Panel();
 				panel->Size = System::Drawing::Size(50, 50);  // Panel boyutu 50x50
@@ -138,7 +161,8 @@ namespace FarmingApp {
 
 				if (isFarmersIdNull) {
 					button->BackColor = System::Drawing::Color::Green;
-					tooltip->SetToolTip(button, "Available \nArea Size: " + area.ToString());
+					tooltip->SetToolTip(button, "Available \nArea Size: " + area.ToString() + "\nPrice: $" + price.ToString("0.00"));
+					button->Tag = price;  // Fiyatı butonun Tag özelliğine kaydediyoruz
 
 					// Tıklama olayını yeşil buton için bağla
 					button->Click += gcnew EventHandler(this, &FieldForm::OnFieldButtonClick);
@@ -179,20 +203,50 @@ namespace FarmingApp {
 					return;
 				}
 
-				int fieldParcel = Int32::Parse(clickedButton->Text);
+				// Fiyatı butonun Tag özelliğinden alıyoruz
+				int price = (int)clickedButton->Tag;
 
-				if (UpdateFieldOwnership(fieldParcel)) {
-					clickedButton->BackColor = System::Drawing::Color::Red;
-					clickedButton->ForeColor = System::Drawing::Color::White;
-
-					ToolTip^ tooltip = gcnew ToolTip();
-					tooltip->SetToolTip(clickedButton, "Owned by: " + currentUser->username);
-
-					MessageBox::Show("Field successfully purchased!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				if (currentUser->budget < price) {
+					MessageBox::Show("Insufficient balance.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
 				}
-				else {
-					MessageBox::Show("Purchase failed. Try again later.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				}
+
+				else
+				{
+					// Bütçeyi ve alan fiyatını göstermek için bir mesaj kutusu açıyoruz
+					System::Windows::Forms::DialogResult result = MessageBox::Show("Do you want to purchase this field?",
+						"Confirm Purchase",
+						MessageBoxButtons::YesNo,
+						MessageBoxIcon::Question);
+
+					if (result == System::Windows::Forms::DialogResult::Yes) {
+						// Bütçeyi kontrol et
+
+
+						// Alanı satın al
+						if (UpdateFieldOwnership(Int32::Parse(clickedButton->Text))) {
+							// Satın alma başarılı
+							clickedButton->BackColor = System::Drawing::Color::Red;
+							clickedButton->ForeColor = System::Drawing::Color::White;
+							tooltip->SetToolTip(clickedButton, "Owned by: " + currentUser->username);
+
+							// Bütçeyi güncelle
+							currentUser->budget -= price;
+							UpdateBalanceLabel();  // Bakiyeyi güncelle
+
+							// Veritabanında kullanıcı bakiyesini güncelle
+							if (UpdateUserBalance()) {
+								MessageBox::Show("Field successfully purchased!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+							}
+							else {
+								MessageBox::Show("Error updating balance in database.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+							}
+						}
+						else {
+							MessageBox::Show("Purchase failed. Try again later.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+						}
+					}
+				}	
 			}
 		}
 
@@ -247,6 +301,32 @@ namespace FarmingApp {
 			finally {
 				connection->Close();
 			}
+		}
+
+		bool UpdateUserBalance() {
+			bool isUpdated = false;
+
+			try {
+				connection->Open();
+
+				SqlCommand^ updateCommand = gcnew SqlCommand(
+					"UPDATE farmers SET budget = @budget WHERE farmers_id = @farmersId", connection);
+
+				// Kullanıcının yeni bakiyesini parametre olarak ekliyoruz
+				updateCommand->Parameters->AddWithValue("@budget", currentUser->budget);
+				updateCommand->Parameters->AddWithValue("@farmersId", currentUser->id);
+
+				int rowsAffected = updateCommand->ExecuteNonQuery();
+				isUpdated = (rowsAffected > 0);
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("An error occurred while updating the balance: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			finally {
+				connection->Close();
+			}
+
+			return isUpdated;
 		}
 
 		void ReloadFieldGrid() {

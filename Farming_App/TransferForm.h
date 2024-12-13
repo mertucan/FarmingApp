@@ -309,7 +309,7 @@ namespace FarmingApp {
 		this->Close();
 	}
 	private: System::Void pictureBox4_Click(System::Object^ sender, System::EventArgs^ e) {
-		FieldForm^ fieldForm = gcnew FieldForm();
+		FieldForm^ fieldForm = gcnew FieldForm(currentUser);
 		fieldForm->Show();
 		this->Hide();
 	}
