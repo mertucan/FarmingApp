@@ -329,7 +329,7 @@ namespace FarmingApp {
 		this->Hide();  // Hide the TransferForm (optional, if you don't want it to stay open)
 	}
 	private: System::Void pictureBox3_Click(System::Object^ sender, System::EventArgs^ e) {
-		WholesalerForm^ wholesalerForm = gcnew WholesalerForm();
+		WholesalerForm^ wholesalerForm = gcnew WholesalerForm(currentUser);
 		wholesalerForm->Show();
 		this->Hide();
 	}
