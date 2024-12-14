@@ -112,6 +112,9 @@ namespace FarmingApp {
 			this->balanceLabel->TabIndex = 1;
 			this->balanceLabel->Text = "Your balance: $0";  // İlk başta bakiyeyi 0 olarak ayarlayalım
 			this->Controls->Add(this->balanceLabel);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
+			this->BackColor = System::Drawing::Color::White;
 		}
 #pragma endregion
 
