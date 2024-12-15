@@ -53,6 +53,7 @@ namespace FarmingApp {
 	private: System::Windows::Forms::TextBox^ textBox3;
 	private: System::Windows::Forms::PictureBox^ pictureBox2;
 	private: System::Windows::Forms::ToolTip^ toolTip1;
+	private: System::Windows::Forms::PictureBox^ pictureBox3;
 	private: System::ComponentModel::IContainer^ components;
 
 
@@ -86,9 +87,11 @@ namespace FarmingApp {
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->toolTip1 = (gcnew System::Windows::Forms::ToolTip(this->components));
+			this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// label5
@@ -160,6 +163,7 @@ namespace FarmingApp {
 			this->panel1->Anchor = System::Windows::Forms::AnchorStyles::Top;
 			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
 				static_cast<System::Int32>(static_cast<System::Byte>(84)));
+			this->panel1->Controls->Add(this->pictureBox3);
 			this->panel1->Controls->Add(this->pictureBox1);
 			this->panel1->Controls->Add(this->label2);
 			this->panel1->Location = System::Drawing::Point(-4, 0);
@@ -225,6 +229,17 @@ namespace FarmingApp {
 			this->pictureBox2->MouseEnter += gcnew System::EventHandler(this, &ForgotPassword::pictureBox2_MouseEnter);
 			this->pictureBox2->MouseLeave += gcnew System::EventHandler(this, &ForgotPassword::pictureBox2_MouseLeave);
 			// 
+			// pictureBox3
+			// 
+			this->pictureBox3->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox3.Image")));
+			this->pictureBox3->Location = System::Drawing::Point(16, 12);
+			this->pictureBox3->Name = L"pictureBox3";
+			this->pictureBox3->Size = System::Drawing::Size(35, 35);
+			this->pictureBox3->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox3->TabIndex = 14;
+			this->pictureBox3->TabStop = false;
+			this->pictureBox3->Click += gcnew System::EventHandler(this, &ForgotPassword::pictureBox3_Click);
+			// 
 			// ForgotPassword
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(192, 192);
@@ -249,6 +264,7 @@ namespace FarmingApp {
 			this->panel1->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -343,6 +359,11 @@ namespace FarmingApp {
 	}
 	private: System::Void pictureBox2_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
 		toolTip1->SetToolTip(this->pictureBox2, "");
+	}
+
+	private: System::Void pictureBox3_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->switchToLogin = true;
+		this->Hide();
 	}
 };
 }

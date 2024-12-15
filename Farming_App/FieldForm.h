@@ -124,6 +124,39 @@ namespace FarmingApp {
 		void FieldForm_Load(Object^ sender, EventArgs^ e) {
 			InitializeFieldGrid();
 			UpdateBalanceLabel();
+
+			Label^ labelX = gcnew Label();
+			labelX->Text = "X"; // "X" yazısı
+			labelX->Font = gcnew System::Drawing::Font("Arial", 20, FontStyle::Bold); // Yazı tipi ve boyutu
+			labelX->ForeColor = System::Drawing::Color::Red; // Yazı rengi kırmızı
+			labelX->BackColor = System::Drawing::Color::Transparent; // Arkaplanı şeffaf yap
+			labelX->Size = System::Drawing::Size(35, 35); // Label boyutu
+			labelX->Location = System::Drawing::Point(580, 5); // Location değerini aynı şekilde veriyoruz
+			labelX->TextAlign = ContentAlignment::MiddleCenter; // "X" yazısını ortalar
+			labelX->Click += gcnew EventHandler(this, &FieldForm::OnLabelXClick); // Tıklama olayı bağlanıyor
+			this->Controls->Add(labelX); // Form'a ekle
+
+			// labelBack tanımı
+			Label^ labelBack = gcnew Label();
+			labelBack->Text = "<"; // Geri oku
+			labelBack->Font = gcnew System::Drawing::Font("Arial", 20, FontStyle::Bold); // Siyah ve kalın
+			labelBack->ForeColor = System::Drawing::Color::Gray; // Yazı rengi siyah
+			labelBack->BackColor = System::Drawing::Color::Transparent; // Arkaplan şeffaf
+			labelBack->Size = System::Drawing::Size(35, 35); // Boyut
+			labelBack->Location = System::Drawing::Point(2, 5);
+			labelBack->TextAlign = ContentAlignment::MiddleCenter; // Ortalanmış yazı
+			labelBack->Click += gcnew EventHandler(this, &FieldForm::OnLabelBackClick); // Tıklama olayı
+			this->Controls->Add(labelBack);
+		}
+		public: bool switchToTransfer = false;
+		void OnLabelBackClick(Object^ sender, EventArgs^ e) {
+			this->switchToTransfer = true;
+			this->Hide();
+		}
+
+		void OnLabelXClick(Object^ sender, EventArgs^ e) {
+			// Formu kapatma işlemi
+			this->Close();
 		}
 
 		void UpdateBalanceLabel() {

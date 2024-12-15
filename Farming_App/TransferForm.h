@@ -33,6 +33,7 @@ namespace FarmingApp {
 	private: System::Windows::Forms::PictureBox^ pictureBox9;
 	private: System::Windows::Forms::Label^ label9;
 
+
 	private:
 		User^ currentUser;
 
@@ -370,36 +371,70 @@ namespace FarmingApp {
 
 		}
 #pragma endregion
+	public: bool switchToForm = false;
 	private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
 	}
 	private: System::Void pictureBox4_Click(System::Object^ sender, System::EventArgs^ e) {
-		FieldForm^ fieldForm = gcnew FieldForm(currentUser);
-		fieldForm->Show();
+		this->switchToForm = true;
 		this->Hide();
+
+		FarmingApp::FieldForm^ fieldForm = gcnew FarmingApp::FieldForm(currentUser);
+		fieldForm->ShowDialog();
+
+		if (fieldForm->switchToTransfer) {
+			this->Show();
+		}
 	}
 	private: System::Void pictureBox5_Click(System::Object^ sender, System::EventArgs^ e) {
-		MyFields^ myfieldForm = gcnew MyFields(currentUser);
-		myfieldForm->Show();
+		this->switchToForm = true;
 		this->Hide();
+
+		FarmingApp::MyFields^ myFieldsForm = gcnew FarmingApp::MyFields(currentUser);
+		myFieldsForm->ShowDialog();
+
+		if (myFieldsForm->switchToTransfer) {
+			this->Show();
+		}
 	}
+	public: bool switchToLogin = false;
 	private: System::Void pictureBox7_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
 	}
 	private: System::Void pictureBox6_Click(System::Object^ sender, System::EventArgs^ e) {
-		BankForm^ bankForm = gcnew BankForm(currentUser);
-		bankForm->Show(); 
-		this->Hide(); 
+		this->switchToForm = true;
+		this->Hide();
+
+		FarmingApp::BankForm^ bankForm = gcnew FarmingApp::BankForm(currentUser);
+		bankForm->ShowDialog();
+
+		if (bankForm->switchToTransfer) {
+			this->Show();
+		}
 	}
 	private: System::Void pictureBox3_Click(System::Object^ sender, System::EventArgs^ e) {
-		WholesalerForm^ wholesalerForm = gcnew WholesalerForm(currentUser);
-		wholesalerForm->Show();
+		this->switchToForm = true;
 		this->Hide();
+
+		// Mevcut kullanýcýyý aktararak yeni form baþlat
+		FarmingApp::WholesalerForm^ wholesalerForm = gcnew FarmingApp::WholesalerForm(currentUser);
+		wholesalerForm->ShowDialog();
+
+		// TransferForm'a geri dönmek istenirse mevcut nesneyi kullan
+		if (wholesalerForm->switchToTransfer) {
+			this->Show(); // Yeni bir TransferForm oluþturmak yerine mevcut olaný göster
+		}
 	}
 	private: System::Void pictureBox8_Click(System::Object^ sender, System::EventArgs^ e) {
-		MyInventory^ myInventoryForm = gcnew MyInventory(currentUser);
-		myInventoryForm->Show();
+		this->switchToForm = true;
 		this->Hide();
+
+		FarmingApp::MyInventory^ inventoryForm = gcnew FarmingApp::MyInventory(currentUser);
+		inventoryForm->ShowDialog();
+
+		if (inventoryForm->switchToTransfer) {
+			this->Show();
+		}
 	}
 };
 }

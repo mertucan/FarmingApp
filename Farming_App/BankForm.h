@@ -44,6 +44,7 @@ namespace FarmingApp {
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::TextBox^ textBox2;
+	private: System::Windows::Forms::PictureBox^ pictureBox2;
 
 
 	private:
@@ -68,8 +69,10 @@ namespace FarmingApp {
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
+			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// panel1
@@ -77,6 +80,7 @@ namespace FarmingApp {
 			this->panel1->Anchor = System::Windows::Forms::AnchorStyles::Top;
 			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
 				static_cast<System::Int32>(static_cast<System::Byte>(84)));
+			this->panel1->Controls->Add(this->pictureBox2);
 			this->panel1->Controls->Add(this->pictureBox1);
 			this->panel1->Controls->Add(this->label1);
 			this->panel1->Location = System::Drawing::Point(-4, 0);
@@ -171,6 +175,17 @@ namespace FarmingApp {
 			this->textBox2->TabIndex = 16;
 			this->textBox2->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &BankForm::textBox2_KeyPress);
 			// 
+			// pictureBox2
+			// 
+			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
+			this->pictureBox2->Location = System::Drawing::Point(16, 12);
+			this->pictureBox2->Name = L"pictureBox2";
+			this->pictureBox2->Size = System::Drawing::Size(35, 35);
+			this->pictureBox2->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox2->TabIndex = 13;
+			this->pictureBox2->TabStop = false;
+			this->pictureBox2->Click += gcnew System::EventHandler(this, &BankForm::pictureBox2_Click);
+			// 
 			// BankForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(192, 192);
@@ -192,6 +207,7 @@ namespace FarmingApp {
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -262,6 +278,11 @@ namespace FarmingApp {
 		if (!Char::IsDigit(e->KeyChar) && e->KeyChar != ',' && e->KeyChar != (char)8) {
 			e->Handled = true; // Prevent the key from being entered
 		}
+	}
+	public: bool switchToTransfer = false;
+	private: System::Void pictureBox2_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->switchToTransfer = true;
+		this->Hide();
 	}
 };
 }

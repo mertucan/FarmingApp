@@ -57,6 +57,7 @@ namespace FarmingApp {
 	private: System::Windows::Forms::Label^ label7;
 	private: System::Windows::Forms::PictureBox^ pictureBox2;
 	private: System::Windows::Forms::ToolTip^ toolTip1;
+	private: System::Windows::Forms::PictureBox^ pictureBox3;
 	private: System::ComponentModel::IContainer^ components;
 
 
@@ -93,10 +94,12 @@ namespace FarmingApp {
 			this->label7 = (gcnew System::Windows::Forms::Label());
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->toolTip1 = (gcnew System::Windows::Forms::ToolTip(this->components));
+			this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->panel2->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// panel1
@@ -104,6 +107,7 @@ namespace FarmingApp {
 			this->panel1->Anchor = System::Windows::Forms::AnchorStyles::Top;
 			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(120)), static_cast<System::Int32>(static_cast<System::Byte>(180)),
 				static_cast<System::Int32>(static_cast<System::Byte>(84)));
+			this->panel1->Controls->Add(this->pictureBox3);
 			this->panel1->Controls->Add(this->pictureBox1);
 			this->panel1->Controls->Add(this->label1);
 			this->panel1->Location = System::Drawing::Point(0, 0);
@@ -288,6 +292,17 @@ namespace FarmingApp {
 			this->pictureBox2->MouseEnter += gcnew System::EventHandler(this, &RegisterForm::pictureBox2_MouseEnter);
 			this->pictureBox2->MouseLeave += gcnew System::EventHandler(this, &RegisterForm::pictureBox2_MouseLeave);
 			// 
+			// pictureBox3
+			// 
+			this->pictureBox3->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox3.Image")));
+			this->pictureBox3->Location = System::Drawing::Point(12, 12);
+			this->pictureBox3->Name = L"pictureBox3";
+			this->pictureBox3->Size = System::Drawing::Size(35, 35);
+			this->pictureBox3->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox3->TabIndex = 15;
+			this->pictureBox3->TabStop = false;
+			this->pictureBox3->Click += gcnew System::EventHandler(this, &RegisterForm::pictureBox3_Click);
+			// 
 			// RegisterForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(192, 192);
@@ -317,6 +332,7 @@ namespace FarmingApp {
 			this->panel2->ResumeLayout(false);
 			this->panel2->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -412,61 +428,65 @@ namespace FarmingApp {
 	private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
 	}
-private: System::Void textBox3_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
-	if (e->KeyCode == System::Windows::Forms::Keys::Enter) {
-		// Button1'ýn Click olayýný tetikle
-		this->button1->PerformClick();
-		e->SuppressKeyPress = true;
+	private: System::Void textBox3_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
+		if (e->KeyCode == System::Windows::Forms::Keys::Enter) {
+			// Button1'ýn Click olayýný tetikle
+			this->button1->PerformClick();
+			e->SuppressKeyPress = true;
+			this->switchToLogin = true;
+			this->Hide();
+		}
+	}
+	private: System::Void textBox2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+		// Get the password entered by the user
+		System::String^ password = textBox2->Text;
+
+		// Check the strength of the password
+		if (password->Length < 6) {
+			panel2->Visible = true;
+			label7->Visible = true;
+			panel2->BackColor = Color::FromArgb(255, 0, 0); // Red for weak
+			label7->Text = "Weak";
+			label6->Location = System::Drawing::Point(24, 190);
+			textBox3->Location = System::Drawing::Point(25, 210);
+		}
+		else if (password->Length >= 6 && password->Length < 10) {
+			panel2->BackColor = Color::FromArgb(255, 165, 0); // Orange for medium
+			label7->Text = "Fair";
+		}
+		else {
+			// Check if password contains at least one special character and number
+			bool hasSpecialChar = false;
+			bool hasDigit = false;
+			for (int i = 0; i < password->Length; i++) {
+				if (Char::IsDigit(password[i])) {
+					hasDigit = true;
+				}
+				if (!Char::IsLetterOrDigit(password[i])) {
+					hasSpecialChar = true;
+				}
+			}
+
+			if (hasSpecialChar && hasDigit) {
+				panel2->BackColor = Color::FromArgb(0, 128, 0); // Green for strong
+				label7->Text = "Strong";
+			}
+			else {
+				panel2->BackColor = Color::FromArgb(255, 165, 0); // Orange for medium (fallback)
+				label7->Text = "Fair";
+			}
+		}
+	}
+
+	private: System::Void pictureBox2_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
+		toolTip1->SetToolTip(this->pictureBox2, L"Password must be at least 8 characters long\nPassword must include both letters and numbers\nPassword must contain at least one special character.");
+	}
+	private: System::Void pictureBox2_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+		toolTip1->SetToolTip(this->pictureBox2, "");
+	}
+	private: System::Void pictureBox3_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->switchToLogin = true;
 		this->Hide();
 	}
-}
-private: System::Void textBox2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-	// Get the password entered by the user
-	System::String^ password = textBox2->Text;
-
-	// Check the strength of the password
-	if (password->Length < 6) {
-		panel2->Visible = true;
-		label7->Visible = true;
-		panel2->BackColor = Color::FromArgb(255, 0, 0); // Red for weak
-		label7->Text = "Weak";
-		label6->Location = System::Drawing::Point(24, 190);
-		textBox3->Location = System::Drawing::Point(25, 210);
-	}
-	else if (password->Length >= 6 && password->Length < 10) {
-		panel2->BackColor = Color::FromArgb(255, 165, 0); // Orange for medium
-		label7->Text = "Fair";
-	}
-	else {
-		// Check if password contains at least one special character and number
-		bool hasSpecialChar = false;
-		bool hasDigit = false;
-		for (int i = 0; i < password->Length; i++) {
-			if (Char::IsDigit(password[i])) {
-				hasDigit = true;
-			}
-			if (!Char::IsLetterOrDigit(password[i])) {
-				hasSpecialChar = true;
-			}
-		}
-
-		if (hasSpecialChar && hasDigit) {
-			panel2->BackColor = Color::FromArgb(0, 128, 0); // Green for strong
-			label7->Text = "Strong";
-		}
-		else {
-			panel2->BackColor = Color::FromArgb(255, 165, 0); // Orange for medium (fallback)
-			label7->Text = "Fair";
-		}
-	}
-}
-
-private: System::Void pictureBox2_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
-	toolTip1->SetToolTip(this->pictureBox2, L"Password must be at least 8 characters long\nPassword must include both letters and numbers\nPassword must contain at least one special character.");
-}
-private: System::Void pictureBox2_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
-	toolTip1->SetToolTip(this->pictureBox2, "");
-}
 };
 }
