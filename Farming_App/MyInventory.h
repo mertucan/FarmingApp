@@ -391,9 +391,10 @@ namespace FarmingApp {
 		String^ itemType = dataGridView1->CurrentRow->Cells["Item Type"]->Value->ToString(); // Selected item type from DataGridView
 		int amount = Int32::Parse(textBox1->Text); // Amount from textBox1
 		Decimal price = Decimal::Parse(textBox2->Text); // Price from textBox2
+		String^ tableType = dataGridView1->CurrentRow->Cells["category"]->Value->ToString(); // Get the 'category' value from DataGridView
 
-		// Step 2: Insert the sale record into the 'market' table
-		String^ insertQuery = "INSERT INTO market (selling_user_id, item_type, amount, price) VALUES (@sellingUserId, @itemType, @amount, @price)";
+		// Step 2: Insert the sale record into the 'market' table including the 'table_type' from 'category'
+		String^ insertQuery = "INSERT INTO market (selling_user_id, item_type, amount, price, table_type) VALUES (@sellingUserId, @itemType, @amount, @price, @tableType)";
 		SqlConnection^ connection = gcnew SqlConnection("Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True"); // Use your connection string here
 		SqlCommand^ insertCommand = gcnew SqlCommand(insertQuery, connection);
 
@@ -401,6 +402,7 @@ namespace FarmingApp {
 		insertCommand->Parameters->AddWithValue("@itemType", itemType);
 		insertCommand->Parameters->AddWithValue("@amount", amount);
 		insertCommand->Parameters->AddWithValue("@price", price);
+		insertCommand->Parameters->AddWithValue("@tableType", tableType); // Use the 'category' value as table_type
 
 		try {
 			connection->Open();

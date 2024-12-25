@@ -6,6 +6,7 @@
 #include "WholesalerForm.h"
 #include "MyInventory.h"
 #include "ForSaleForm.h"
+#include "MarketForm.h"
 
 namespace FarmingApp {
 
@@ -155,6 +156,7 @@ namespace FarmingApp {
 			this->pictureBox2->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox2->TabIndex = 2;
 			this->pictureBox2->TabStop = false;
+			this->pictureBox2->Click += gcnew System::EventHandler(this, &TransferForm::pictureBox2_Click);
 			// 
 			// pictureBox3
 			// 
@@ -402,7 +404,7 @@ namespace FarmingApp {
 	}
 	public: bool switchToLogin = false;
 	private: System::Void pictureBox7_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->Close();
+		Application::Exit(); 
 	}
 	private: System::Void pictureBox6_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->switchToForm = true;
@@ -447,6 +449,17 @@ namespace FarmingApp {
 		forSaleForm->ShowDialog();
 
 		if (forSaleForm->switchToTransfer) {
+			this->Show();
+		}
+	}
+	private: System::Void pictureBox2_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->switchToForm = true;
+		this->Hide();
+
+		FarmingApp::MarketForm^ marketForm = gcnew FarmingApp::MarketForm(currentUser);
+		marketForm->ShowDialog();
+
+		if (marketForm->switchToTransfer) {
 			this->Show();
 		}
 	}
