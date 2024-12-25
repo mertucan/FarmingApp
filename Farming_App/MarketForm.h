@@ -489,32 +489,44 @@ namespace FarmingApp {
 				cmd4->Parameters->AddWithValue("@itemId", itemId);
 				cmd4->ExecuteNonQuery();
 
-				// Check inventory and add/update
-				String^ checkInventoryQuery = "SELECT amount FROM inventory WHERE farmers_id = @userId AND item_type = @itemType AND table_type = @tableType";
-				SqlCommand^ cmd5 = gcnew SqlCommand(checkInventoryQuery, connection, transaction);
+				// Insert transaction into transactions table
+				String^ insertTransactionQuery = "INSERT INTO transactions (selling_user_id, buying_user_id, item_type, table_name, amount, price, total) VALUES (@sellerId, @userId, @itemType, @tableType, @purchaseAmount, @itemPrice, @totalCost)";
+				SqlCommand^ cmd5 = gcnew SqlCommand(insertTransactionQuery, connection, transaction);
+				cmd5->Parameters->AddWithValue("@sellerId", sellerId);
 				cmd5->Parameters->AddWithValue("@userId", currentUser->id);
 				cmd5->Parameters->AddWithValue("@itemType", itemType);
 				cmd5->Parameters->AddWithValue("@tableType", tableType);
-				Object^ result = cmd5->ExecuteScalar();
+				cmd5->Parameters->AddWithValue("@purchaseAmount", purchaseAmount);
+				cmd5->Parameters->AddWithValue("@itemPrice", itemPrice);
+				cmd5->Parameters->AddWithValue("@totalCost", totalCost);
+				cmd5->ExecuteNonQuery();
+
+				// Check inventory and add/update
+				String^ checkInventoryQuery = "SELECT amount FROM inventory WHERE farmers_id = @userId AND item_type = @itemType AND table_type = @tableType";
+				SqlCommand^ cmd6 = gcnew SqlCommand(checkInventoryQuery, connection, transaction);
+				cmd6->Parameters->AddWithValue("@userId", currentUser->id);
+				cmd6->Parameters->AddWithValue("@itemType", itemType);
+				cmd6->Parameters->AddWithValue("@tableType", tableType);
+				Object^ result = cmd6->ExecuteScalar();
 
 				if (result != nullptr) {
 					int currentAmount = Convert::ToInt32(result);
 					String^ updateInventoryQuery = "UPDATE inventory SET amount = amount + @purchaseAmount WHERE farmers_id = @userId AND item_type = @itemType AND table_type = @tableType";
-					SqlCommand^ cmd6 = gcnew SqlCommand(updateInventoryQuery, connection, transaction);
-					cmd6->Parameters->AddWithValue("@purchaseAmount", purchaseAmount);
-					cmd6->Parameters->AddWithValue("@userId", currentUser->id);
-					cmd6->Parameters->AddWithValue("@itemType", itemType);
-					cmd6->Parameters->AddWithValue("@tableType", tableType);
-					cmd6->ExecuteNonQuery();
-				}
-				else {
-					String^ insertInventoryQuery = "INSERT INTO inventory (farmers_id, item_type, table_type, amount) VALUES (@userId, @itemType, @tableType, @purchaseAmount)";
-					SqlCommand^ cmd7 = gcnew SqlCommand(insertInventoryQuery, connection, transaction);
+					SqlCommand^ cmd7 = gcnew SqlCommand(updateInventoryQuery, connection, transaction);
+					cmd7->Parameters->AddWithValue("@purchaseAmount", purchaseAmount);
 					cmd7->Parameters->AddWithValue("@userId", currentUser->id);
 					cmd7->Parameters->AddWithValue("@itemType", itemType);
 					cmd7->Parameters->AddWithValue("@tableType", tableType);
-					cmd7->Parameters->AddWithValue("@purchaseAmount", purchaseAmount);
 					cmd7->ExecuteNonQuery();
+				}
+				else {
+					String^ insertInventoryQuery = "INSERT INTO inventory (farmers_id, item_type, table_type, amount) VALUES (@userId, @itemType, @tableType, @purchaseAmount)";
+					SqlCommand^ cmd8 = gcnew SqlCommand(insertInventoryQuery, connection, transaction);
+					cmd8->Parameters->AddWithValue("@userId", currentUser->id);
+					cmd8->Parameters->AddWithValue("@itemType", itemType);
+					cmd8->Parameters->AddWithValue("@tableType", tableType);
+					cmd8->Parameters->AddWithValue("@purchaseAmount", purchaseAmount);
+					cmd8->ExecuteNonQuery();
 				}
 
 				// Commit the transaction
