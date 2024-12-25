@@ -177,6 +177,12 @@ namespace FarmingApp {
 		this->Close();
 	}
 	private: System::Void MyFields_Load(System::Object^ sender, System::EventArgs^ e) {
+		dataGridView1->ReadOnly = true;
+		dataGridView1->AllowUserToResizeColumns = false;
+		dataGridView1->AllowUserToResizeRows = false;
+		dataGridView1->MultiSelect = false;
+		dataGridView1->AllowUserToAddRows = false;
+
 		// Veritabaný baðlantýsý
 		SqlConnection^ connection = gcnew SqlConnection("Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True"); // Baðlantý dizesini deðiþtirin
 		connection->Open();

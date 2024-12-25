@@ -133,6 +133,7 @@ namespace FarmingApp {
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(509, 41);
 			this->textBox1->TabIndex = 1;
+			this->textBox1->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &LoginForm::textBox1_KeyDown);
 			// 
 			// textBox2
 			// 
@@ -406,9 +407,15 @@ namespace FarmingApp {
 		}
 	}
 	private: System::Void textBox2_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
-		if (e->KeyCode == System::Windows::Forms::Keys::Enter) {
-			// Button1'ýn Click olayýný tetikle
-			this->button1->PerformClick();
+		if (e->KeyCode == System::Windows::Forms::Keys::Enter)
+		{
+			e->SuppressKeyPress = true; // Enter tuþunun iþlem yapmasýný engelle
+		}
+	}
+	private: System::Void textBox1_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
+		if (e->KeyCode == System::Windows::Forms::Keys::Enter)
+		{
+			e->SuppressKeyPress = true; // Enter tuþunun iþlem yapmasýný engelle
 		}
 	}
 	private: System::Void label6_MouseEnter(System::Object^ sender, System::EventArgs^ e) {
@@ -441,5 +448,5 @@ namespace FarmingApp {
 			loginForm->ShowDialog();
 		}
 	}
-	};
+};
 }

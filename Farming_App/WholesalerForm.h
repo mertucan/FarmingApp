@@ -572,6 +572,12 @@ namespace FarmingApp {
 		textBox1->Clear();
 	}
 	private: System::Void WholesalerForm_Load(System::Object^ sender, System::EventArgs^ e) {
+		dataGridView1->ReadOnly = true;
+		dataGridView1->AllowUserToResizeColumns = false;
+		dataGridView1->AllowUserToResizeRows = false;
+		dataGridView1->MultiSelect = false;
+		dataGridView1->AllowUserToAddRows = false;
+
 		this->label5->Text = "Current Balance: $" + currentUser->budget.ToString("0.00");
 		textBox1->Enabled = false;
 	}

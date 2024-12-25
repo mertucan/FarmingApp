@@ -100,6 +100,11 @@ namespace FarmingApp {
 			this->panel2 = (gcnew System::Windows::Forms::Panel());
 			this->panel3 = (gcnew System::Windows::Forms::Panel());
 			this->button6 = (gcnew System::Windows::Forms::Button());
+			this->panel6 = (gcnew System::Windows::Forms::Panel());
+			this->textBox11 = (gcnew System::Windows::Forms::TextBox());
+			this->label12 = (gcnew System::Windows::Forms::Label());
+			this->textBox12 = (gcnew System::Windows::Forms::TextBox());
+			this->label13 = (gcnew System::Windows::Forms::Label());
 			this->button5 = (gcnew System::Windows::Forms::Button());
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->button3 = (gcnew System::Windows::Forms::Button());
@@ -127,18 +132,13 @@ namespace FarmingApp {
 			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->textBox8 = (gcnew System::Windows::Forms::TextBox());
 			this->label9 = (gcnew System::Windows::Forms::Label());
-			this->panel6 = (gcnew System::Windows::Forms::Panel());
-			this->textBox11 = (gcnew System::Windows::Forms::TextBox());
-			this->label12 = (gcnew System::Windows::Forms::Label());
-			this->textBox12 = (gcnew System::Windows::Forms::TextBox());
-			this->label13 = (gcnew System::Windows::Forms::Label());
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->panel3->SuspendLayout();
+			this->panel6->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->panel4->SuspendLayout();
 			this->panel5->SuspendLayout();
-			this->panel6->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// panel1
@@ -222,6 +222,63 @@ namespace FarmingApp {
 			this->button6->Text = L"Plans";
 			this->button6->UseVisualStyleBackColor = false;
 			this->button6->Click += gcnew System::EventHandler(this, &MainForm::button6_Click);
+			// 
+			// panel6
+			// 
+			this->panel6->Controls->Add(this->textBox11);
+			this->panel6->Controls->Add(this->label12);
+			this->panel6->Controls->Add(this->textBox12);
+			this->panel6->Controls->Add(this->label13);
+			this->panel6->Location = System::Drawing::Point(1130, 151);
+			this->panel6->Name = L"panel6";
+			this->panel6->Size = System::Drawing::Size(303, 322);
+			this->panel6->TabIndex = 19;
+			// 
+			// textBox11
+			// 
+			this->textBox11->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->textBox11->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.125F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(162)));
+			this->textBox11->Location = System::Drawing::Point(27, 119);
+			this->textBox11->Multiline = true;
+			this->textBox11->Name = L"textBox11";
+			this->textBox11->Size = System::Drawing::Size(246, 181);
+			this->textBox11->TabIndex = 13;
+			// 
+			// label12
+			// 
+			this->label12->AutoSize = true;
+			this->label12->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7.875F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(162)));
+			this->label12->ForeColor = System::Drawing::Color::Gray;
+			this->label12->Location = System::Drawing::Point(22, 87);
+			this->label12->Name = L"label12";
+			this->label12->Size = System::Drawing::Size(144, 25);
+			this->label12->TabIndex = 14;
+			this->label12->Text = L"Effective Plan";
+			// 
+			// textBox12
+			// 
+			this->textBox12->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->textBox12->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.125F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(162)));
+			this->textBox12->Location = System::Drawing::Point(27, 39);
+			this->textBox12->Multiline = true;
+			this->textBox12->Name = L"textBox12";
+			this->textBox12->Size = System::Drawing::Size(246, 41);
+			this->textBox12->TabIndex = 11;
+			// 
+			// label13
+			// 
+			this->label13->AutoSize = true;
+			this->label13->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7.875F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(162)));
+			this->label13->ForeColor = System::Drawing::Color::Gray;
+			this->label13->Location = System::Drawing::Point(22, 7);
+			this->label13->Name = L"label13";
+			this->label13->Size = System::Drawing::Size(60, 25);
+			this->label13->TabIndex = 12;
+			this->label13->Text = L"Type";
 			// 
 			// button5
 			// 
@@ -445,6 +502,7 @@ namespace FarmingApp {
 			this->textBox4->Name = L"textBox4";
 			this->textBox4->Size = System::Drawing::Size(246, 41);
 			this->textBox4->TabIndex = 17;
+			this->textBox4->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MainForm::textBox4_KeyPress);
 			// 
 			// label5
 			// 
@@ -468,6 +526,7 @@ namespace FarmingApp {
 			this->textBox3->Name = L"textBox3";
 			this->textBox3->Size = System::Drawing::Size(246, 41);
 			this->textBox3->TabIndex = 15;
+			this->textBox3->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MainForm::textBox3_KeyPress);
 			// 
 			// label3
 			// 
@@ -491,6 +550,7 @@ namespace FarmingApp {
 			this->textBox2->Name = L"textBox2";
 			this->textBox2->Size = System::Drawing::Size(246, 41);
 			this->textBox2->TabIndex = 13;
+			this->textBox2->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MainForm::textBox2_KeyPress);
 			// 
 			// label2
 			// 
@@ -514,7 +574,7 @@ namespace FarmingApp {
 			this->panel5->Controls->Add(this->label8);
 			this->panel5->Controls->Add(this->textBox8);
 			this->panel5->Controls->Add(this->label9);
-			this->panel5->Location = System::Drawing::Point(1130, 154);
+			this->panel5->Location = System::Drawing::Point(1130, 151);
 			this->panel5->Name = L"panel5";
 			this->panel5->Size = System::Drawing::Size(303, 322);
 			this->panel5->TabIndex = 19;
@@ -529,6 +589,7 @@ namespace FarmingApp {
 			this->textBox5->Name = L"textBox5";
 			this->textBox5->Size = System::Drawing::Size(246, 41);
 			this->textBox5->TabIndex = 17;
+			this->textBox5->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MainForm::textBox5_KeyPress);
 			// 
 			// label6
 			// 
@@ -552,6 +613,7 @@ namespace FarmingApp {
 			this->textBox6->Name = L"textBox6";
 			this->textBox6->Size = System::Drawing::Size(246, 41);
 			this->textBox6->TabIndex = 15;
+			this->textBox6->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MainForm::textBox6_KeyPress);
 			// 
 			// label7
 			// 
@@ -611,63 +673,6 @@ namespace FarmingApp {
 			this->label9->TabIndex = 12;
 			this->label9->Text = L"Type";
 			// 
-			// panel6
-			// 
-			this->panel6->Controls->Add(this->textBox11);
-			this->panel6->Controls->Add(this->label12);
-			this->panel6->Controls->Add(this->textBox12);
-			this->panel6->Controls->Add(this->label13);
-			this->panel6->Location = System::Drawing::Point(1130, 154);
-			this->panel6->Name = L"panel6";
-			this->panel6->Size = System::Drawing::Size(303, 322);
-			this->panel6->TabIndex = 19;
-			// 
-			// textBox11
-			// 
-			this->textBox11->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->textBox11->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.125F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(162)));
-			this->textBox11->Location = System::Drawing::Point(27, 119);
-			this->textBox11->Multiline = true;
-			this->textBox11->Name = L"textBox11";
-			this->textBox11->Size = System::Drawing::Size(246, 181);
-			this->textBox11->TabIndex = 13;
-			// 
-			// label12
-			// 
-			this->label12->AutoSize = true;
-			this->label12->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7.875F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(162)));
-			this->label12->ForeColor = System::Drawing::Color::Gray;
-			this->label12->Location = System::Drawing::Point(22, 87);
-			this->label12->Name = L"label12";
-			this->label12->Size = System::Drawing::Size(144, 25);
-			this->label12->TabIndex = 14;
-			this->label12->Text = L"Effective Plan";
-			// 
-			// textBox12
-			// 
-			this->textBox12->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->textBox12->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.125F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(162)));
-			this->textBox12->Location = System::Drawing::Point(27, 39);
-			this->textBox12->Multiline = true;
-			this->textBox12->Name = L"textBox12";
-			this->textBox12->Size = System::Drawing::Size(246, 41);
-			this->textBox12->TabIndex = 11;
-			// 
-			// label13
-			// 
-			this->label13->AutoSize = true;
-			this->label13->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7.875F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(162)));
-			this->label13->ForeColor = System::Drawing::Color::Gray;
-			this->label13->Location = System::Drawing::Point(22, 7);
-			this->label13->Name = L"label13";
-			this->label13->Size = System::Drawing::Size(60, 25);
-			this->label13->TabIndex = 12;
-			this->label13->Text = L"Type";
-			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(192, 192);
@@ -693,13 +698,13 @@ namespace FarmingApp {
 			this->panel1->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->panel3->ResumeLayout(false);
+			this->panel6->ResumeLayout(false);
+			this->panel6->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->panel4->ResumeLayout(false);
 			this->panel4->PerformLayout();
 			this->panel5->ResumeLayout(false);
 			this->panel5->PerformLayout();
-			this->panel6->ResumeLayout(false);
-			this->panel6->PerformLayout();
 			this->ResumeLayout(false);
 
 		}
@@ -1016,6 +1021,12 @@ private: void ClearTextBoxes() {
 		button7->Visible = false;
 		button8->Visible = false;
 		button9->Visible = false;
+
+		dataGridView1->ReadOnly = true;
+		dataGridView1->AllowUserToResizeColumns = false;
+		dataGridView1->AllowUserToResizeRows = false;
+		dataGridView1->MultiSelect = false;
+		dataGridView1->AllowUserToAddRows = false;
 	}
 
 	private: System::Void button7_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -1584,6 +1595,31 @@ private: void ClearTextBoxes() {
 		finally {
 			// Baðlantýyý kapatalým
 			conn->Close();
+		}
+	}
+	private: System::Void textBox6_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+		if (!Char::IsDigit(e->KeyChar) && e->KeyChar != (char)8 && e->KeyChar != (char)13 && e->KeyChar != ',') {
+			e->Handled = true; // Geçersiz tuþ basýldýðýnda iþlemi engeller
+		}
+	}
+	private: System::Void textBox5_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+		if (!Char::IsDigit(e->KeyChar) && e->KeyChar != (char)8 && e->KeyChar != (char)13) {
+			e->Handled = true; // Geçersiz tuþ basýldýðýnda iþlemi engeller
+		}
+	}
+	private: System::Void textBox2_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+		if (!Char::IsDigit(e->KeyChar) && e->KeyChar != (char)8 && e->KeyChar != (char)13 && e->KeyChar != ',') {
+			e->Handled = true; // Geçersiz tuþ basýldýðýnda iþlemi engeller
+		}
+	}
+	private: System::Void textBox3_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+		if (!Char::IsDigit(e->KeyChar) && e->KeyChar != (char)8 && e->KeyChar != (char)13 && e->KeyChar != ',') {
+			e->Handled = true; // Geçersiz tuþ basýldýðýnda iþlemi engeller
+		}
+	}
+	private: System::Void textBox4_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+		if (!Char::IsDigit(e->KeyChar) && e->KeyChar != (char)8 && e->KeyChar != (char)13) {
+			e->Handled = true; // Geçersiz tuþ basýldýðýnda iþlemi engeller
 		}
 	}
 };
