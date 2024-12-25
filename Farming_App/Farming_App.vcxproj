@@ -125,6 +125,7 @@
     <ClCompile Include="BankForm.cpp" />
     <ClCompile Include="FieldForm.cpp" />
     <ClCompile Include="ForgotPassword.cpp" />
+    <ClCompile Include="ForSaleForm.cpp" />
     <ClCompile Include="LoginForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="MyFields.cpp" />
@@ -141,6 +142,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="ForgotPassword.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="ForSaleForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="LoginForm.h">
@@ -175,6 +179,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ForgotPassword.resx">
       <DependentUpon>ForgotPassword.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ForSaleForm.resx">
+      <DependentUpon>ForSaleForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.h</DependentUpon>

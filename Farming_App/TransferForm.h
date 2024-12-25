@@ -5,6 +5,7 @@
 #include "User.h"
 #include "WholesalerForm.h"
 #include "MyInventory.h"
+#include "ForSaleForm.h"
 
 namespace FarmingApp {
 
@@ -308,12 +309,14 @@ namespace FarmingApp {
 			// pictureBox9
 			// 
 			this->pictureBox9->BackColor = System::Drawing::Color::Black;
+			this->pictureBox9->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox9.Image")));
 			this->pictureBox9->Location = System::Drawing::Point(168, 375);
 			this->pictureBox9->Name = L"pictureBox9";
 			this->pictureBox9->Size = System::Drawing::Size(125, 125);
 			this->pictureBox9->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox9->TabIndex = 21;
 			this->pictureBox9->TabStop = false;
+			this->pictureBox9->Click += gcnew System::EventHandler(this, &TransferForm::pictureBox9_Click);
 			// 
 			// label9
 			// 
@@ -321,11 +324,11 @@ namespace FarmingApp {
 			this->label9->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(162)));
 			this->label9->ForeColor = System::Drawing::Color::Gray;
-			this->label9->Location = System::Drawing::Point(182, 503);
+			this->label9->Location = System::Drawing::Point(150, 503);
 			this->label9->Name = L"label9";
-			this->label9->Size = System::Drawing::Size(100, 29);
+			this->label9->Size = System::Drawing::Size(174, 29);
 			this->label9->TabIndex = 22;
-			this->label9->Text = L"Belirsiz";
+			this->label9->Text = L"Items for Sale";
 			// 
 			// TransferForm
 			// 
@@ -433,6 +436,17 @@ namespace FarmingApp {
 		inventoryForm->ShowDialog();
 
 		if (inventoryForm->switchToTransfer) {
+			this->Show();
+		}
+	}
+	private: System::Void pictureBox9_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->switchToForm = true;
+		this->Hide();
+
+		FarmingApp::ForSaleForm^ forSaleForm = gcnew FarmingApp::ForSaleForm(currentUser);
+		forSaleForm->ShowDialog();
+
+		if (forSaleForm->switchToTransfer) {
 			this->Show();
 		}
 	}
