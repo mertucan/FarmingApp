@@ -7,6 +7,7 @@
 #include "MyInventory.h"
 #include "ForSaleForm.h"
 #include "MarketForm.h"
+#include "HarvestForm.h"
 
 namespace FarmingApp {
 
@@ -34,6 +35,8 @@ namespace FarmingApp {
 	private: System::Windows::Forms::Label^ label8;
 	private: System::Windows::Forms::PictureBox^ pictureBox9;
 	private: System::Windows::Forms::Label^ label9;
+	private: System::Windows::Forms::Label^ label10;
+	private: System::Windows::Forms::PictureBox^ pictureBox10;
 
 
 	private:
@@ -100,6 +103,8 @@ namespace FarmingApp {
 			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->pictureBox9 = (gcnew System::Windows::Forms::PictureBox());
 			this->label9 = (gcnew System::Windows::Forms::Label());
+			this->label10 = (gcnew System::Windows::Forms::Label());
+			this->pictureBox10 = (gcnew System::Windows::Forms::PictureBox());
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
@@ -110,6 +115,7 @@ namespace FarmingApp {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox7))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox8))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox9))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox10))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// panel1
@@ -150,7 +156,7 @@ namespace FarmingApp {
 			// pictureBox2
 			// 
 			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
-			this->pictureBox2->Location = System::Drawing::Point(21, 185);
+			this->pictureBox2->Location = System::Drawing::Point(21, 138);
 			this->pictureBox2->Name = L"pictureBox2";
 			this->pictureBox2->Size = System::Drawing::Size(125, 125);
 			this->pictureBox2->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
@@ -161,7 +167,7 @@ namespace FarmingApp {
 			// pictureBox3
 			// 
 			this->pictureBox3->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox3.Image")));
-			this->pictureBox3->Location = System::Drawing::Point(168, 185);
+			this->pictureBox3->Location = System::Drawing::Point(168, 138);
 			this->pictureBox3->Name = L"pictureBox3";
 			this->pictureBox3->Size = System::Drawing::Size(125, 125);
 			this->pictureBox3->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
@@ -172,7 +178,7 @@ namespace FarmingApp {
 			// pictureBox4
 			// 
 			this->pictureBox4->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox4.Image")));
-			this->pictureBox4->Location = System::Drawing::Point(315, 185);
+			this->pictureBox4->Location = System::Drawing::Point(315, 138);
 			this->pictureBox4->Name = L"pictureBox4";
 			this->pictureBox4->Size = System::Drawing::Size(125, 125);
 			this->pictureBox4->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
@@ -183,7 +189,7 @@ namespace FarmingApp {
 			// pictureBox5
 			// 
 			this->pictureBox5->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox5.Image")));
-			this->pictureBox5->Location = System::Drawing::Point(462, 185);
+			this->pictureBox5->Location = System::Drawing::Point(462, 138);
 			this->pictureBox5->Name = L"pictureBox5";
 			this->pictureBox5->Size = System::Drawing::Size(125, 125);
 			this->pictureBox5->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
@@ -197,7 +203,7 @@ namespace FarmingApp {
 			this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(162)));
 			this->label4->ForeColor = System::Drawing::Color::Gray;
-			this->label4->Location = System::Drawing::Point(35, 313);
+			this->label4->Location = System::Drawing::Point(35, 266);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(92, 29);
 			this->label4->TabIndex = 11;
@@ -209,7 +215,7 @@ namespace FarmingApp {
 			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(162)));
 			this->label2->ForeColor = System::Drawing::Color::Gray;
-			this->label2->Location = System::Drawing::Point(158, 313);
+			this->label2->Location = System::Drawing::Point(158, 266);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(145, 29);
 			this->label2->TabIndex = 12;
@@ -221,7 +227,7 @@ namespace FarmingApp {
 			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(162)));
 			this->label3->ForeColor = System::Drawing::Color::Gray;
-			this->label3->Location = System::Drawing::Point(340, 313);
+			this->label3->Location = System::Drawing::Point(340, 266);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(86, 29);
 			this->label3->TabIndex = 13;
@@ -233,7 +239,7 @@ namespace FarmingApp {
 			this->label5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(162)));
 			this->label5->ForeColor = System::Drawing::Color::Gray;
-			this->label5->Location = System::Drawing::Point(462, 313);
+			this->label5->Location = System::Drawing::Point(462, 266);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(126, 29);
 			this->label5->TabIndex = 14;
@@ -242,7 +248,7 @@ namespace FarmingApp {
 			// pictureBox6
 			// 
 			this->pictureBox6->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox6.Image")));
-			this->pictureBox6->Location = System::Drawing::Point(315, 375);
+			this->pictureBox6->Location = System::Drawing::Point(315, 328);
 			this->pictureBox6->Name = L"pictureBox6";
 			this->pictureBox6->Size = System::Drawing::Size(125, 125);
 			this->pictureBox6->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
@@ -253,7 +259,7 @@ namespace FarmingApp {
 			// pictureBox7
 			// 
 			this->pictureBox7->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox7.Image")));
-			this->pictureBox7->Location = System::Drawing::Point(459, 375);
+			this->pictureBox7->Location = System::Drawing::Point(241, 502);
 			this->pictureBox7->Name = L"pictureBox7";
 			this->pictureBox7->Size = System::Drawing::Size(125, 125);
 			this->pictureBox7->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
@@ -267,7 +273,7 @@ namespace FarmingApp {
 			this->label6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(162)));
 			this->label6->ForeColor = System::Drawing::Color::Gray;
-			this->label6->Location = System::Drawing::Point(474, 503);
+			this->label6->Location = System::Drawing::Point(256, 630);
 			this->label6->Name = L"label6";
 			this->label6->Size = System::Drawing::Size(93, 29);
 			this->label6->TabIndex = 17;
@@ -279,7 +285,7 @@ namespace FarmingApp {
 			this->label7->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(162)));
 			this->label7->ForeColor = System::Drawing::Color::Gray;
-			this->label7->Location = System::Drawing::Point(348, 503);
+			this->label7->Location = System::Drawing::Point(348, 456);
 			this->label7->Name = L"label7";
 			this->label7->Size = System::Drawing::Size(71, 29);
 			this->label7->TabIndex = 18;
@@ -288,7 +294,7 @@ namespace FarmingApp {
 			// pictureBox8
 			// 
 			this->pictureBox8->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox8.Image")));
-			this->pictureBox8->Location = System::Drawing::Point(21, 375);
+			this->pictureBox8->Location = System::Drawing::Point(21, 328);
 			this->pictureBox8->Name = L"pictureBox8";
 			this->pictureBox8->Size = System::Drawing::Size(125, 125);
 			this->pictureBox8->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
@@ -302,7 +308,7 @@ namespace FarmingApp {
 			this->label8->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(162)));
 			this->label8->ForeColor = System::Drawing::Color::Gray;
-			this->label8->Location = System::Drawing::Point(26, 503);
+			this->label8->Location = System::Drawing::Point(26, 456);
 			this->label8->Name = L"label8";
 			this->label8->Size = System::Drawing::Size(118, 29);
 			this->label8->TabIndex = 20;
@@ -312,7 +318,7 @@ namespace FarmingApp {
 			// 
 			this->pictureBox9->BackColor = System::Drawing::Color::Black;
 			this->pictureBox9->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox9.Image")));
-			this->pictureBox9->Location = System::Drawing::Point(168, 375);
+			this->pictureBox9->Location = System::Drawing::Point(168, 328);
 			this->pictureBox9->Name = L"pictureBox9";
 			this->pictureBox9->Size = System::Drawing::Size(125, 125);
 			this->pictureBox9->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
@@ -326,11 +332,34 @@ namespace FarmingApp {
 			this->label9->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(162)));
 			this->label9->ForeColor = System::Drawing::Color::Gray;
-			this->label9->Location = System::Drawing::Point(150, 503);
+			this->label9->Location = System::Drawing::Point(150, 456);
 			this->label9->Name = L"label9";
 			this->label9->Size = System::Drawing::Size(174, 29);
 			this->label9->TabIndex = 22;
 			this->label9->Text = L"Items for Sale";
+			// 
+			// label10
+			// 
+			this->label10->AutoSize = true;
+			this->label10->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(162)));
+			this->label10->ForeColor = System::Drawing::Color::Gray;
+			this->label10->Location = System::Drawing::Point(473, 456);
+			this->label10->Name = L"label10";
+			this->label10->Size = System::Drawing::Size(101, 29);
+			this->label10->TabIndex = 24;
+			this->label10->Text = L"Harvest";
+			// 
+			// pictureBox10
+			// 
+			this->pictureBox10->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox10.Image")));
+			this->pictureBox10->Location = System::Drawing::Point(459, 328);
+			this->pictureBox10->Name = L"pictureBox10";
+			this->pictureBox10->Size = System::Drawing::Size(125, 125);
+			this->pictureBox10->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox10->TabIndex = 23;
+			this->pictureBox10->TabStop = false;
+			this->pictureBox10->Click += gcnew System::EventHandler(this, &TransferForm::pictureBox10_Click);
 			// 
 			// TransferForm
 			// 
@@ -339,6 +368,8 @@ namespace FarmingApp {
 			this->AutoSize = true;
 			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(600, 671);
+			this->Controls->Add(this->label10);
+			this->Controls->Add(this->pictureBox10);
 			this->Controls->Add(this->label9);
 			this->Controls->Add(this->pictureBox9);
 			this->Controls->Add(this->label8);
@@ -371,6 +402,7 @@ namespace FarmingApp {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox7))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox8))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox9))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox10))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -460,6 +492,17 @@ namespace FarmingApp {
 		marketForm->ShowDialog();
 
 		if (marketForm->switchToTransfer) {
+			this->Show();
+		}
+	}
+	private: System::Void pictureBox10_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->switchToForm = true;
+		this->Hide();
+
+		FarmingApp::HarvestForm^ harvestForm = gcnew FarmingApp::HarvestForm(currentUser);
+		harvestForm->ShowDialog();
+
+		if (harvestForm->switchToTransfer) {
 			this->Show();
 		}
 	}

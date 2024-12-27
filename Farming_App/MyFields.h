@@ -160,7 +160,7 @@ namespace FarmingApp {
 			this->button8->Font = (gcnew System::Drawing::Font(L"Dubai", 10.125F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button8->ForeColor = System::Drawing::Color::White;
-			this->button8->Location = System::Drawing::Point(671, 557);
+			this->button8->Location = System::Drawing::Point(671, 567);
 			this->button8->Name = L"button8";
 			this->button8->Size = System::Drawing::Size(206, 64);
 			this->button8->TabIndex = 10;

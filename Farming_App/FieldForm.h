@@ -154,6 +154,27 @@ namespace FarmingApp {
 			this->Hide();
 		}
 
+		int GetOwnedFieldsCount(int userId) {
+			int count = 0;
+			try {
+				connection->Open();
+
+				// Count the number of fields owned by the user
+				SqlCommand^ command = gcnew SqlCommand("SELECT COUNT(*) FROM field WHERE farmers_id = @farmersId", connection);
+				command->Parameters->AddWithValue("@farmersId", userId);
+
+				count = (int)command->ExecuteScalar();  // Get the count from the query
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("An error occurred while fetching the owned fields count: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			finally {
+				connection->Close();
+			}
+
+			return count;
+		}
+
 		void OnLabelXClick(Object^ sender, EventArgs^ e) {
 			// Formu kapatma işlemi
 			this->Close();
@@ -242,47 +263,47 @@ namespace FarmingApp {
 				// Fiyatı butonun Tag özelliğinden alıyoruz
 				int price = (int)clickedButton->Tag;
 
+				// Check if the user already owns more than 30 fields
+				int ownedFieldsCount = GetOwnedFieldsCount(currentUser->id);
+				if (ownedFieldsCount >= 30) {
+					MessageBox::Show("A user cannot own more than 30 fields!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+
 				if (currentUser->budget < price) {
 					MessageBox::Show("Insufficient balance.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 					return;
 				}
 
-				else
-				{
-					// Bütçeyi ve alan fiyatını göstermek için bir mesaj kutusu açıyoruz
-					System::Windows::Forms::DialogResult result = MessageBox::Show("Do you want to purchase this field?",
-						"Confirm Purchase",
-						MessageBoxButtons::YesNo,
-						MessageBoxIcon::Question);
+				System::Windows::Forms::DialogResult result = MessageBox::Show("Do you want to purchase this field?",
+					"Confirm Purchase",
+					MessageBoxButtons::YesNo,
+					MessageBoxIcon::Question);
 
-					if (result == System::Windows::Forms::DialogResult::Yes) {
-						// Bütçeyi kontrol et
+				if (result == System::Windows::Forms::DialogResult::Yes) {
+					// Alanı satın al
+					if (UpdateFieldOwnership(Int32::Parse(clickedButton->Text))) {
+						// Satın alma başarılı
+						clickedButton->BackColor = System::Drawing::Color::Red;
+						clickedButton->ForeColor = System::Drawing::Color::White;
+						tooltip->SetToolTip(clickedButton, "Owned by: " + currentUser->username);
 
+						// Bütçeyi güncelle
+						currentUser->budget -= price;
+						UpdateBalanceLabel();  // Bakiyeyi güncelle
 
-						// Alanı satın al
-						if (UpdateFieldOwnership(Int32::Parse(clickedButton->Text))) {
-							// Satın alma başarılı
-							clickedButton->BackColor = System::Drawing::Color::Red;
-							clickedButton->ForeColor = System::Drawing::Color::White;
-							tooltip->SetToolTip(clickedButton, "Owned by: " + currentUser->username);
-
-							// Bütçeyi güncelle
-							currentUser->budget -= price;
-							UpdateBalanceLabel();  // Bakiyeyi güncelle
-
-							// Veritabanında kullanıcı bakiyesini güncelle
-							if (UpdateUserBalance()) {
-								MessageBox::Show("Field successfully purchased!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
-							}
-							else {
-								MessageBox::Show("Error updating balance in database.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-							}
+						// Veritabanında kullanıcı bakiyesini güncelle
+						if (UpdateUserBalance()) {
+							MessageBox::Show("Field successfully purchased!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 						}
 						else {
-							MessageBox::Show("Purchase failed. Try again later.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+							MessageBox::Show("Error updating balance in database.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 						}
 					}
-				}	
+					else {
+						MessageBox::Show("Purchase failed. Try again later.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					}
+				}
 			}
 		}
 
