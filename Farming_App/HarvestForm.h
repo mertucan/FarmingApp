@@ -47,6 +47,7 @@ namespace FarmingApp {
 	private: System::Windows::Forms::TextBox^ textBox1;
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::Label^ label2;
+	private: System::Collections::Generic::Dictionary<String^, Double>^ buttonData;
 
 
 	private:
@@ -291,7 +292,7 @@ namespace FarmingApp {
 		SqlConnection^ conn = gcnew SqlConnection("Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True");
 
 		// Field butonlarý yükle
-		SqlCommand^ fieldCmd = gcnew SqlCommand("SELECT field_parcel FROM field WHERE farmers_id = @user_id", conn);
+		SqlCommand^ fieldCmd = gcnew SqlCommand("SELECT field_parcel, area FROM field WHERE farmers_id = @user_id", conn);
 		fieldCmd->Parameters->AddWithValue("@user_id", currentUser->id);
 
 		try {
@@ -319,7 +320,9 @@ namespace FarmingApp {
 				newButton->Text = parcelName;
 				newButton->ForeColor = System::Drawing::Color::White;
 				newButton->BackColor = System::Drawing::Color::Green;
+				newButton->Tag = newButton->Text;
 				newButton->Click += gcnew EventHandler(this, &HarvestForm::ParcelButton_Click);
+				newButton->Click += gcnew EventHandler(this, &HarvestForm::Button_Click_After_Done);
 
 				groupBox1->Controls->Add(newButton);
 
@@ -341,6 +344,224 @@ namespace FarmingApp {
 			MessageBox::Show("Error loading fields: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 
+		LoadDataGridView();
+	}
+	private: String^ tagValue;
+	private: System::Void ParcelButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		Button^ clickedButton = dynamic_cast<Button^>(sender);
+
+		if (clickedButton != nullptr && clickedButton->Text != "OK") {
+			int tagValueInt = 0;
+			int textBoxValue = 0;
+
+			// Butonun Tag deðerini kontrol et ve dönüþtür
+			if (!String::IsNullOrWhiteSpace(clickedButton->Tag->ToString()) &&
+				Int32::TryParse(clickedButton->Tag->ToString(), tagValueInt) &&
+				!String::IsNullOrWhiteSpace(textBox1->Text) &&
+				Int32::TryParse(textBox1->Text, textBoxValue) && textBoxValue > 0) {
+
+				// Timer baþlat
+				Timer^ timer = gcnew Timer();
+				timer->Interval = 1000; // 1 saniye
+
+				// Geri sayým süresi: Tag deðeri * TextBox deðeri
+				int countdownTime = 5 * textBoxValue;
+
+				// Calculate minutes and seconds
+				int minutes = countdownTime / 60;
+				int seconds = countdownTime % 60;
+
+				timer->Tag = gcnew Tuple<Button^, int>(clickedButton, countdownTime);
+
+				// Veritabanýna veri ekleme iþlemi
+				try {
+					// Baðlantý dizesi (kendi veritabaný baðlantýnýzý kullanýn)
+					String^ connectionString = "Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True";
+					SqlConnection^ connection = gcnew SqlConnection(connectionString);
+
+					// Sorgu: Harvest tablosuna veri ekleme
+					String^ query = "INSERT INTO harvest (field_parcel, amount, time, item_type) VALUES (@field_parcel, @amount, @time, @item_type)";
+					SqlCommand^ command = gcnew SqlCommand(query, connection);
+
+					// Parametreler
+					command->Parameters->AddWithValue("@field_parcel", tagValueInt);
+					command->Parameters->AddWithValue("@amount", textBoxValue);
+					command->Parameters->AddWithValue("@time", countdownTime);
+					command->Parameters->AddWithValue("@item_type", label2->Text);
+
+					// Baðlantýyý aç ve sorguyu çalýþtýr
+					connection->Open();
+					command->ExecuteNonQuery();
+					connection->Close();
+
+					// Inventory tablosunda amount deðerini güncelle
+					String^ queryUpdate = "UPDATE inventory SET amount = amount - @amount WHERE farmers_id = @farmers_id AND item_type = @item_type";
+					SqlCommand^ commandUpdate = gcnew SqlCommand(queryUpdate, connection);
+
+					// Parametreler
+					commandUpdate->Parameters->AddWithValue("@amount", textBoxValue);
+					commandUpdate->Parameters->AddWithValue("@farmers_id", currentUser->id);  // currentUser->id ile kullanýcýyý tanýmla
+					commandUpdate->Parameters->AddWithValue("@item_type", label2->Text);
+
+					// Baðlantýyý tekrar aç ve güncelleme iþlemi yap
+					connection->Open();
+					commandUpdate->ExecuteNonQuery();
+					connection->Close();
+
+					// DataGridView'i yeniden yükle
+					LoadDataGridView();
+				}
+				catch (Exception^ ex) {
+					MessageBox::Show("An error occurred: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+
+				// Butonun durumunu deðiþtir ve geri sayýmý baþlatmadan önce remainingTime deðerini göster
+				clickedButton->Enabled = false; // Butonu devre dýþý býrak
+				clickedButton->BackColor = System::Drawing::Color::Red; // Arka plan rengini deðiþtir
+				clickedButton->ForeColor = System::Drawing::Color::White;
+				clickedButton->Text = String::Format("{0}:{1:D2}", minutes, seconds);
+
+				// Timer olay iþleyicisi ekle
+				timer->Tick += gcnew EventHandler(this, &HarvestForm::Timer_Tick);
+
+				// Timer'ý baþlat
+				timer->Start();
+			}
+			else {
+				// Hatalý giriþ varsa uyarý göster
+				MessageBox::Show("You forgot to write harvest amount!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+	}
+	private: System::Void Timer_Tick(System::Object^ sender, System::EventArgs^ e) {
+		Timer^ timer = dynamic_cast<Timer^>(sender);
+		if (timer != nullptr) {
+			Tuple<Button^, int>^ data = dynamic_cast<Tuple<Button^, int>^>(timer->Tag);
+			Button^ button = data->Item1;
+			int remainingTime = data->Item2;
+
+			if (remainingTime > 1) {
+				remainingTime--;
+
+				// Calculate minutes and seconds
+				int minutes = remainingTime / 60;
+				int seconds = remainingTime % 60;
+
+				// Format the time in "minutes:seconds"
+				button->Text = String::Format("{0}:{1:D2}", minutes, seconds);
+
+				// Update the timer's Tag with the new remaining time
+				timer->Tag = gcnew Tuple<Button^, int>(button, remainingTime);
+			}
+			else {
+				timer->Stop();
+				button->Text = "OK";
+				button->BackColor = System::Drawing::Color::Green;
+				button->ForeColor = System::Drawing::Color::White;
+				button->Enabled = true;
+			}
+		}
+	}
+	private: System::Void Button_Click_After_Done(System::Object^ sender, System::EventArgs^ e) {
+		Button^ clickedButton = dynamic_cast<Button^>(sender);
+
+		if (clickedButton != nullptr && clickedButton->Text == "OK") {
+			try {
+				// 1. Butonun tag deðerini tekrar üstüne yazdýr
+				clickedButton->Text = clickedButton->Tag->ToString();
+
+				// 2. Þansa baðlý çarpan ayarlama
+				Random^ rand = gcnew Random();
+				int chance = rand->Next(1, 101); // 1 ile 100 arasýnda rastgele sayý
+				int multiplier;
+
+				if (chance <= 39) multiplier = 1;
+				else if (chance <= 78) multiplier = 2;
+				else if (chance <= 98) multiplier = 3;
+				else multiplier = 4;
+
+				// Veritabaný baðlantýsý
+				String^ connectionString = "Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True";
+				SqlConnection^ connection = gcnew SqlConnection(connectionString);
+				connection->Open();
+
+				// 3. Harvest tablosundaki amount deðerini çek ve çarpanla çarp
+				String^ queryHarvest = "SELECT amount, item_type, field_parcel FROM harvest WHERE field_parcel = @field_parcel";
+				SqlCommand^ commandHarvest = gcnew SqlCommand(queryHarvest, connection);
+				commandHarvest->Parameters->AddWithValue("@field_parcel", clickedButton->Tag->ToString());
+
+				SqlDataReader^ reader = commandHarvest->ExecuteReader();
+				if (reader->Read()) {
+					int harvestAmount = Convert::ToInt32(reader["amount"]);
+					String^ itemType = reader["item_type"]->ToString();
+					String^ fieldParcel = reader["field_parcel"]->ToString();
+					int newAmount = harvestAmount * multiplier;
+					reader->Close();
+
+					// 4. Field tablosundaki area bilgisini al
+					String^ queryField = "SELECT area FROM field WHERE field_parcel = @field_parcel";
+					SqlCommand^ commandField = gcnew SqlCommand(queryField, connection);
+					commandField->Parameters->AddWithValue("@field_parcel", fieldParcel);
+					SqlDataReader^ fieldReader = commandField->ExecuteReader();
+
+					int area = 0;
+					if (fieldReader->Read()) {
+						area = fieldReader->GetInt32(0);
+					}
+					fieldReader->Close();
+
+					// Çiftlik alanýný newAmount ile çarp
+					int totalProduction = area * newAmount;
+
+					// 5. Inventory tablosunu güncelle
+					String^ queryInventory = "UPDATE inventory SET amount = amount + @newAmount "
+						"WHERE farmers_id = @farmers_id AND item_type = @item_type";
+					SqlCommand^ commandInventory = gcnew SqlCommand(queryInventory, connection);
+					commandInventory->Parameters->AddWithValue("@newAmount", totalProduction);
+					commandInventory->Parameters->AddWithValue("@farmers_id", currentUser->id);
+					commandInventory->Parameters->AddWithValue("@item_type", itemType);
+					commandInventory->ExecuteNonQuery();
+
+					String^ message;
+					if (multiplier == 1) {
+						message = String::Format("You earned {0} from {1} harvest. You got back what you planted, but it wasn't very productive! \n\nThe field area is {2}.", totalProduction, itemType, area);
+					}
+					else if (multiplier == 2) {
+						message = String::Format("You earned {0} from {1} harvest! You got 2 times what you planted, it was a very productive harvest! \n\nThe field area is {2}.", totalProduction, itemType, area);
+					}
+					else if (multiplier == 3) {
+						message = String::Format("You earned {0} from {1} harvest! You got 3 times what you planted and the soil sends its thanks. \n\nThe field area is {2}.", totalProduction, itemType, area);
+					}
+					else if (multiplier == 4) {
+						message = String::Format("You earned {0} from {1} harvest! You got 4 times what you planted, it couldn't have been better! \n\nThe field area is {2}.", totalProduction, itemType, area);
+					}
+
+					MessageBox::Show(message, "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				}
+				else {
+					MessageBox::Show("Harvest data not found for this field parcel.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					connection->Close();
+					return;
+				}
+
+				// 6. Harvest tablosundan eþleþen veriyi sil
+				String^ queryDelete = "DELETE FROM harvest WHERE field_parcel = @field_parcel";
+				SqlCommand^ commandDelete = gcnew SqlCommand(queryDelete, connection);
+				commandDelete->Parameters->AddWithValue("@field_parcel", clickedButton->Tag->ToString());
+				commandDelete->ExecuteNonQuery();
+
+				connection->Close();
+
+				// 7. DataGridView'i tekrar yükle
+				LoadDataGridView();
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("An error occurred: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+	}
+	private: System::Void LoadDataGridView() {
+		SqlConnection^ conn = gcnew SqlConnection("Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True");
 		// Inventory tablosunu doldur
 		SqlCommand^ inventoryCmd = gcnew SqlCommand("SELECT item_type AS [Type], amount AS [Amount] FROM inventory WHERE farmers_id = @user_id AND table_type = 'crops'", conn);
 		inventoryCmd->Parameters->AddWithValue("@user_id", currentUser->id);
@@ -367,20 +588,17 @@ namespace FarmingApp {
 			conn->Close();
 		}
 	}
-
-	private: System::Void ParcelButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		Button^ clickedButton = safe_cast<Button^>(sender);
-		MessageBox::Show("You clicked on parcel: " + clickedButton->Text, "Parcel Selected", MessageBoxButtons::OK, MessageBoxIcon::Information);
-	}
+	private: System::String^ selectedType;
 	private: System::Void dataGridView1_SelectionChanged(System::Object^ sender, System::EventArgs^ e) {
 		textBox1->Clear();
-		if (dataGridView1->SelectedRows->Count > 0) { // Seçili bir satýr var mý kontrolü
-			DataGridViewRow^ selectedRow = dataGridView1->SelectedRows[0]; // Ýlk seçili satýrý al
-			if (selectedRow->Cells["Type"]->Value != nullptr) { // "Name" boþsa "Type" kontrol edilir
-				label2->Text = selectedRow->Cells["Type"]->Value->ToString(); // "Type" deðerini `label2`ye ata
+		if (dataGridView1->SelectedRows->Count > 0) {
+			DataGridViewRow^ selectedRow = dataGridView1->SelectedRows[0];
+			if (selectedRow->Cells["Type"]->Value != nullptr) {
+				selectedType = selectedRow->Cells["Type"]->Value->ToString(); // Type deðerini sakla
+				label2->Text = selectedType; // Label'e yaz
 			}
 			else {
-				label2->Text = ""; // Her iki deðer de boþsa `label2`yi temizle
+				label2->Text = "";
 				textBox1->Clear();
 			}
 		}
@@ -390,6 +608,7 @@ namespace FarmingApp {
 			e->Handled = true; // Geçersiz tuþ basýldýðýnda iþlemi engeller
 		}
 	}
+
 	private: System::Double maxAmount;
 	private: System::Void label7_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (dataGridView1->SelectedRows->Count > 0) {
