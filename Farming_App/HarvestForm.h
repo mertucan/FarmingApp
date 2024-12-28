@@ -48,6 +48,8 @@ namespace FarmingApp {
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Collections::Generic::Dictionary<String^, Double>^ buttonData;
+	private: System::Windows::Forms::Label^ label4;
+	private: System::Windows::Forms::Label^ label6;
 
 
 	private:
@@ -77,6 +79,8 @@ namespace FarmingApp {
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
@@ -198,7 +202,7 @@ namespace FarmingApp {
 			this->label7->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7.875F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(162)));
 			this->label7->ForeColor = System::Drawing::Color::Orange;
-			this->label7->Location = System::Drawing::Point(1276, 696);
+			this->label7->Location = System::Drawing::Point(1281, 682);
 			this->label7->Name = L"label7";
 			this->label7->Size = System::Drawing::Size(56, 25);
 			this->label7->TabIndex = 28;
@@ -210,7 +214,7 @@ namespace FarmingApp {
 			this->textBox1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->textBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.125F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(162)));
-			this->textBox1->Location = System::Drawing::Point(1100, 652);
+			this->textBox1->Location = System::Drawing::Point(1105, 638);
 			this->textBox1->Multiline = true;
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(232, 41);
@@ -224,7 +228,7 @@ namespace FarmingApp {
 			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.125F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label3->ForeColor = System::Drawing::Color::Gray;
-			this->label3->Location = System::Drawing::Point(869, 654);
+			this->label3->Location = System::Drawing::Point(874, 640);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(209, 31);
 			this->label3->TabIndex = 27;
@@ -242,12 +246,40 @@ namespace FarmingApp {
 			this->label2->TabIndex = 29;
 			this->label2->Text = L"Crops Name";
 			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->BackColor = System::Drawing::Color::White;
+			this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7.875F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(162)));
+			this->label4->ForeColor = System::Drawing::Color::Red;
+			this->label4->Location = System::Drawing::Point(826, 724);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(558, 25);
+			this->label4->TabIndex = 30;
+			this->label4->Text = L"You must stay on this page for the harvesting to process.";
+			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->BackColor = System::Drawing::Color::White;
+			this->label6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7.875F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(162)));
+			this->label6->ForeColor = System::Drawing::Color::Red;
+			this->label6->Location = System::Drawing::Point(763, 749);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(679, 25);
+			this->label6->TabIndex = 31;
+			this->label6->Text = L"If you leave, the process will be canceled and your product will be lost";
+			// 
 			// HarvestForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(192, 192);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Dpi;
 			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(1455, 783);
+			this->Controls->Add(this->label6);
+			this->Controls->Add(this->label4);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label7);
 			this->Controls->Add(this->textBox1);
@@ -273,13 +305,50 @@ namespace FarmingApp {
 		}
 #pragma endregion
 	private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->Close();
-	}
+		// Ask the user for confirmation before proceeding
+		System::Windows::Forms::DialogResult result = MessageBox::Show("All harvests will be canceled and deleted. Are you sure you want to leave?",
+			"Exit Confirmation",
+			MessageBoxButtons::YesNo,
+			MessageBoxIcon::Warning);
 
+		// If user clicks 'Yes', delete harvest data and proceed
+		if (result == System::Windows::Forms::DialogResult::Yes) {
+			DeleteHarvestData();
+			this->Close();
+		}
+	}
+	private: void DeleteHarvestData()
+	{
+		SqlConnection^ conn = gcnew SqlConnection("Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True");
+
+		String^ deleteQuery = "DELETE FROM harvest"; // Delete all records from harvest table
+		SqlCommand^ deleteCmd = gcnew SqlCommand(deleteQuery, conn);
+
+		try {
+			conn->Open();
+			deleteCmd->ExecuteNonQuery(); // Execute the query
+			conn->Close();
+
+			MessageBox::Show("All harvest records have been deleted.", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		}
+		catch (Exception^ ex) {
+			MessageBox::Show("Error deleting harvest records: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+	}
 	public: bool switchToTransfer = false;
 	private: System::Void pictureBox2_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->switchToTransfer = true;
-		this->Hide();
+		// Ask the user for confirmation before proceeding
+		System::Windows::Forms::DialogResult result = MessageBox::Show("All harvests will be canceled and deleted. Are you sure you want to leave?",
+			"Exit Confirmation",
+			MessageBoxButtons::YesNo,
+			MessageBoxIcon::Warning);
+
+		// If user clicks 'Yes', delete harvest data and proceed
+		if (result == System::Windows::Forms::DialogResult::Yes) {
+			DeleteHarvestData();
+			this->switchToTransfer = true;
+			this->Hide();
+		}
 	}
 	private: System::Void HarvestForm_Load(System::Object^ sender, System::EventArgs^ e) {
 		dataGridView1->RowHeadersVisible = false;
@@ -563,7 +632,7 @@ namespace FarmingApp {
 	private: System::Void LoadDataGridView() {
 		SqlConnection^ conn = gcnew SqlConnection("Data Source=MERT;Initial Catalog=farming_system;Integrated Security=True");
 		// Inventory tablosunu doldur
-		SqlCommand^ inventoryCmd = gcnew SqlCommand("SELECT item_type AS [Type], amount AS [Amount] FROM inventory WHERE farmers_id = @user_id AND table_type = 'crops'", conn);
+		SqlCommand^ inventoryCmd = gcnew SqlCommand("SELECT item_type AS [Type], amount AS [Amount] FROM inventory WHERE farmers_id = @user_id AND table_type = 'crops' AND amount != 0", conn);
 		inventoryCmd->Parameters->AddWithValue("@user_id", currentUser->id);
 
 		try {
