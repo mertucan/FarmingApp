@@ -243,7 +243,7 @@ namespace FarmingApp {
 
 			// Kullanýcýya onay mesajý göster
 			System::Windows::Forms::DialogResult result = MessageBox::Show(
-				String::Format("Are you sure you want to sell this item at a 25% reduced price of {0}?", discountedPrice),
+				String::Format("Are you sure you want to sell this item at a 25% reduced price of ${0}?", discountedPrice),
 				"Confirm Sale",
 				MessageBoxButtons::YesNo,
 				MessageBoxIcon::Question
